@@ -1,0 +1,1061 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<script>
+    (function(){
+        if('iTesting'){
+            if (prompt('请输入文章密码') !== 'iTesting'){
+                alert('密码错误，请关注公众号iTesting获取密码');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="自动化测试框架," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="如需阅读全文，请关注公众号TesterTalk索要密码。unittest是python自带的单元测试框架，它封装好了一些校验返回的结果方法和一些用例执行前的初始化操作，使得单元测试易于开展，因为它的易用性，很多同学也拿它来做功能测试和接口测试，只需简单开发一些功能（报告，初始化webdriver，或者http请求方法）便可实现。 
+但自动化测试中我们常常需要根据不同需求挑选部分测试用例运行，并且我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动化框架Pytest从入门到熟练使用">
+<meta property="og:url" content="http://www.helloqa.com/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/index.html">
+<meta property="og:site_name" content="iTesting软件测试知识分享">
+<meta property="og:description" content="如需阅读全文，请关注公众号TesterTalk索要密码。unittest是python自带的单元测试框架，它封装好了一些校验返回的结果方法和一些用例执行前的初始化操作，使得单元测试易于开展，因为它的易用性，很多同学也拿它来做功能测试和接口测试，只需简单开发一些功能（报告，初始化webdriver，或者http请求方法）便可实现。 
+但自动化测试中我们常常需要根据不同需求挑选部分测试用例运行，并且我">
+<meta property="og:image" content="http://www.helloqa.com/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/pytest_start.JPG">
+<meta property="og:image" content="http://www.helloqa.com/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/HTML_REPORT.JPG">
+<meta property="og:image" content="http://www.helloqa.com/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/HTML_REPORT_RERUN.JPG">
+<meta property="og:image" content="http://www.helloqa.com/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/DataDriven_easy.JPG">
+<meta property="og:image" content="http://www.helloqa.com/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/unittest.JPG">
+<meta property="og:image" content="http://www.helloqa.com/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/unittest_intergrate.JPG">
+<meta property="og:updated_time" content="2018-07-30T15:48:50.337Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自动化框架Pytest从入门到熟练使用">
+<meta name="twitter:description" content="如需阅读全文，请关注公众号TesterTalk索要密码。unittest是python自带的单元测试框架，它封装好了一些校验返回的结果方法和一些用例执行前的初始化操作，使得单元测试易于开展，因为它的易用性，很多同学也拿它来做功能测试和接口测试，只需简单开发一些功能（报告，初始化webdriver，或者http请求方法）便可实现。 
+但自动化测试中我们常常需要根据不同需求挑选部分测试用例运行，并且我">
+<meta name="twitter:image" content="http://www.helloqa.com/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/pytest_start.JPG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.helloqa.com/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/"/>
+
+
+
+
+
+  <title> 自动化框架Pytest从入门到熟练使用 | iTesting软件测试知识分享 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/Light07/flask_blog" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+<!--
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">iTesting软件测试知识分享</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">iTesting</h1>
+    
+</div>
+-->
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+		
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-basic-knowledge">
+          <a href="/categories/basic-knowledge" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            测试理论
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-dev-in-test">
+          <a href="/categories/dev-in-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-flask"></i> <br />
+            
+            测试开发
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-automation">
+          <a href="/categories/automation" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-desktop"></i> <br />
+            
+            自动化测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-api-test">
+          <a href="/categories/api-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane-o"></i> <br />
+            
+            接口测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-mobile-test">
+          <a href="/categories/mobile-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mobile"></i> <br />
+            
+            移动端测试
+          </a>
+        </li>
+		
+      
+        
+		
+      
+        
+		
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.helloqa.com/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="iTesting">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="iTesting软件测试知识分享">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="iTesting软件测试知识分享" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                自动化框架Pytest从入门到熟练使用
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-31T22:26:04+08:00">
+                2018-07-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/automation/" itemprop="url" rel="index">
+                    <span itemprop="name">automation</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/automation/api-test/" itemprop="url" rel="index">
+                    <span itemprop="name">api-test</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">全文共计3.3k字</span>
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">预计阅读时间13分钟</span>	  
+			  
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>如需阅读全文，请关注公众号TesterTalk索要密码。<br>unittest是python自带的单元测试框架，它封装好了一些校验返回的结果方法和一些用例执行前的初始化操作，使得单元测试易于开展，因为它的易用性，很多同学也拿它来做功能测试和接口测试，只需简单开发一些功能（报告，初始化webdriver，或者http请求方法）便可实现。 </p>
+<p>但自动化测试中我们常常需要根据不同需求挑选部分测试用例运行，并且我们希望用例克服环境不稳定的局限，即运行失败后自动重新运行一次，如果成功就认为是环境问题导致第一次失败，还有我们经常希望测试用例可以并发执行等等，这些unittest都做不到或者需要大量二次开发才能做到，那么有没有更加强大的框架可以替代unittests呢？<br><a id="more"></a></p>
+<p>pytest是python里的一个强大框架，它可以用来做单元测试，你也可以用来做功能，接口自动化测试。而且它比unittest支持的功能更多更全面。但是pytest在Getstarted里给出的实例却很简单，很多同学错以为它只是跟unittest一样是个单元测试框架罢了，如果你查询中文互联网，你也只能找到寥寥数篇大致一样的用法，可以说pytest的精髓使用，没有被大家挖掘出来，如此强大的框架不应该被埋没，今天我就带领大家深入pytest使用，共同领略pytest的强大。</p>
+<h3 id="1-pytst安装"><a href="#1-pytst安装" class="headerlink" title="1.pytst安装"></a>1.pytst安装</h3><p>pytest不属于python的标准库，所以需要安装才能使用， 安装方式如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install -U pytest</div></pre></td></tr></table></figure></p>
+<p>如果你已经安装有pytest，想查看它的版本号：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pytest --version</div></pre></td></tr></table></figure></p>
+<h3 id="2-你的第一个pytest测试"><a href="#2-你的第一个pytest测试" class="headerlink" title="2.你的第一个pytest测试"></a>2.你的第一个pytest测试</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#直接使用官网用例</span></div><div class="line"><span class="comment"># content of TesterTalk.py</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="keyword">return</span> x + <span class="number">1</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_answer</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">assert</span> func(<span class="number">3</span>) == <span class="number">5</span></div><div class="line"><span class="comment">#在你的terminial里输入 python -m pytest TesterTalk.py,你将会看到如下信息：</span></div></pre></td></tr></table></figure>
+<p><img src="/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/pytest_start.JPG" alt=""><br>非常简单吧， 如果想运行多个用例该如何做呢？<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># content of TesterTalk.py</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestClass</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_one</span><span class="params">(self)</span>:</span></div><div class="line">        x = <span class="string">"this"</span></div><div class="line">        <span class="keyword">assert</span> <span class="string">'h'</span> <span class="keyword">in</span> x</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_two</span><span class="params">(self)</span>:</span></div><div class="line">        x = <span class="string">"hello"</span></div><div class="line">        <span class="keyword">assert</span> hasattr(x, <span class="string">'check'</span>)</div><div class="line"><span class="comment">#把要测试的case以test_开头就好了。</span></div><div class="line"><span class="comment">#terminal里输入 pytest TesterTalk.py, 执行结果一个成功一个失败。</span></div></pre></td></tr></table></figure></p>
+<p><strong> 注意: </strong><br>（1）.如果你想用pytest寻找整个文件夹下的测试用例，那么文件须以test_开头或者以<em>test结尾。<br>（2）.测试类以Test开头，并且不能带有 <strong>init</strong> 方法。<br>（3）.测试函数以test</em>开头。<br>（4）.另外，pytest不支持也不打算支持中文路径，如果项目路径中有中文会报错。<br>好了，pytest的getStarted就结束了， 看了上面的应用方式的确没觉得它哪里强大。 别着急，我们再来想一想，如果你有个测试框架，你希望如何用这个框架做测试？</p>
+<h3 id="3-灵活的指定测试用例运行集。"><a href="#3-灵活的指定测试用例运行集。" class="headerlink" title="3.灵活的指定测试用例运行集。"></a>3.灵活的指定测试用例运行集。</h3><p>在unittest框架里，你只能通过suite.addTest（），或者defaultTestLoader.Discover()两种方法在查找测试用例，对于你不需要的测试用例，只能用@unittest.skip()<br>来忽略，但做不到不改动代码变更测试用例集，pytest很好的实现了这一点，它支持如下查找：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"># 1. 运行某个package下的所有用例。</div><div class="line">pytest test_4. #会运行test_4下面所有的test_*.py 或者*_test.py文件里所有的Test开头的类（这个类不允许有__init__方法）下面的以test_开头的方法。</div><div class="line"></div><div class="line">#2. 运行某个文件（module）下的所有用例。</div><div class="line">pytest testtalk.py #会查找这个文件下所有的Test开头的类（这个类不允许有__init__方法）下面的以test_开头的方法。</div><div class="line"></div><div class="line">#3. 运行包含（或不包含）某个关键词的测试类/方法。</div><div class="line">class TestClass(object):</div><div class="line">    def test_one(self):</div><div class="line">        x = "this"</div><div class="line">        assert 'h' in x</div><div class="line"></div><div class="line">    def test_two(self):</div><div class="line">        x = "hello"</div><div class="line">        assert hasattr(x, 'check')</div><div class="line">#在terminal里输入 pytst -k "TestClass and not two" #会运行 test_one这个function但不会与性test_two.</div><div class="line"></div><div class="line">#4.根据node ids运行测试用例。 pytest给每个test assign里一个id。 可以用::隔开。 举例来说：</div><div class="line"># TesterTalk.py</div><div class="line">class TestClass(object):</div><div class="line">    def test_one(self):</div><div class="line">        x = "this"</div><div class="line">        assert 'h' in x</div><div class="line"></div><div class="line">    def test_two(self):</div><div class="line">        x = "hello"</div><div class="line">        assert hasattr(x, 'check')</div><div class="line">#在terminal里输入 pytest TesterTalk.py：：TestClass 会执行TestClass下的所有用例</div><div class="line">#在terminal里输入 pytest TesterTalk.py：：TestClass：：test_two, 仅会执行test_two.</div><div class="line"></div><div class="line">#5.根据标签（mark）运行，比如有个测试类，你想在regression时候才运行，另外一个测试类你想在releasae的时候才运行。</div><div class="line">#TesterTalk.py</div><div class="line">@pytest.mark.release</div><div class="line">class TestClass1(object):</div><div class="line">    def test_one(self):</div><div class="line">        x = "this"</div><div class="line">        assert 'h' in x</div><div class="line"></div><div class="line">    def test_two(self):</div><div class="line">        x = "hello"</div><div class="line">        assert hasattr(x, 'check')</div><div class="line">		</div><div class="line">		</div><div class="line">@pytest.mark.regression</div><div class="line">class TestClass2(object):</div><div class="line">    def test_one(self):</div><div class="line">        x = "this"</div><div class="line">        assert 'h' in x</div><div class="line"></div><div class="line">    def test_two(self):</div><div class="line">        x = "hello"</div><div class="line">        assert hasattr(x, 'check')</div><div class="line">#你只需在terminal里指定标签就可以了。 </div><div class="line">pytest TesterTalk.py -m release</div><div class="line">pytest TesterTalk.py -m regression</div><div class="line">是不是比unittest方便太多了，所有的测试类，测试方法，你只需要用@pytest.mark.XXX装饰就好了。然后一次更改，多次挑选运行！</div><div class="line">这样就完了吗？ NO, No,No, 你如果想几个标签一起运行怎么办？或者你不想某个标签运行怎么办？ </div><div class="line">Very simple：</div><div class="line">pytest TesterTalk.py -m “release or regression" #有release或者regression标签的都会运行。</div><div class="line">pytest TesterTalk.py -m “not regression” # regression标签的不会运行。</div><div class="line"></div><div class="line">当然了，unittest里支持的skip方法，pytest也支持，具体用法如下：</div><div class="line">#TesterTalk.py</div><div class="line">@pytest.mark.skip('skip')</div><div class="line">class TestClass1(object):</div><div class="line">    def test_one(self):</div><div class="line">        x = "this"</div><div class="line">        assert 'h' in x</div><div class="line"></div><div class="line">    def test_two(self):</div><div class="line">        x = "hello"</div><div class="line">        assert hasattr(x, 'check')</div><div class="line"></div><div class="line">#skip装饰器可以放在类前面skip掉整个测试类，也可以防止function前面只skip掉这个function。</div><div class="line">#对应的还有skipif， 请自己看文档了解。</div></pre></td></tr></table></figure></p>
+<p>难道就仅限于此吗？ 其实pytest帮我们实现了更多的高级功能，比如：</p>
+<h3 id="4-并发运行测试用例集"><a href="#4-并发运行测试用例集" class="headerlink" title="4.并发运行测试用例集"></a>4.并发运行测试用例集</h3><p>关注公众号TesterTalk，跟我一起关注测试技术<br>首先，你得安装个插件：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install pytest-parallel  <span class="comment">#pytest-parallel比pytst-xdist要更好。</span></div></pre></td></tr></table></figure><br>其次，要注意区这个插件仅仅支持python3.6版本及以上，而且如果你想多进程并发，必须跑在Unix或者Mac机器上，windows环境仅仅支持多线程运行。<br>运行上需要指定参数：</p>
+<blockquote>
+<p>–workers (optional) X。  多进程运行， X是进程数。 默认值1。<br>–tests-per-worker (optional) X. 多线程运行， X是每个worker运行的最大并发线程数。 默认值1。</p>
+</blockquote>
+<p>举例来说：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># TesterTalk.py</span></div><div class="line"><span class="keyword">import</span> pytest</div><div class="line"></div><div class="line"><span class="meta">@pytest.mark.release</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestClass1</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_one</span><span class="params">(self)</span>:</span></div><div class="line">        x = <span class="string">"this"</span></div><div class="line">        <span class="keyword">assert</span> <span class="string">'h'</span> <span class="keyword">in</span> x</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_two</span><span class="params">(self)</span>:</span></div><div class="line">        x = <span class="string">"hello"</span></div><div class="line">        <span class="keyword">assert</span> hasattr(x, <span class="string">'check'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@pytest.mark.regression</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestClass2</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_one</span><span class="params">(self)</span>:</span></div><div class="line">        x = <span class="string">"this"</span></div><div class="line">        <span class="keyword">assert</span> <span class="string">'h'</span> <span class="keyword">in</span> x</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_two</span><span class="params">(self)</span>:</span></div><div class="line">        x = <span class="string">"hello"</span></div><div class="line">        <span class="keyword">assert</span> hasattr(x, <span class="string">'check'</span>)</div><div class="line"><span class="comment">#terminal里输入 pytest TesterTalk.py --workers 2 #指定一个进程并发</span></div><div class="line"></div><div class="line"><span class="comment">#terminal里输入 pytest TesterTalk.py --workers 2 --test-per-worker 3 #指定2个进程并发，每个进程最多运行3个线程。</span></div></pre></td></tr></table></figure></p>
+<h3 id="5-测试报告优化"><a href="#5-测试报告优化" class="headerlink" title="5.测试报告优化"></a>5.测试报告优化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#允许HTML格式报告</span></div><div class="line"><span class="comment">#首先还是要安装：</span></div><div class="line">pip install pytest-html</div><div class="line"></div><div class="line">Usage：</div><div class="line">使用很简单带参数 --html=report.html就好。</div><div class="line">仍然拿我们刚才举例：</div><div class="line">pytest TesterTalk.py --html=./report.html</div></pre></td></tr></table></figure>
+<p>生成的结果如下：<br><img src="/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/HTML_REPORT.JPG" alt=""></p>
+<p>有时候，我们需要克服环境问题，让失败的用例rerun，有没有办法呢？<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#rerun失败的case</span></div><div class="line"><span class="comment">#首先还是要安装：</span></div><div class="line">pip install pytest-rerunfailures</div><div class="line">Usage:</div><div class="line">--reruns <span class="number">5</span> ＃ｒｅｒｕｎ　５次</div><div class="line">----reruns <span class="number">5</span> --reruns-delay <span class="number">1</span> <span class="comment"># rerun5次， 但是每次rerun前等待1秒。</span></div><div class="line"></div><div class="line">仍以我们刚才的为例：</div><div class="line"><span class="comment">#terminal里输入 pytest TesterTalk.py --reruns 1 --html=./report.html</span></div></pre></td></tr></table></figure></p>
+<p>生成的结果如下：<br><img src="/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/HTML_REPORT_RERUN.JPG" alt=""><br>可以看到，rerun聚合在了报告里。</p>
+<p>我们自动化一般用到持续集成，Jenkins里需要junit XML格式的报告，pytest有没有办法直接生成？<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">无需安装，直接使用：</div><div class="line">pytest --junitxml=path </div><div class="line"></div><div class="line">例如：</div><div class="line">pytest TesterTalk.py --reruns <span class="number">1</span> --html=./report.html --junitxml=./xml_format_report.xml</div><div class="line">会在本地目录生成xml_format_report.xml</div></pre></td></tr></table></figure></p>
+<p>这就结束了吗？还远呢？数据参数化你了解下？</p>
+<h3 id="6-数据参数化"><a href="#6-数据参数化" class="headerlink" title="6.数据参数化"></a>6.数据参数化</h3><p>pytest有几种数据参数化方式：<br><strong> pytest.fixture(). 不带参数 </strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#1.fixture()不带参数：</span></div><div class="line"><span class="keyword">import</span> pytest</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@pytest.fixture()</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">initial_browser</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line">    <span class="keyword">return</span> webdriver.Chrome()</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestBaidu</span><span class="params">()</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_open_baidu</span><span class="params">(self, initial_browser)</span>:</span></div><div class="line">        initial_browser.get(<span class="string">"http://www.baidu.com"</span>)</div><div class="line">		</div><div class="line"><span class="comment">#在terminal里输入pytest testing/testertalk.py  --html=./report.html， 你会看到百度浏览器打开了。说明函数间可以传递值，我们也可以利用这个来做unittest里setup（）的事情。</span></div></pre></td></tr></table></figure></p>
+<p><strong> pytest.fixture()， 带parms参数</strong>:</p>
+<blockquote>
+<p>params with @pytest.fixture, a list of values for each of which the fixture function will execute and can access a value via request.param.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#利用fixtures的params</span></div><div class="line"><span class="keyword">import</span> pytest</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@pytest.fixture(params=[&#123;'username':'TesterTalk',"password":1&#125;, &#123;'username':'Test',"password":1&#125;])</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">account_provider</span><span class="params">(request)</span>:</span> <span class="comment">#request是固定的。</span></div><div class="line">    <span class="keyword">return</span> request.param  <span class="comment">#request.parm也是固定的。</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_login</span><span class="params">(account_provider)</span>:</span></div><div class="line">    <span class="comment">#some operations</span></div><div class="line">    print(account_provider)</div><div class="line"></div><div class="line">假设你需要用多个用户名密码测试登录，只需要用fixture（）加params就好。</div><div class="line"><span class="comment">#在terminal里输入pytest testing/testertalk.py  --html=./report.html</span></div></pre></td></tr></table></figure><br>report显示下图,可以看到test_login被执行了2遍，每次执行带入的数据不同：<br><img src="/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/DataDriven_easy.JPG" alt=""></p>
+</blockquote>
+<p>除了直接用pytest.fixture, 还可以这么用：</p>
+<p><strong> pytest.mark.usefixtures() </strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pytest</div><div class="line"></div><div class="line"><span class="meta">@pytest.fixture(params=[&#123;'username':'TesterTalk',"password":1&#125;, &#123;'username':'Test',"password":1&#125;])</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">account_provider</span><span class="params">(request)</span>:</span></div><div class="line">    <span class="keyword">return</span> request.param</div><div class="line"></div><div class="line"><span class="meta">@pytest.mark.usefixtures("account_provider")</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_login</span><span class="params">(account_provider)</span>:</span></div><div class="line">    <span class="comment">#some operations</span></div><div class="line">    print(account_provider)</div><div class="line"><span class="comment">#在terminal里输入pytest testing/testertalk.py  --html=./report.html，report跟上面的演示一样。</span></div><div class="line">注意：</div><div class="line">使用fixture标记函数后，函数将默认接入一个request参数，它将包含使用该fixture函数的信息，这使我们可以更加灵活的根据不同的函数来决定创建不同的对象以及释放函数。 举例来说userfixtures可以用作setup（）和teardown（）</div></pre></td></tr></table></figure>
+<p>pytest固然强大，这就结束了吗？还有什么高阶的功能吗？必须的。</p>
+<h3 id="7-pytest-mark-parametrize实现数据驱动"><a href="#7-pytest-mark-parametrize实现数据驱动" class="headerlink" title="7.pytest.mark.parametrize实现数据驱动"></a>7.pytest.mark.parametrize实现数据驱动</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#直接在测试方法前直到数据源</span></div><div class="line"><span class="keyword">import</span> pytest</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@pytest.mark.parametrize("account_provider", </span></div><div class="line">                         [&#123;<span class="string">'username'</span>:<span class="string">'TesterTalk'</span>,<span class="string">"password"</span>:<span class="number">1</span>&#125;, </div><div class="line">                          &#123;<span class="string">'username'</span>:<span class="string">'Test'</span>,<span class="string">"password"</span>:<span class="number">1</span>&#125;])</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_login</span><span class="params">(account_provider)</span>:</span></div><div class="line">    <span class="comment">#some operations</span></div><div class="line">    print(account_provider)</div><div class="line"><span class="comment">#在terminal里输入pytest testing/testertalk.py  --html=./report.html，就能看到login跑了2次。</span></div></pre></td></tr></table></figure>
+<p>如果我的数据来自外部文件呢？<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pytest</div><div class="line"><span class="comment">#直接写函数读取外部文件生成数据值，注意values返回值是个list</span></div><div class="line">values = read_from_excel()</div><div class="line"></div><div class="line"><span class="meta">@pytest.mark.parametrize('v', values)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_login</span><span class="params">(v)</span>:</span></div><div class="line">    <span class="comment">#some operations</span></div><div class="line">    print(v)</div><div class="line"><span class="comment">#在terminal里输入pytest testing/testertalk.py  --html=./report.html，就能看到login跑了2次，结果跟上面一样。</span></div><div class="line"></div></pre></td></tr></table></figure></p>
+<p>到这里为止，你已经学习了pytst的基础功能，高阶功能，还有什么吗？ 如果你之前的框架是unittest， pytest支持无缝切换， 你不需要改任何代码。<br>记得上次直播我分享的unittest实现的自动化框架吗，我们看看这个page：<br><img src="/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/unittest.JPG" alt=""><br>这个是unittest实现的测试类，我们之间在terminal里运行<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pytet test_baidu.py --html=./report.html ,就是这么简单，我们看看报告是什么样子</div></pre></td></tr></table></figure></p>
+<p><img src="/2018/07/31/测试框架/自动化框架Pytest从入门到熟练使用/unittest_intergrate.JPG" alt=""><br>怎么样，就问你惊喜不惊喜？刺激不刺激！</p>
+<p>当然，pytest的特色还远不只与此，我们最后介绍一个高级特性，它允许你在用例运行的整个session里，或者一个module里共享测试数据。</p>
+<h3 id="8-作用域（scope）实现数据共享（autouse）"><a href="#8-作用域（scope）实现数据共享（autouse）" class="headerlink" title="8.作用域（scope）实现数据共享（autouse）"></a>8.作用域（scope）实现数据共享（autouse）</h3><p>我们知道，fixture，允许你不带参数运行和带参数运行， 调用fixture的第三种方式就是使用autouse<br>fixture decorator一个optional的参数是autouse, 默认设置为False。 当默认为False，就可以选择用上面两种方式来试用fixture。 当设置为True时，在一个session内的所有的test都会自动调用这个fixture。 权限大，责任也大，所以用该功能时也要谨慎小心。</p>
+<p>举例来说，我想初始化我的浏览器，但是我不想每次测试运行都初始化，怎么办呢？我可以用scope限制住。<br>首先要建立一个conftest.py文件：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pytest</div><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@pytest.fixture(scope="session", autouse=True)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_session_enginie_chrome</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">"I will use session engine -- chrome"</span>)</div><div class="line">    browser= webdriver.Chrome()</div><div class="line">    <span class="keyword">return</span> browser</div><div class="line"></div><div class="line"><span class="meta">@pytest.fixture(scope="module")</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_module_enginie_firefox</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">"I will use module engine -- firefox"</span>)</div><div class="line">    browser = webdriver.Firefox()</div><div class="line">    <span class="keyword">return</span> browser</div><div class="line"></div><div class="line"><span class="meta">@pytest.fixture(scope="module")</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_function_enginie_chrome</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">"I will use funciton engine --chrome"</span>)</div><div class="line">    browser = webdriver.Firefox()</div><div class="line">    <span class="keyword">return</span> browser</div></pre></td></tr></table></figure></p>
+<p>其次，写我们的测试类<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#test_666.py</span></div><div class="line"><span class="keyword">import</span> pytest</div><div class="line"></div><div class="line"><span class="comment">##如果autouse fixture被session装饰，那么它只会初始化一次，不管它在哪里定义的。通常用于全局系统初始化.</span></div><div class="line"><span class="meta">@pytest.fixture(scope='session', autouse=True)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">before</span><span class="params">(request)</span>:</span></div><div class="line">    <span class="keyword">print</span> (<span class="string">"session start"</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_browser</span><span class="params">(my_session_enginie_chrome, before)</span>:</span></div><div class="line">    browser = my_session_enginie_chrome</div><div class="line">    browser.get(<span class="string">"https://wwww.baidu.com"</span>)</div><div class="line">    <span class="keyword">assert</span> <span class="number">1</span>==<span class="number">1</span></div><div class="line"></div><div class="line"><span class="comment">#整个module用，在这个module范围内可以用。</span></div><div class="line"><span class="meta">@pytest.fixture(scope='module', autouse=True)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">before</span><span class="params">(request)</span>:</span></div><div class="line">    <span class="keyword">print</span> (<span class="string">"before start--%s"</span> % request.module.__name__)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_browser</span><span class="params">(my_module_enginie_firefox, before)</span>:</span></div><div class="line">    browser = my_module_enginie_firefox</div><div class="line">    browser.get(<span class="string">"https://wwww.baidu.com"</span>)</div><div class="line">    <span class="keyword">assert</span> <span class="number">1</span>==<span class="number">1</span></div><div class="line"></div><div class="line"><span class="comment"># 每个test都会运行。</span></div><div class="line"><span class="meta">@pytest.fixture(scope='function', autouse=True)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">before</span><span class="params">(request)</span>:</span></div><div class="line">    <span class="keyword">print</span> (<span class="string">"before start--%s"</span> % request.function.__name__)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_browser</span><span class="params">(my_function_enginie_chrome, before)</span>:</span></div><div class="line">    browser = my_function_enginie_chrome</div><div class="line">    browser.get(<span class="string">"https://wwww.baidu.com"</span>)</div><div class="line">    <span class="keyword">assert</span> <span class="number">1</span>==<span class="number">1</span></div></pre></td></tr></table></figure></p>
+<p>fixture的存在使得我们在编写测试函数的准备函数、销毁函数或者多个条件的测试提供了更加灵活的选择。<br>autouse的scope含义如下：</p>
+<blockquote>
+<p>autouse fixtures obey the scope= keyword-argument: if an autouse fixture has scope=’session’ it will only be run once, no matter where it is defined. scope=’class’ means it will be run once per class, etc.<br>if an autouse fixture is defined in a test module, all its test functions automatically use it.<br>if an autouse fixture is defined in a conftest.py file then all tests in all test modules below its directory will invoke the fixture.</p>
+</blockquote>
+<p>好了讲到这里，谁还认为pytest不够强大的？！ pytest绝对是你开展功能自动化测试，接口自动化测试的利器，希望大家都可以用起来！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="iTesting WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="iTesting Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------<i class="fa-snowflake-o"></i>更多内容，请关注微信公众号iTesting-------------</div>
+    
+</div>
+	  
+	</div>
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="iTesting wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫码关注，跟作者互动</div>
+</div>
+
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/自动化测试框架/" rel="tag"># 自动化测试框架</a>
+          
+        </div>
+      
+	<div>
+		  
+			
+		  
+	</div>
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/30/测试框架/Python接口测试框架实践/" rel="next" title="Python接口测试框架实践">
+                <i class="fa fa-chevron-left"></i> Python接口测试框架实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/17/测试框架/测试框架--教你用Python实现数据驱动1/" rel="prev" title="测试框架--教你用Python实现数据驱动1">
+                测试框架--教你用Python实现数据驱动1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="iTesting" />
+		  
+          <p class="site-author-name" itemprop="name"><a href= "/about">iTesting</a></p>
+		  
+          <p class="site-description motion-element" itemprop="description">Python， 测试开发， 软件测试， 自动化测试， 接口测试， Appium， Selenium， Jmeter， 职场感悟。</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">94</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/thinkbig" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-user-circle-o"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://qahome.cn" target="_blank" title="wechat">
+                  
+                    <i class="fa fa-fw fa-wechat"></i>
+                  
+                  wechat
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/thinkbig" title="知乎" target="_blank">知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-pytst安装"><span class="nav-number">1.</span> <span class="nav-text">1.pytst安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-你的第一个pytest测试"><span class="nav-number">2.</span> <span class="nav-text">2.你的第一个pytest测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-灵活的指定测试用例运行集。"><span class="nav-number">3.</span> <span class="nav-text">3.灵活的指定测试用例运行集。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-并发运行测试用例集"><span class="nav-number">4.</span> <span class="nav-text">4.并发运行测试用例集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-测试报告优化"><span class="nav-number">5.</span> <span class="nav-text">5.测试报告优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-数据参数化"><span class="nav-number">6.</span> <span class="nav-text">6.数据参数化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-pytest-mark-parametrize实现数据驱动"><span class="nav-number">7.</span> <span class="nav-text">7.pytest.mark.parametrize实现数据驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-作用域（scope）实现数据共享（autouse）"><span class="nav-number">8.</span> <span class="nav-text">8.作用域（scope）实现数据共享（autouse）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  Copyright &nbsp 
+  &copy; 2017 - 
+  <span itemprop="copyrightYear">2018 &nbsp&nbsp Designed by helloqa</span>
+  
+  <span class="with-love">
+    <i class="fa fa-wechat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iTesting</span>
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+
+-->  
+
+
+        <!-- 
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+ -->
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,1005 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误，请关注公众号iTesting获取密码');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="继续来学习，今天了解下搜索算法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python算法分享系列 -- 广度优先">
+<meta property="og:url" content="http://www.helloqa.com/2018/02/22/面试相关/算法/Python算法分享系列 -- 广度优先/index.html">
+<meta property="og:site_name" content="iTesting软件测试知识分享">
+<meta property="og:description" content="继续来学习，今天了解下搜索算法。">
+<meta property="og:image" content="http://www.helloqa.com/2018/02/22/面试相关/算法/Python算法分享系列 -- 广度优先/tu1.PNG">
+<meta property="og:image" content="http://www.helloqa.com/2018/02/22/面试相关/算法/Python算法分享系列 -- 广度优先/tu1.PNG">
+<meta property="og:updated_time" content="2018-02-23T07:12:12.552Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python算法分享系列 -- 广度优先">
+<meta name="twitter:description" content="继续来学习，今天了解下搜索算法。">
+<meta name="twitter:image" content="http://www.helloqa.com/2018/02/22/面试相关/算法/Python算法分享系列 -- 广度优先/tu1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.helloqa.com/2018/02/22/面试相关/算法/Python算法分享系列 -- 广度优先/"/>
+
+
+
+
+
+  <title> Python算法分享系列 -- 广度优先 | iTesting软件测试知识分享 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/Light07/flask_blog" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+<!--
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">iTesting软件测试知识分享</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">iTesting</h1>
+    
+</div>
+-->
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+		
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-basic-knowledge">
+          <a href="/categories/basic-knowledge" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            测试理论
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-dev-in-test">
+          <a href="/categories/dev-in-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-flask"></i> <br />
+            
+            测试开发
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-automation">
+          <a href="/categories/automation" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-desktop"></i> <br />
+            
+            自动化测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-api-test">
+          <a href="/categories/api-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane-o"></i> <br />
+            
+            接口测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-mobile-test">
+          <a href="/categories/mobile-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mobile"></i> <br />
+            
+            移动端测试
+          </a>
+        </li>
+		
+      
+        
+		
+      
+        
+		
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.helloqa.com/2018/02/22/面试相关/算法/Python算法分享系列 -- 广度优先/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="iTesting">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="iTesting软件测试知识分享">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="iTesting软件测试知识分享" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python算法分享系列 -- 广度优先
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-22T21:49:04+08:00">
+                2018-02-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev-in-test/" itemprop="url" rel="index">
+                    <span itemprop="name">dev-in-test</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev-in-test/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">全文共计1.4k字</span>
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">预计阅读时间5分钟</span>	  
+			  
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>继续来学习，今天了解下搜索算法。<br><a id="more"></a></p>
+<p>广度优先搜索（breadth-first search）是一种解决最短路径问题的算法，通常需要：</p>
+<ol>
+<li>使用图来建立问题模型。</li>
+<li>使用广度优先搜索解决问题。<br>那么，什么是图呢？<br>图模拟一组连接，比如说，假设你与朋友玩牌，并要模拟谁欠谁钱，可以下面这样指出<br><img src="/2018/02/22/面试相关/算法/Python算法分享系列 -- 广度优先/tu1.PNG" alt=""><br>图由节点（node）和边（edge）组成。</li>
+</ol>
+<p>广度优先搜索可以帮助我们解决以下两类问题：<br><strong> 1.从节点A出发，能到达节点B吗？ </strong><br><strong> 2.从节点A出发，前往节点B的哪条路最短。 </strong></p>
+<p>我们先来解决第一个问题， 假设有这样一个欠钱的关系图，<br><img src="/2018/02/22/面试相关/算法/Python算法分享系列 -- 广度优先/tu1.PNG" alt=""><br>过年了，债主纷纷要帐，都知道欠钱的是大爷，现在kevin这个大爷想， 钱我可以还，但还钱前，我想找美女陪我吃顿饭，这下，债主们（alex， bob）纷纷傻了，我俩都是大老爷们啊，怎么办？ 去请一个美女过来，还得花钱呐，干脆，我也找我的债主提要求去，于是alex和bob又对他们的债主提出来相同的问题。<br>Alex没有债主，于是他只好希望Bob能找到，Bob找到了Hult和steven， steven也没有债主，他就等Hult，Hult正好欠Buauty这个美女的钱，于是这样一层一层，终于找到了Beauity，Kevin大爷和Beauty吃端饭，把钱还了，皆大欢喜。</p>
+<p>我们来代码实现它,首先把问题转化成图：</p>
+<blockquote>
+<p>图由多个节点组成。<br>每个节点都与邻近节点相连，如果表示类似于“kevin→Bob”这样的关系呢？好在你知道的一种结构让你能够表示这种关系，它就是散列表！<br>散列表让你能将键映射到值， 这种映射关系， python里的实现是字典。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#注意，每一个节点都必须有它对应的节点，如果没有，它对应的节点为空</span></div><div class="line">debt = &#123;&#125;</div><div class="line">debt[<span class="string">'kevin'</span>] = [<span class="string">'alex'</span>, <span class="string">'bob'</span>]</div><div class="line">debt[<span class="string">'bob'</span>] = [<span class="string">'hult'</span>, <span class="string">'steven'</span>]</div><div class="line">debt[<span class="string">'hult'</span>] = [<span class="string">'beauty'</span>]</div><div class="line">debt[<span class="string">'alex'</span>] = []</div><div class="line">debt[<span class="string">'steven'</span>] = []</div><div class="line">debt[<span class="string">'beauty'</span>] = []</div></pre></td></tr></table></figure>
+<p>查找的方式是：<br>0.创建一个队列，队列里是待查找的元素，再创一个列表，列表里是已经检查过的元素。<br>1.把队列元素依次弹出，看它在不在列表，在表示已经查过了，不需要做任何操作，不在，把它加入列表，然后看看弹出的元素有没有符合条件的。。<br>2.如果有直接退出<br>3.如果没有，看弹出的元素，还有没有债主，有就把它的债主加入到这个队列里。、<br>4.重复第1到3步，直到找到美女或者队列为空。<br>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">BFS</span><span class="params">()</span>:</span></div><div class="line">    debt = &#123;&#125;</div><div class="line">    debt[<span class="string">'kevin'</span>] = [<span class="string">'alex'</span>, <span class="string">'bob'</span>]</div><div class="line">    debt[<span class="string">'bob'</span>] = [<span class="string">'hult'</span>, <span class="string">'steven'</span>]</div><div class="line">    debt[<span class="string">'hult'</span>] = [<span class="string">'beauty'</span>]</div><div class="line">    debt[<span class="string">'alex'</span>] = []</div><div class="line">    debt[<span class="string">'steven'</span>] = []</div><div class="line">    debt[<span class="string">'beauty'</span>] = []</div><div class="line"></div><div class="line">    search_route = []</div><div class="line">    q = deque()</div><div class="line">    q.append(<span class="string">'kevin'</span>)</div><div class="line"></div><div class="line">    <span class="keyword">while</span> q:</div><div class="line">        search = q.popleft()</div><div class="line">        <span class="keyword">if</span> search <span class="keyword">not</span> <span class="keyword">in</span> search_route:</div><div class="line"></div><div class="line">            search_route.append(search)</div><div class="line">            <span class="keyword">if</span> is_beauty(search):</div><div class="line">                print(search_route)</div><div class="line">                <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                q += debt[search]</div><div class="line">    <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_beauty</span><span class="params">(name)</span>:</span></div><div class="line">    <span class="keyword">if</span> name == <span class="string">"beauty"</span>:</div><div class="line">        print(<span class="string">"Beauty found!"</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    BFS()</div></pre></td></tr></table></figure>
+<p>第一个问题从A点到B点有没有解的问题，我们已经解决了，但我们的程序没有把最短路径拿出来，下面来看，如何找最短路径。</p>
+<p>根据图的关系，假设我们已经找到了最终的元素Beauty，那么，就意味着我们找到了最短路径，为什么这么说呢，因为我们是从一层一层找下来的，从图来看，有3层，第一层是kevin，第二层是alex， bob， 第3层是steven， hult，第4层是beauty。 那么初始节点出发（第一层），我们首先遍历了第2层所有的子节点，<br>alex和bob，都没有我们要找的元素，然后我们走向第3层，hult，steven，也没有我们找的元素，但是第3层的hult指向了第4层的一个元素，也就是我们的目标。既然找到了目标，我们反过来查目标的上一个元素是谁，就可以一层一层回溯到起始节点。<br>下面来实现下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</div><div class="line"></div><div class="line">father_child = &#123;&#125; <span class="comment">#记录每个元素和它对应的上一层元素。</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">BFS</span><span class="params">()</span>:</span></div><div class="line"></div><div class="line">    debt = &#123;&#125;</div><div class="line">    debt[<span class="string">'kevin'</span>] = [<span class="string">'alex'</span>, <span class="string">'bob'</span>]</div><div class="line">    debt[<span class="string">'bob'</span>] = [<span class="string">'hult'</span>, <span class="string">'steven'</span>]</div><div class="line">    debt[<span class="string">'hult'</span>] = [<span class="string">'beauty'</span>]</div><div class="line">    debt[<span class="string">'alex'</span>] = []</div><div class="line">    debt[<span class="string">'steven'</span>] = []</div><div class="line">    debt[<span class="string">'beauty'</span>] = []</div><div class="line"></div><div class="line">    search_route = []</div><div class="line">    q = deque()</div><div class="line">    q.append(<span class="string">'kevin'</span>)</div><div class="line"></div><div class="line">    <span class="keyword">while</span> q:</div><div class="line">        search = q.popleft()</div><div class="line">        <span class="keyword">if</span> search <span class="keyword">not</span> <span class="keyword">in</span> search_route:</div><div class="line">            search_route.append(search)</div><div class="line">            <span class="keyword">if</span> is_beauty(search):</div><div class="line">                <span class="keyword">return</span> search_path(search)[::<span class="number">-1</span>]</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                q += debt[search]</div><div class="line">                <span class="keyword">for</span> item <span class="keyword">in</span> debt[search]:  <span class="comment">#生成元素和它上一层元素的对应关系</span></div><div class="line">                    father_child[item] = search</div><div class="line">    <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_beauty</span><span class="params">(name)</span>:</span></div><div class="line">    <span class="keyword">if</span> name == <span class="string">"beauty"</span>:</div><div class="line">        print(<span class="string">"Beauty found!, search order are:"</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">search_path</span><span class="params">(search)</span>:</span> <span class="comment">#回溯查找路径</span></div><div class="line">    return_order = [search]</div><div class="line">    <span class="keyword">while</span> search <span class="keyword">in</span> father_child.keys():</div><div class="line">        return_order.append(father_child[search])</div><div class="line">        search = father_child[search]</div><div class="line">    <span class="keyword">return</span> return_order</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    print(BFS())</div><div class="line">	</div></pre></td></tr></table></figure></p>
+<p>代码不是很好看，优化一下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BFS</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, diagram)</span>:</span></div><div class="line">        self.diagram = diagram</div><div class="line">        self.searched = []</div><div class="line">        self.node_relation = &#123;&#125; <span class="comment">#记录每个元素和它对应的上一层元素。</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bfs</span><span class="params">(self, start_node)</span>:</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(self.diagram, dict):</div><div class="line">            <span class="keyword">raise</span> SyntaxError(<span class="string">"diagrom must be dict"</span>)</div><div class="line"></div><div class="line">        q = deque() <span class="comment">#双向链表，可以用作栈也可以当作队列</span></div><div class="line">        q.append(start_node)</div><div class="line"></div><div class="line">        <span class="keyword">while</span> q:</div><div class="line">            node = q.popleft()</div><div class="line">            <span class="keyword">if</span> node <span class="keyword">not</span> <span class="keyword">in</span> self.searched:</div><div class="line">                self.searched.append(node)</div><div class="line">                <span class="keyword">if</span> self.is_beauty(node):</div><div class="line">                    <span class="keyword">return</span> self.search_path(node)[::<span class="number">-1</span>]</div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    q += self.diagram[node]</div><div class="line">                    <span class="keyword">for</span> item <span class="keyword">in</span> self.diagram[node]:  <span class="comment">#生成元素和它上一层元素的对应关系</span></div><div class="line">                        self.node_relation[item] = node</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_beauty</span><span class="params">(self, name)</span>:</span></div><div class="line">        <span class="keyword">if</span> name == <span class="string">"beauty"</span>:</div><div class="line">            print(<span class="string">"Beauty found!, search order are:"</span>)</div><div class="line">            <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">search_path</span><span class="params">(self, node)</span>:</span></div><div class="line">        return_order = [node]</div><div class="line">        <span class="keyword">while</span> node <span class="keyword">in</span> self.node_relation.keys():</div><div class="line">            return_order.append(self.node_relation[node])</div><div class="line">            node = self.node_relation[node]</div><div class="line">        <span class="keyword">return</span> return_order</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    debt = &#123;&#125;</div><div class="line">    debt[<span class="string">'kevin'</span>] = [<span class="string">'alex'</span>, <span class="string">'bob'</span>]</div><div class="line">    debt[<span class="string">'bob'</span>] = [<span class="string">'hult'</span>, <span class="string">'steven'</span>]</div><div class="line">    debt[<span class="string">'hult'</span>] = [<span class="string">'beauty'</span>]</div><div class="line">    debt[<span class="string">'alex'</span>] = []</div><div class="line">    debt[<span class="string">'steven'</span>] = []</div><div class="line">    debt[<span class="string">'beauty'</span>] = []</div><div class="line">    print(BFS(debt).bfs(<span class="string">'kevin'</span>))</div></pre></td></tr></table></figure></p>
+<p>好了，现在广度优先搜索大家也会了，广度优先搜索还有个非常经典的练习题目就是迷宫问题，大家可以尝试解解看，原理是一样的。有问题可以给我留言。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="iTesting WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="iTesting Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------<i class="fa-snowflake-o"></i>更多内容，请关注微信公众号iTesting-------------</div>
+    
+</div>
+	  
+	</div>
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="iTesting wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫码关注，跟作者互动</div>
+</div>
+
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+	<div>
+		  
+			
+		  
+	</div>
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/07/面试相关/算法/Python算法分享系列 -- 二叉树/" rel="next" title="Python算法分享系列 -- 二叉树">
+                <i class="fa fa-chevron-left"></i> Python算法分享系列 -- 二叉树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/02/测试开发系列/Git/Git用法总结/" rel="prev" title="Git用法总结">
+                Git用法总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="iTesting" />
+		  
+          <p class="site-author-name" itemprop="name"><a href= "/about">iTesting</a></p>
+		  
+          <p class="site-description motion-element" itemprop="description">Python， 测试开发， 软件测试， 自动化测试， 接口测试， Appium， Selenium， Jmeter， 职场感悟。</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">94</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/thinkbig" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-user-circle-o"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://qahome.cn" target="_blank" title="wechat">
+                  
+                    <i class="fa fa-fw fa-wechat"></i>
+                  
+                  wechat
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/thinkbig" title="知乎" target="_blank">知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  Copyright &nbsp 
+  &copy; 2017 - 
+  <span itemprop="copyrightYear">2018 &nbsp&nbsp Designed by helloqa</span>
+  
+  <span class="with-love">
+    <i class="fa fa-wechat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iTesting</span>
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+
+-->  
+
+
+        <!-- 
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+ -->
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

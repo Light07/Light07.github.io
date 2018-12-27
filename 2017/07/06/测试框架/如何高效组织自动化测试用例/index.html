@@ -1,0 +1,1023 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误，请关注公众号iTesting获取密码');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="自动化测试框架," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="自动化测试用例写多了，不可避免会遇到这个问题,每次运行无需运行所有的用例，那么如何把要运行的用例挑出来并高效组织它们呢？一般说来，通用的做法都是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何高效组织自动化测试用例">
+<meta property="og:url" content="http://www.helloqa.com/2017/07/06/测试框架/如何高效组织自动化测试用例/index.html">
+<meta property="og:site_name" content="iTesting软件测试知识分享">
+<meta property="og:description" content="自动化测试用例写多了，不可避免会遇到这个问题,每次运行无需运行所有的用例，那么如何把要运行的用例挑出来并高效组织它们呢？一般说来，通用的做法都是">
+<meta property="og:updated_time" content="2017-07-07T07:04:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何高效组织自动化测试用例">
+<meta name="twitter:description" content="自动化测试用例写多了，不可避免会遇到这个问题,每次运行无需运行所有的用例，那么如何把要运行的用例挑出来并高效组织它们呢？一般说来，通用的做法都是">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.helloqa.com/2017/07/06/测试框架/如何高效组织自动化测试用例/"/>
+
+
+
+
+
+  <title> 如何高效组织自动化测试用例 | iTesting软件测试知识分享 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/Light07/flask_blog" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+<!--
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">iTesting软件测试知识分享</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">iTesting</h1>
+    
+</div>
+-->
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+		
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-basic-knowledge">
+          <a href="/categories/basic-knowledge" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            测试理论
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-dev-in-test">
+          <a href="/categories/dev-in-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-flask"></i> <br />
+            
+            测试开发
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-automation">
+          <a href="/categories/automation" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-desktop"></i> <br />
+            
+            自动化测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-api-test">
+          <a href="/categories/api-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane-o"></i> <br />
+            
+            接口测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-mobile-test">
+          <a href="/categories/mobile-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mobile"></i> <br />
+            
+            移动端测试
+          </a>
+        </li>
+		
+      
+        
+		
+      
+        
+		
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.helloqa.com/2017/07/06/测试框架/如何高效组织自动化测试用例/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="iTesting">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="iTesting软件测试知识分享">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="iTesting软件测试知识分享" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                如何高效组织自动化测试用例
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-06T20:42:06+08:00">
+                2017-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/automation/" itemprop="url" rel="index">
+                    <span itemprop="name">automation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">全文共计2.2k字</span>
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">预计阅读时间9分钟</span>	  
+			  
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>自动化测试用例写多了，不可避免会遇到这个问题,每次运行无需运行所有的用例，那么如何把要运行的用例挑出来并高效组织它们呢？<br>一般说来，通用的做法都是<br><a id="more"></a><br>把要运行的用例用特殊标记Mark出来，然后框架运行时，自动寻找这些带标记的case，并把它们装到一个新的test suite里。<br>所以高效组织测试用例的关键就是两部分：</p>
+<h5 id="1-如何标记待测试用例"><a href="#1-如何标记待测试用例" class="headerlink" title="1. 如何标记待测试用例."></a>1. 如何标记待测试用例.</h5><h5 id="2-运行时如何收集这些带标记的用例。"><a href="#2-运行时如何收集这些带标记的用例。" class="headerlink" title="2. 运行时如何收集这些带标记的用例。"></a>2. 运行时如何收集这些带标记的用例。</h5><p>以下列出来我经历过的方法：</p>
+<h5 id="1-给所有的测试用例编号，把测试用例按照-编号，-summary，-Path，-ClassName，-测试运行与否的flag等等，写到一个外部文件里，通常是Excel，"><a href="#1-给所有的测试用例编号，把测试用例按照-编号，-summary，-Path，-ClassName，-测试运行与否的flag等等，写到一个外部文件里，通常是Excel，" class="headerlink" title="1.给所有的测试用例编号，把测试用例按照 编号， summary， Path， ClassName， 测试运行与否的flag等等，写到一个外部文件里，通常是Excel，"></a>1.给所有的测试用例编号，把测试用例按照 编号， summary， Path， ClassName， 测试运行与否的flag等等，写到一个外部文件里，通常是Excel，</h5><p>每次测试框架运行时，先去这个文件里，一行一行的读文件，如果发现“测试运行与否的flag”的值是True， 就把这条case拿出来放到一个临时变量里，读完整个文件，就拿到了<br>所有要运行的case， 这个时候，导入这个case需要的所有依赖，运行这个case，并把运行结果写回到一个results的文件里。 那么，改动老的case，增加新的case，怎么办呢？<br>勤快一点的，每写一个/更改一个自动化用例，手工更新这个外部表格。 懒一点的，写一段代码，每写/改一个case，手工运行这段代码，把更改写进去。</p>
+<h5 id="2-利用装饰器，经典的如TestNG，可以在测试用例前加-BeforeSuite，-今天要讲的也是这个。如何在python里实现。"><a href="#2-利用装饰器，经典的如TestNG，可以在测试用例前加-BeforeSuite，-今天要讲的也是这个。如何在python里实现。" class="headerlink" title="2.利用装饰器，经典的如TestNG，可以在测试用例前加@BeforeSuite， 今天要讲的也是这个。如何在python里实现。"></a>2.利用装饰器，经典的如TestNG，可以在测试用例前加@BeforeSuite， 今天要讲的也是这个。如何在python里实现。</h5><p>先说下思想： 我期望自动化测试运行时候，可以根据我提供的不同的tag，运行不同的测试用例。 前提是我写自动化用例的时需给每个测试用例，都加上tag并赋值。<br>在运行时候，框架通过我提供的不同的tag，去找这些被标记的case，然后组织起来运行。</p>
+<p>要实现这个，我们需要接收用户参数，可以用：</p>
+<h5 id="1-sys-argv-1-来自己写代码处理，也可以用标准库argparse来，我们用后者。"><a href="#1-sys-argv-1-来自己写代码处理，也可以用标准库argparse来，我们用后者。" class="headerlink" title="1.sys.argv[1:]来自己写代码处理，也可以用标准库argparse来，我们用后者。"></a>1.sys.argv[1:]来自己写代码处理，也可以用标准库argparse来，我们用后者。</h5><p>argparse 的用法很直观, 先看段代码：：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="number">1.</span> 先创建一个parser： </div><div class="line">parser = argparse.ArgumentParser(prog=<span class="string">'para'</span>)</div><div class="line"><span class="number">2.</span> 加入一些参数：</div><div class="line">parser.add_argument(<span class="string">'-w'</span>, action=<span class="string">'store'</span>, default=<span class="string">'.'</span>, help=<span class="string">'specify the work space'</span>)</div><div class="line">parser.add_argument(<span class="string">'-target'</span>, action=<span class="string">'store'</span>, help=<span class="string">'specify the run target file'</span>)</div><div class="line">parser.add_argument(<span class="string">'-tag'</span>, action=<span class="string">'store'</span>, help=<span class="string">'run by tag'</span>)</div><div class="line">parser.add_argument(<span class="string">'-n'</span>, action=<span class="string">'store'</span>, help=<span class="string">'concurrent user'</span>)</div><div class="line"><span class="number">3.</span> Parseing 这些参数</div><div class="line">options = parser.parse_args()</div><div class="line"><span class="keyword">print</span> （options）</div></pre></td></tr></table></figure>
+<p>这个时候，如在command line里输入<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python __init__.py -target test -tag smoke -n <span class="number">3</span> </div></pre></td></tr></table></figure>
+就会得到如下结果：
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line">Namespace(n=<span class="string">'3'</span>, tag=<span class="string">'smoke'</span>, target=<span class="string">'test'</span>, w=<span class="string">'.'</span>)</div></pre></td></tr></table></figure><br>使用argparse就可以方便的获取用户参数，并处理。关于argparse的用法，请参考官网。</p>
+<h5 id="2-用户输入的参数我们接收处理了-那么如何处理这些tag呢，这就要用到装饰器："><a href="#2-用户输入的参数我们接收处理了-那么如何处理这些tag呢，这就要用到装饰器：" class="headerlink" title="2.用户输入的参数我们接收处理了,那么如何处理这些tag呢，这就要用到装饰器："></a>2.用户输入的参数我们接收处理了,那么如何处理这些tag呢，这就要用到装饰器：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">TestCase</span><span class="params">(enabled=True, tags=None, **kwargs)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tracer</span><span class="params">(cls)</span>:</span></div><div class="line">        cls.__type__ = <span class="string">'Test'</span></div><div class="line">        cls.__enabled__ = enabled</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> tags:</div><div class="line">            cls.__tags__ = <span class="keyword">None</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">                <span class="comment"># 想想看，如果tag有好几个，这块代码应该怎么改</span></div><div class="line">                cls.__tags__ = tags</div><div class="line">        <span class="keyword">return</span> cls</div><div class="line">    <span class="keyword">return</span> tracer</div></pre></td></tr></table></figure>
+<p>上面的代码呢，我们定义了一个装饰器，这个装饰器唯一的作用，是接收传入的类，然后给这些类增加一些属性，这些属性后续用来判断是否要执行。 使用时在新建立测试类上加上@Testcase即可。</p>
+<h5 id="3-测试用例类，这些测试类或者测试类中的函数实现了一个个的功能。"><a href="#3-测试用例类，这些测试类或者测试类中的函数实现了一个个的功能。" class="headerlink" title="3.测试用例类，这些测试类或者测试类中的函数实现了一个个的功能。"></a>3.测试用例类，这些测试类或者测试类中的函数实现了一个个的功能。</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RealTest</span><span class="params">()</span>:</span></div><div class="line"><span class="meta">    @TestCase(tags='smoke')</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test1</span><span class="params">(self)</span>:</span></div><div class="line">        logging.info(<span class="string">"this is test 1"</span>)</div><div class="line">        time.sleep(<span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="meta">    @TestCase(enabled=True, tags='smoke')</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">(self)</span>:</span></div><div class="line">        logging.info(<span class="string">"this is test2"</span>)</div><div class="line">        time.sleep(<span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="meta">    @TestCase(enabled=False, tags='smoke')</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test3</span><span class="params">(self)</span>:</span></div><div class="line">        logging.info(<span class="string">"this is test3"</span>)</div><div class="line">        time.sleep(<span class="number">5</span>)</div></pre></td></tr></table></figure>
+<p>我们可以利用装饰器里的tag参数， enable参数来实现测试用例的筛选。</p>
+<h5 id="4-我们再定义一个类，这个类作为一个test-case的执行器，把要运行的测试用例装进来，并发，或者顺序执行。"><a href="#4-我们再定义一个类，这个类作为一个test-case的执行器，把要运行的测试用例装进来，并发，或者顺序执行。" class="headerlink" title="4.我们再定义一个类，这个类作为一个test case的执行器，把要运行的测试用例装进来，并发，或者顺序执行。"></a>4.我们再定义一个类，这个类作为一个test case的执行器，把要运行的测试用例装进来，并发，或者顺序执行。</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestExecutor</span><span class="params">(threading.Thread)</span>:</span></div><div class="line">     <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, cls, worker)</span>:</span></div><div class="line">         threading.Thread.__init__(self)</div><div class="line">         self.cls = cls</div><div class="line">         self.workers = worker</div><div class="line">         self._lock = threading.RLock()</div><div class="line"></div><div class="line">     <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">         self.workers.acquire()</div><div class="line">         logging.info(<span class="string">"Thread &#123;threadname&#125;"</span>.format(threadname=self.current_executor()))</div><div class="line">         self.cls(self)</div><div class="line">         self.workers.release()</div><div class="line"></div><div class="line">     <span class="function"><span class="keyword">def</span> <span class="title">current_executor</span><span class="params">(self)</span>:</span></div><div class="line">         <span class="keyword">return</span> threading.current_thread()</div></pre></td></tr></table></figure>
+<h5 id="5-利用threading-Semaphore实现线程并发限制。"><a href="#5-利用threading-Semaphore实现线程并发限制。" class="headerlink" title="5.利用threading.Semaphore实现线程并发限制。"></a>5.利用threading.Semaphore实现线程并发限制。</h5><h5 id="6-实现："><a href="#6-实现：" class="headerlink" title="6.实现："></a>6.实现：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> argparse</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> logging</div><div class="line"></div><div class="line">logging.basicConfig(level=logging.INFO , format=<span class="string">'%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s'</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">TestCase</span><span class="params">(enabled=True, tags=None, **kwargs)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tracer</span><span class="params">(cls)</span>:</span></div><div class="line">        cls.__type__ = <span class="string">'Test'</span></div><div class="line">        cls.__enabled__ = enabled</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> tags:</div><div class="line">            cls.__tags__ = <span class="keyword">None</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">                <span class="comment"># 想想看，如果tag有好几个，这块代码应该怎么改</span></div><div class="line">                cls.__tags__ = tags</div><div class="line">        <span class="keyword">return</span> cls</div><div class="line">    <span class="keyword">return</span> tracer</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestExecutor</span><span class="params">(threading.Thread)</span>:</span></div><div class="line">     <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, cls, worker)</span>:</span></div><div class="line">         threading.Thread.__init__(self)</div><div class="line">         self.cls = cls</div><div class="line">         self.workers = worker</div><div class="line">         self._lock = threading.RLock()</div><div class="line"></div><div class="line">     <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">         self.workers.acquire()</div><div class="line">         logging.info(<span class="string">"Thread &#123;threadname&#125;"</span>.format(threadname=self.current_executor()))</div><div class="line">         self.cls(self)</div><div class="line">         self.workers.release()</div><div class="line"></div><div class="line">     <span class="function"><span class="keyword">def</span> <span class="title">current_executor</span><span class="params">(self)</span>:</span></div><div class="line">         <span class="keyword">return</span> threading.current_thread()</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RealTest</span><span class="params">()</span>:</span></div><div class="line"><span class="meta">    @TestCase(tags='smoke')</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test1</span><span class="params">(self)</span>:</span></div><div class="line">        logging.info(<span class="string">"this is test 1"</span>)</div><div class="line">        time.sleep(<span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="meta">    @TestCase(enabled=True, tags='smoke')</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">(self)</span>:</span></div><div class="line">        logging.info(<span class="string">"this is test2"</span>)</div><div class="line">        time.sleep(<span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="meta">    @TestCase(enabled=True, tags='smoke')</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test3</span><span class="params">(self)</span>:</span></div><div class="line">        logging.info(<span class="string">"this is test3"</span>)</div><div class="line">        time.sleep(<span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line"></div><div class="line">    s = threading.Semaphore(<span class="number">2</span>)</div><div class="line"></div><div class="line">    parser = argparse.ArgumentParser(prog=<span class="string">'para'</span>)</div><div class="line">    parser.add_argument(<span class="string">'-w'</span>, action=<span class="string">'store'</span>, default=<span class="string">'.'</span>, help=<span class="string">'specify the work space'</span>)</div><div class="line">    parser.add_argument(<span class="string">'-target'</span>, action=<span class="string">'store'</span>, help=<span class="string">'specify the run target file'</span>)</div><div class="line">    parser.add_argument(<span class="string">'-tag'</span>, action=<span class="string">'store'</span>, help=<span class="string">'run by tag'</span>)</div><div class="line">    parser.add_argument(<span class="string">'-n'</span>, action=<span class="string">'store'</span>, help=<span class="string">'concurrent user'</span>)</div><div class="line">    options = parser.parse_args()</div><div class="line"></div><div class="line">    real_cases = []</div><div class="line">    <span class="keyword">for</span> module_element <span class="keyword">in</span>  dir(RealTest):  </div><div class="line">        pre_test_class = getattr(RealTest,module_element) <span class="comment"># @Mark</span></div><div class="line"></div><div class="line">        <span class="keyword">if</span> options.tag:</div><div class="line">            <span class="keyword">if</span> hasattr(pre_test_class, <span class="string">"__type__"</span>) <span class="keyword">and</span> \</div><div class="line">                    hasattr(pre_test_class, <span class="string">"__enabled__"</span>) \</div><div class="line">                    <span class="keyword">and</span> pre_test_class.__enabled__\</div><div class="line">                    <span class="keyword">and</span> hasattr(pre_test_class, <span class="string">"__tags__"</span>)\</div><div class="line">                    <span class="keyword">and</span> pre_test_class.__tags__ \</div><div class="line">                    <span class="keyword">and</span> pre_test_class.__tags__.lower() == options.tag.lower():</div><div class="line">                real_cases.append(pre_test_class)</div><div class="line"></div><div class="line">    threads = []</div><div class="line"></div><div class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> real_cases:</div><div class="line">        threads.append(TestExecutor(item, s))</div><div class="line"></div><div class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> threads:</div><div class="line">        t.start()</div><div class="line"></div><div class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> threads:</div><div class="line">        t.join()</div><div class="line"></div></pre></td></tr></table></figure>
+<p>这里重点讲下标记为 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#@Mark </div></pre></td></tr></table></figure>的语句，实际上这个就是如何把标记的case挑选出来的核心方法。<br>我们使用了反射机制</p>
+<blockquote>
+<p>反射： 有时候我们会碰到这样的需求，需要执行对象的某个方法，或是需要对对象的某个字段赋值，而方法名或是字段名在编码代码时并不能确定，需要通过参数传递字符串的形式输入。举个具体的例子：当我们需要实现一个通用的DBM框架时，可能需要对数据对象的字段赋值，但我们无法预知用到这个框架的数据对象都有些什么字段，换言之，我们在写框架的时候需要通过某种机制访问未知的属性。这个机制被称为反射（反过来让对象告诉我们他是什么），或是自省</p>
+<p>dir([obj]):<br>调用这个方法将返回包含obj大多数属性名的列表（会有一些特殊的属性不包含在内）。obj的默认值是当前的模块对象。</p>
+<p>hasattr(obj, attr):<br>这个方法用于检查obj是否有一个名为attr的值的属性，返回一个布尔值。</p>
+<p>getattr(obj, attr):<br>调用这个方法将返回obj中名为attr值的属性的值，例如如果attr为’bar’，则返回obj.bar。</p>
+</blockquote>
+<p>对于所有的测试类，我们会逐个把他们导入（示例里无这段代码，关于case class的导入可以根据 -target这个参数的值来代码实现，此处未展示。）<br>对于每一个类，我们通过dir（）， getattr（）拿到测试类所有的可用方法，然后这些方法因为有装饰器TestCase的加持，我们可以顺利的根据参数-tags拿到要运行的测试用例。<br>然后我们根据拿到的每一个测试用例,判断它们是否有需要的属性（ <strong>enabled</strong>，<strong>type</strong>）， 然后对于每个有这个属性的用例，我们在放到真正运行的测试用例list里。<br>最后对测试用例list的用例，每一个都放入TestExecutor里执行，TestExecutor 实现了多线程及多线程限制。</p>
+<p>我们来看下运行效果：<br>输入：<br>python Android/<strong>init</strong>.py -target test -tag smoke -n 3<br>输出：<br>因为我们限制了并发线程数为2， 所以我们先看到以下输出。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Namespace(n=<span class="string">'3'</span>, tag=<span class="string">'smoke'</span>, target=<span class="string">'test'</span>, w=<span class="string">'.'</span>)</div><div class="line"><span class="number">2017</span><span class="number">-07</span><span class="number">-07</span> <span class="number">20</span>:<span class="number">01</span>:<span class="number">25</span>,<span class="number">009</span> - __init__.py[line:<span class="number">31</span>] - INFO: Thread &lt;TestExecutor(Thread<span class="number">-1</span>, started <span class="number">11284</span>)&gt;</div><div class="line"><span class="number">2017</span><span class="number">-07</span><span class="number">-07</span> <span class="number">20</span>:<span class="number">01</span>:<span class="number">25</span>,<span class="number">009</span> - __init__.py[line:<span class="number">42</span>] - INFO: this <span class="keyword">is</span> test <span class="number">1</span></div><div class="line"><span class="number">2017</span><span class="number">-07</span><span class="number">-07</span> <span class="number">20</span>:<span class="number">01</span>:<span class="number">25</span>,<span class="number">009</span> - __init__.py[line:<span class="number">31</span>] - INFO: Thread &lt;TestExecutor(Thread<span class="number">-2</span>, started <span class="number">10196</span>)&gt;</div><div class="line"><span class="number">2017</span><span class="number">-07</span><span class="number">-07</span> <span class="number">20</span>:<span class="number">01</span>:<span class="number">25</span>,<span class="number">010</span> - __init__.py[line:<span class="number">47</span>] - INFO: this <span class="keyword">is</span> test2</div></pre></td></tr></table></figure><br>5秒后，又看到如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">2017</span><span class="number">-07</span><span class="number">-07</span> <span class="number">20</span>:<span class="number">01</span>:<span class="number">30</span>,<span class="number">010</span> - __init__.py[line:<span class="number">31</span>] - INFO: Thread &lt;TestExecutor(Thread<span class="number">-3</span>, started <span class="number">14156</span>)&gt;</div><div class="line"><span class="number">2017</span><span class="number">-07</span><span class="number">-07</span> <span class="number">20</span>:<span class="number">01</span>:<span class="number">30</span>,<span class="number">011</span> - __init__.py[line:<span class="number">52</span>] - INFO: this <span class="keyword">is</span> test3</div></pre></td></tr></table></figure></p>
+<p>如此一来，我们仅需要写测试用例时，添加合适的tag，然后运行时用参数区分，就可以不修改代码的的情况下运行不同的case了。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="iTesting WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="iTesting Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------<i class="fa-snowflake-o"></i>更多内容，请关注微信公众号iTesting-------------</div>
+    
+</div>
+	  
+	</div>
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="iTesting wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫码关注，跟作者互动</div>
+</div>
+
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/自动化测试框架/" rel="tag"># 自动化测试框架</a>
+          
+        </div>
+      
+	<div>
+		  
+			
+		  
+	</div>
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/14/移动测试系列/Appium自动化框架入门实践/" rel="next" title="Appium自动化框架入门实践">
+                <i class="fa fa-chevron-left"></i> Appium自动化框架入门实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/23/Python知识/Python自动化测试--关于datetime的一点思考/" rel="prev" title="Python自动化测试--关于datetime的一点思考">
+                Python自动化测试--关于datetime的一点思考 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="iTesting" />
+		  
+          <p class="site-author-name" itemprop="name"><a href= "/about">iTesting</a></p>
+		  
+          <p class="site-description motion-element" itemprop="description">Python， 测试开发， 软件测试， 自动化测试， 接口测试， Appium， Selenium， Jmeter， 职场感悟。</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">94</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/thinkbig" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-user-circle-o"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://qahome.cn" target="_blank" title="wechat">
+                  
+                    <i class="fa fa-fw fa-wechat"></i>
+                  
+                  wechat
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/thinkbig" title="知乎" target="_blank">知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-如何标记待测试用例"><span class="nav-number">1.</span> <span class="nav-text">1. 如何标记待测试用例.</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-运行时如何收集这些带标记的用例。"><span class="nav-number">2.</span> <span class="nav-text">2. 运行时如何收集这些带标记的用例。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-给所有的测试用例编号，把测试用例按照-编号，-summary，-Path，-ClassName，-测试运行与否的flag等等，写到一个外部文件里，通常是Excel，"><span class="nav-number">3.</span> <span class="nav-text">1.给所有的测试用例编号，把测试用例按照 编号， summary， Path， ClassName， 测试运行与否的flag等等，写到一个外部文件里，通常是Excel，</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-利用装饰器，经典的如TestNG，可以在测试用例前加-BeforeSuite，-今天要讲的也是这个。如何在python里实现。"><span class="nav-number">4.</span> <span class="nav-text">2.利用装饰器，经典的如TestNG，可以在测试用例前加@BeforeSuite， 今天要讲的也是这个。如何在python里实现。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-sys-argv-1-来自己写代码处理，也可以用标准库argparse来，我们用后者。"><span class="nav-number">5.</span> <span class="nav-text">1.sys.argv[1:]来自己写代码处理，也可以用标准库argparse来，我们用后者。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-用户输入的参数我们接收处理了-那么如何处理这些tag呢，这就要用到装饰器："><span class="nav-number">6.</span> <span class="nav-text">2.用户输入的参数我们接收处理了,那么如何处理这些tag呢，这就要用到装饰器：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-测试用例类，这些测试类或者测试类中的函数实现了一个个的功能。"><span class="nav-number">7.</span> <span class="nav-text">3.测试用例类，这些测试类或者测试类中的函数实现了一个个的功能。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-我们再定义一个类，这个类作为一个test-case的执行器，把要运行的测试用例装进来，并发，或者顺序执行。"><span class="nav-number">8.</span> <span class="nav-text">4.我们再定义一个类，这个类作为一个test case的执行器，把要运行的测试用例装进来，并发，或者顺序执行。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-利用threading-Semaphore实现线程并发限制。"><span class="nav-number">9.</span> <span class="nav-text">5.利用threading.Semaphore实现线程并发限制。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-实现："><span class="nav-number">10.</span> <span class="nav-text">6.实现：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  Copyright &nbsp 
+  &copy; 2017 - 
+  <span itemprop="copyrightYear">2018 &nbsp&nbsp Designed by helloqa</span>
+  
+  <span class="with-love">
+    <i class="fa fa-wechat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iTesting</span>
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+
+-->  
+
+
+        <!-- 
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+ -->
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

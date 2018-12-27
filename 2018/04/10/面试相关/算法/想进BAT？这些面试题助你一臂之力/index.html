@@ -1,0 +1,1063 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<script>
+    (function(){
+        if('iTesting'){
+            if (prompt('请输入文章密码') !== 'iTesting'){
+                alert('密码错误，请关注公众号iTesting获取密码');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="面试," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="请微信添加公众号TesterTalk获取此文章密码。昨天TesterHome发表了如下文章《被同龄人抛弃？68道中高级测试工程师面试题助你一臂之力》引爆了我的朋友圈。 我大致看了下，里面的问题很有代表性，即使是我这样的老司机，没有经过充分准备也不能回答的令自己满意，故花点时间，写下这些面试题的答案，给大家参考，也欢迎大家讨论指正。
+正文全部引用上述文章的问题，答案写在每一个问题下面。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="想进BAT？这些面试题助你一臂之力（附答案）">
+<meta property="og:url" content="http://www.helloqa.com/2018/04/10/面试相关/算法/想进BAT？这些面试题助你一臂之力/index.html">
+<meta property="og:site_name" content="iTesting软件测试知识分享">
+<meta property="og:description" content="请微信添加公众号TesterTalk获取此文章密码。昨天TesterHome发表了如下文章《被同龄人抛弃？68道中高级测试工程师面试题助你一臂之力》引爆了我的朋友圈。 我大致看了下，里面的问题很有代表性，即使是我这样的老司机，没有经过充分准备也不能回答的令自己满意，故花点时间，写下这些面试题的答案，给大家参考，也欢迎大家讨论指正。
+正文全部引用上述文章的问题，答案写在每一个问题下面。">
+<meta property="og:image" content="http://www.helloqa.com/2018/04/10/面试相关/算法/想进BAT？这些面试题助你一臂之力/Appium_philosophy1.PNG">
+<meta property="og:image" content="http://www.helloqa.com/2018/04/10/面试相关/算法/想进BAT？这些面试题助你一臂之力/Appium_philosophy2.PNG">
+<meta property="og:updated_time" content="2018-07-02T08:12:56.121Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="想进BAT？这些面试题助你一臂之力（附答案）">
+<meta name="twitter:description" content="请微信添加公众号TesterTalk获取此文章密码。昨天TesterHome发表了如下文章《被同龄人抛弃？68道中高级测试工程师面试题助你一臂之力》引爆了我的朋友圈。 我大致看了下，里面的问题很有代表性，即使是我这样的老司机，没有经过充分准备也不能回答的令自己满意，故花点时间，写下这些面试题的答案，给大家参考，也欢迎大家讨论指正。
+正文全部引用上述文章的问题，答案写在每一个问题下面。">
+<meta name="twitter:image" content="http://www.helloqa.com/2018/04/10/面试相关/算法/想进BAT？这些面试题助你一臂之力/Appium_philosophy1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.helloqa.com/2018/04/10/面试相关/算法/想进BAT？这些面试题助你一臂之力/"/>
+
+
+
+
+
+  <title> 想进BAT？这些面试题助你一臂之力（附答案） | iTesting软件测试知识分享 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/Light07/flask_blog" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+<!--
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">iTesting软件测试知识分享</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">iTesting</h1>
+    
+</div>
+-->
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+		
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-basic-knowledge">
+          <a href="/categories/basic-knowledge" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            测试理论
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-dev-in-test">
+          <a href="/categories/dev-in-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-flask"></i> <br />
+            
+            测试开发
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-automation">
+          <a href="/categories/automation" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-desktop"></i> <br />
+            
+            自动化测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-api-test">
+          <a href="/categories/api-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane-o"></i> <br />
+            
+            接口测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-mobile-test">
+          <a href="/categories/mobile-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mobile"></i> <br />
+            
+            移动端测试
+          </a>
+        </li>
+		
+      
+        
+		
+      
+        
+		
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.helloqa.com/2018/04/10/面试相关/算法/想进BAT？这些面试题助你一臂之力/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="iTesting">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="iTesting软件测试知识分享">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="iTesting软件测试知识分享" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                想进BAT？这些面试题助你一臂之力（附答案）
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-10T00:02:29+08:00">
+                2018-04-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev-in-test/" itemprop="url" rel="index">
+                    <span itemprop="name">dev-in-test</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev-in-test/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">全文共计10.2k字</span>
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">预计阅读时间37分钟</span>	  
+			  
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>请微信添加公众号TesterTalk获取此文章密码。<br>昨天TesterHome发表了如下文章《被同龄人抛弃？68道中高级测试工程师面试题助你一臂之力》引爆了我的朋友圈。 我大致看了下，里面的问题很有代表性，即使是我这样的老司机，没有经过充分准备也不能回答的令自己满意，故花点时间，写下这些面试题的答案，给大家参考，也欢迎大家讨论指正。</p>
+<p>正文全部引用上述文章的问题，答案写在每一个问题下面。</p>
+<a id="more"></a>
+<h1 id="1-软性热身题"><a href="#1-软性热身题" class="headerlink" title="1 软性热身题"></a>1 软性热身题</h1><p>这种题目，考的就是你的软性能力，比如表达能力，理解能力，协调能力，一个词概括就是套路。这类题目会在面试开始热身的时候，问一道两题，不会多，但是如果你能回答的有条不紊，清晰达意，那么就会给面试官留下非常好的印象，大致的题目如下：</p>
+<p>自我介绍</p>
+<p><font color="red">我叫XXX，毕业于XXX，从事测试行业已经XX年，我擅长接口测试自动化，测试框架，巴拉巴拉，我共服务过X个公司分别有Y个成就，江湖人称666.总之，尽量用<br>简介的语言突出自己的优点，要保持humble，就像我介绍的这样，嗯：）</font></p>
+
+<p>介绍下你负责的公司项目</p>
+<p><font color="red">我主导了XXX，协助了YYY，参与了ZZZ。 这个回答你要记清楚，后续的面试肯定还有项目细节，甚至技术实现细节。同类的项目说一个足以，重点突出不同技术栈或者有管理，对外沟通的项目</font></p>
+
+<p>你有什么优点和缺点？</p>
+<p><font color="red">实际情况作答，比如优点是长的好看，缺点是太好看之类的，总之，要谦虚，不要傲。</font></p><p><br><br>在同一个项目组内，你认为你怎么做会比另外一名测试更加优秀？<br></p><p><font color="red">我个人认为这个题目很有迷惑性，如果你只追求比别人优秀，肯定很难跟别人合作，如果你没有别人优秀，那么我为什么要用你？<br>要我答的话，我重点会放在如何一点一滴积累技术实力，及用这些实力解决项目组存在的问题上，这实际上也是很多优秀测试人员的必备素质</font></p><p><br><br>你为什么离开上家公司？离职原因（这个会在最后问）<br></p><p><font color="red">看老板不爽啊，PM太SB啦喜欢的同事跟开发跑啦等等， 一个都不要说！！！ 我要面试别人，关注的是离职背后的动机，这人是不是被开除的，这人是不是不好相处，这人是不是有明显性格缺陷，只要不沾这些必死项，其它实际作答吧。</font></p><p><br><br><strong> <p><font color="red"> 个人觉得软性题，不必要过多关注，除自我介绍外，通常是通过面试后HR关的闲聊题，主要还是要关注下面的技术问题。</font></p><p> </p></strong><br><br># 2 测试理论基础题<br><br>这类题目就是考测试工程师的基本能力了，比如测试计划，测试流程，如何bug，你做过哪些测试，一般我们认为这些能力做的再好都是应该的，不会有加分，但是只要做的不好，那就是个不合格的测试工程师了。这种题目也不会问的太多，大概题目如下：<br><br>请描述下你上个公司的测试流程？<br></p><p><font color="red">实际情况作答， Scrum模式举例如下：<br>1.我们公司采用Scrum模式开发，测试也跟这个走，在每个sprint开始前会前后召开grooming meeting， planning meeting， Grooming meeting上把这个sprint可能做的tasks从product backlog里捞出来， 然后按照优先级排序， planning meeting上估时，做commitments，并确认每个story的后端，前端，测试。<br>2.planning后sprint正式开始时，需求，design，UI应该都ready了，测试就可以设计用例， 通过review后发给所有组成员review。  story ready for test时，开发把代码放到测试环境，测试开始测试，发现问题jira报bug，linked到story，测试全部完成后标记 UAT GL， 等公司release process开始。<br>3.Release process开始，不同小组把各自代码放到统一测试环境，继续测试一次，这轮关注别组不会影响自己。<br>4.然后还有一轮甚至两轮 pre release，主要验证代码，环境，变量等问题。<br>5.最后release， 观察下，有问题回退版本，没问题继续走下个sprint</font></p><p><br><br>请描述下bug的几个要素？<br></p><p><font color="red">ID， Summary， reproduce steps， Priority， Assign to， Sprint info， fix version（due data）等等。<br>这道题我好想回答一句，jira里都有，你自己不会看呀：）</font></p><p><br><br>白盒和黑盒的区别，你是怎么运用的？<br></p><p><font color="red">简单来说一个关注内部实现逻辑，一个只从用户角度出发，不关注具体实现。具体定义及区别请参考我以往文章。<br>一般中高级测试都会偏灰盒一些，既关注内部实现逻辑又关注用户jounery，设计case的时候两边参考。<br>内部实现逻辑可以看代码，也可以请开发讲给你听，知道了怎么实现，能在设计用例时构造不同数据cover逻辑覆盖。同时也清楚了regression 的scope</font></p><p><br><br>你是如何做测试分析？<br></p><p><font color="red">这题是考察测试思维，一个应用/功能如何测试的问题，我的原则是确定需求，先定性后定量。<br>具体来说，定性， 哪些是显性需求？那些是隐性需求？功能在scope吗？性能？可靠性？安全性？兼容mobile平台吗？<br>定量就是， 功能要测， 那么有哪些功能，每个功能点是什么， 入口是什么，出口是什么，precondition是什么，数据哪里构造等等。<br>重复上述操作直到分析完成</font></p><p><br><br>如何设计测试用例？什么样子的测试用例是好用例？<br></p><p><font color="red">个人觉得上题回答好了，这题不会问了。 设计用例原则上好的用例各有千秋（不外乎边界值，等价类，流程图，正交法，判定表等）， 但坏的实践要避免，具体如下：<br>1.一个测试用例验证多个功能点（A,B,C三个功能一个用例，那么用例失败了，到底是A引起的？还是B引起的?增加后续开发定位问题的难度，浪费时间）<br>2.期望结果不明确（例如： make sure every thing works fine. what the f×××？！）<br>3.不可执行（比如一个配置项组合， 手工要执行的case写了2000个， 怎么执行完？）<br>4.precondition，steps描述不清楚，上手困难（你负责的story可能要由其它测试人员交叉执行）。<br>5.不必要的外部依赖（用例应直指功能核心，无关的入口/步骤/依赖 不必要一股脑放进来）</font></p><p><br><br>功能测试在 beta 版本对外的上线标准是什么？<br></p><p><font color="red">貌似业界对beta的定义不太统一，有人说这个是A/B测试的一种， 但一般认为专业测试人员完成后，有部分用户参与的一轮测试即beta测试。一般测试环境为用户实际应用环境，目标在于要求用户使用发现不合理，不符合实际情况的问题，然后改进。<br>功能上线标准每个公司不一样，大致如下：<br>1.所有功能点(需求)都被用例覆盖到了<br>2.所有用例执行过至少一遍<br>3.所有发现的bug被修复并验证，做过regression了。<br>4.不能修复的记录了/关闭了/known issue了。<br>5.bug曲线区域平稳了</font></p><p><br><br></p><p><font color="red">本人认为此类问题属于淘汰题，一个问题回答不上来或者深度不够，直接闲聊然后结束面试。</font></p><p><br><br># 3 测试管理题<br><br>这类题目就是考验你作为测试leader或者测试负责人的管理能力了。<br><br>如果项目周期很短，测试人力匮乏，你是怎么协调的？<br></p><p><font color="red">范围不变，赶工/增加人手，快速跟进/并行开始任务。 范围能变，砍低优先级用例，缩小测试范围。</font></p><p><br><br>描述下你团队的测试分工<br></p><p><font color="red">实话实说， 比如：<br>干活是不可能干活的，这辈子都不可能干活的， 做管理又不会做，就是颜值这种东西，才能维持得了团队这样子。</font></p><p><br><br>对于团队成员，你是如何打kpi的？<br></p><p><font color="red">没钱没颜你速去，童颜巨 你快来这样子。<br>我一般看三点：<br>1.出活<br>2.持续出活<br>3.持续精彩的出活</font></p><p><br><br># 4 移动测试相关<br><br>如今是移动互联网的天下，谁家没有个应用，所以这一块基本都会问到，同时也会看你的简历，如果你没有做过，基本也不会问的太深，如果你是专门做这一块的，那么要好好准备了。<br><br><strong> 概念题 </strong><br><br>描述下web测试和移动应用测试的相同点和区别？<br></p><p><font color="red">公众号以前分享过，不赘述，把握以下几点：<br>0.任何类型测试先定性，再定量， 范围， 分类一定，大差不差。<br>1.web通常不要安装，移动应用通常要安装。<br>2.移动设备存在特殊性，不同设备的屏幕/分辨率，系统，定制UI都不相同。<br>3.移动应用不应该影响移动设备现有功能，如电话/短信等。<br>4.移动端要重点关注，发热（电量消耗）， crash， 流量(4G/WIFI/2G)等</font></p><p><br><br>你是如何做应用的兼容性测试的？<br></p><p><font color="red">一般兼容性主要关注：<br>1.硬件的适配：不同手机厂商、硬件性能，不同屏幕大小的适配<br>2.OS版本的兼容。 iOS，Android， 手机，pad， 版本号啊，MUI定制啊等<br>3.不同分辨率屏幕的适配<br>解决办法（云测，此处欠我广告费），除公司自备主流设备外，需参考：<br>1.各大厂商发布的季度/年度手机出货量，尽量覆盖出货量大的，热门的机型<br>2.应用做tracking，记录自己用户常用机型<br>3.购买各种云测服务，解决机型适配问题</font></p><p><br><br>请讲出客户端下 3 个常用的性能指标的名称与具体含义？<br></p><p><font color="red">基本的：<br>1.CPU利用率<br>2.内存使用率<br>3.平均用户响应时间<br>独有的：<br>1.电量<br>2.流量<br>3.首次打开速度<br>4.竞品相应项目质量比较</font></p><p><br><br>iOS应用和Android应用测试有什么侧重点？<br></p><p><font color="red">主要是iOS系统和Android系统的本质造成的：<br>1.Android运行基于虚拟机，iOS则是沙盒机制<br>2.iOS是伪后台，任何第三方程序都不能在后台运行；而Android是真后台，安卓中任何程序都能在后台运行，直到内存不够才关闭<br>3.IOS中用于UI指令权限最高，安卓中数据处理指令权限最高。<br>测试实际应用上来，个人觉得没有本质区别，要注意以下问题：<br>1.安全性。 因为Android2的本质，任何程序都就可以轻松访问其他程序文件，要关注下有没有偷偷访问不需要功能/偷流量/常时间运行占用内存消耗电量等问题。<br>2.Android开源，定制版本过多（比如小米系列MIUI）， 要关注定制引起的问题。</font></p><p><br><br>请讲诉移动应用的灰度是怎么做的？<br></p><p><font color="red">灰度发布作为A/B Test的一种，一般指发布新功能到部分用户，收集反馈/改进，进而发布到全步用户的一种策略。<br>个人经历过以下方面：<br>1.新服务发布到全部服务器，但通过配置项把不同特征用户的请求打到不同的后端服务上去。比如ip是中国的用户访点击某个按钮，调用的是后端。。。/vi这个API， 而国外ip调用。。/V2<br>2.新功能的后端服务只发布到部分服务器，只有访问到这个服务器的用户才能用新功能。<br>3.同一个用户访问的平台不同，请求的服务就不同，比如app的访问V1， web的访问V2，可以通过发布app版本来实现。<br>另外这个实现还有很多专业的AB测试平台可以实现， 例如（云测，此处欠我广告费）。<br>如果涉及到写DB操作， 一般都双写。即访问新服务时，写到新服务的DB数据也要写到老服务的DB。甚至全部切换至新服务后再并行运行一段时间，才彻底切换到新服务，停写老服务。</font></p><p><br><br><strong> 实践题 </strong><br><br>应用的闪退通常是什么原因造成的？如果应用闪退，Android 和 iOS 上是分别怎么抓取日志的？<br></p><p><font color="red">一般闪退原因如下：<br>1.内存超载<br>2.后端服务或动态链接库未找到<br>3.应用初始化时无法正确读取到用户数据。<br>4.系统兼容问题。<br>日志抓取的话，iOS：<br>1.通过iTunes Connect（Manage Your Applications - View Details - Crash Reports）获取用户的crash日志<br>2.通过Xcode从你的设备上获得崩溃日志<br>3.自己在程序中添加崩溃捕捉代码，如果应用集成第三方SDK，如百度统计<br>Android：<br>1.通过集成第三方SDK，如百度统计、友盟统计等<br>2、发版时使用加固工具，他们也会收集错误日志，如360加固<br>3、在程序中添加程序异常崩溃的捕捉代码，保存到本地文件中</font></p><p><br><br>请简述移动应用在升级安装时候应该考虑的场景？<br></p><p><font color="red">实际上跟CS架构的升级没什么两样：<br>1.APP有新版本时，打开APP是否有更新提示。<br>2.当版本为非强制升级版时，用户可以取消更新，老版本能正常使用。用户在下次启动app时，仍能出现更新提示。<br>3.当版本为强制升级版时，当给出强制更新后用户没有做更新时，退出APP。下次启动app时，仍出现强制升级提示。<br>4.不删除APP直接更新，检查是否能正常更新，更新后能否正常工作。<br>5.删除老的APP，重新下载APP，能不能正常工作。<br>6.不删除APP直接更新，检查更新后的APP和新安装的APP提供的功能一样。<br>7.检查在线跨版本升级能否成功，版本过老是否提示用户重装。<br>8.更新成功后，用户数据有没有丢失，各个配置项是否还原。</font></p><p><br><br>给你一个应用，请简述你会从哪些方面去测试？<br></p><p><font color="red">一般答分类， 分类如下： 安装/卸载测试， UI， 功能， 性能， 安全， 兼容， 易用， 可移植性。切忌东答一下，西答一下。</font></p><p><br><br>请描述下微信朋友圈发小视频的用例设计？<br></p><p><font color="red">先假设一个需求，征得面试官同意，在这个既定需求下说你的用例，还是那个思想，定性，定量分类， 不展开了，测试用例设计算基本功吧，考察的无非是功能的全面性，边界/异常条件下的处理， 性能/安全。 主要是有测试思维/结构化思维，设计的用例要系统，不能想起那个说那个。</font></p><p><br><br>如果让你来测试扫码支付，你会考虑哪些场景？<br></p><p><font color="red">同上，不赘述</font></p><p><br><br>如何测试一个应用的登录场景？<br></p><p><font color="red">同上，不赘述， 吐槽下，这题改成如何测试百度的登录会更好，BAT齐活了 ：） 实际上这3道题有一道就好了。</font></p><p><br><br><strong><p><font color="red">对中高级测试而言，实践题也是淘汰题，一项卡壳没有后续， 但如果在细节上有疏忽，可以网开一面，进入下个环节</font></p><p></p></strong><br><br># 5 服务端测试相关<br><br>什么都离不开服务端，所以这是你逃不开的，一般来说服务端会问接口测试，性能测试，更深一点，埋点监控止血也会有。<br><br>请问你们公司是如何做接口测试的？<br></p><p><font color="red">累死我了， 题要做吐了。 接口测试实际跟一般测试不同就是测试用例的设计部分。<br>1.接口规范拿到。<br>2.设计接口测试功能用例（主要从用户角度出发看接口能否实现业务需求，用例设计就是黑盒用例那一套）。<br>3.各种入参验证（正常情况，异常情况包括输入参数个数不对，类型不对，可选/必选， 还有考虑参数有互斥或关联的情况）。<br>4.接口返回值各种验证（符合接口文档需求）<br>5.了解接口实现逻辑，实现逻辑覆盖（语句/条件/分支/判定/。。。。。）<br>6.接口能并发执行吗?<br>6.采用工具或者自写代码来验证，HTTP接口一般SoapUI， Jmeter， Fiddler， Postman等都能验证，自己写更好。web service接口一般要写代码来调用。根据测试用例自动化。<br>7.发现问题跟功能测试一样，该报bug报bug，该跟踪状态跟踪状态 </font></p><p><br><br>接口测试质量评估标准是什么？<br></p><p><font color="red">接口测试说的接口可以是模块接口，也可以是集成接口，那么质量评估标准也就转换为单元测试里的接口测试标准，和集成测试里的集成测试标准。<br>实际上这题如果我来回答的话会关注：<br>1.接口功能是否正确，接口功能是否实现了业务需求。<br>2.接口参数正确性包括实参形参的个数/属性，是否匹配。<br>3.接口并发/串行执行时接口返回值的正确性。<br>4.有没有性能问题（并发执行），有没有安全问题（用户能否直接访问该接口，需不需要验证）<br><br>面试答上面的应该够了， 其实这里面涉及到单元测试和集成测试评估点，我公众号以前分享后，在测试基础知识里， 总结的更全面，大家可移步查看。</font></p>
+
+
+<p>请问你们公司是如何做性能测试的？请讲诉性能测试的相关指标？</p>
+<p><font color="red">老规矩，先确定需求，再定性，定量。<br>例如：<br>1.这次测试目的是什么，是压力测试/负载测试/疲劳强度测试/BenchMark测试？<br>2.测试的硬件环境是什么？软件是什么？<br>3.测试工具用什么？<br>4.有哪些测试指标？<br>5.测试分析调优/测试报告要吗？<br>具体来说：<br>1.拿到测试需求，确定测试软硬件环境/测试指标， 使用测试工具(Loadrunner, jmeter)录制或者编写测试代码，逐步加压，直到测试目的达成。<br>2.分析测试结果，编写测试报告，突出性能指标包括成功，失败情况，并加以分析。<br>3.调优（一般都是开发的事）<br>相关性能指标：<br>服务器系统资源方面 CPU占用率，内存占用率 磁盘的读写指标<br>网络的占用情况 基础吞吐率<br>事务处理速度 如平均登录时间，操作平均响应时间等。</font></p><p><br><br>压力测试和负载测试的区别<br></p><p><font color="red">一个（压力测试）把最后一根稻草仍你身上，一个（负载测试）就剩最后一根稻草没仍，或者仍给你指定数目稻草。</font></p><p><br><br>服务器中一般要监控哪些数据，如何监控的，怎么从监控数据中发现问题？<br></p><p><font color="red">CPU， 内存， 网络， I/O， 数据库。等等。 一般用工具监控，另外Windows上有性能监视器。<br>发现问题，一般要关注阈值，比如CPU利用率超过85%，说明server压力太大了，数据量一大DB某条SQL写入速度变慢了等等等等</font></p><p><br><br>假设系统A调用系统B，我把B的接口都mock了，进行性能测试，这样有什么好处和坏处？<br></p><p><font color="red">好处是去掉的依赖，可以在B没有好之前测试A，并且B的任何改动/错误/失效不会影响我测试A<br>坏处是真实性能要比测出来的性能差， 性能指标不准确。 因为Mock的服务再真也不能代替真实服务</font></p><p><br><br>有一天早上打车高峰，滴滴服务端挂了大概30分钟，工程师抢修之后，马上上线，之后又挂了，请问有哪些原因会造成这个情况？<br></p><p><font color="red">还是考测试思维， 一定记得先确认需求，再定性，定量。 一般都要反问， 服务器是哪个服务器？后端应用服务器？数据服务器？缓存系统服务器？中间件服务器？文件系统服务器？<br>然后面试官说个，不说就自己假定一个， 然后第一次挂第二次挂分开说，先问有没有错误码，日志有吗，有就看日志，没有就猜 是应用服务器挂了啊，是不是高峰期顶不住这么大并发访问啊？是数据库服务器啊，是不是频繁读写受不了啊，读写有分开吗？同步还是异步啊， 把喇叭里。<br>第二次挂，可能更多了，是不是代码弄错了，改坏了，或者把喇叭里。<br>总之套路就是性能测试中可能预见的问题及原因，这个你们google下吧，自己分类总结下。</font></p><p><br><br><strong>性能这部分题，个人认为除非你面试性能测试工程师，不然都是可选题，答对80%过关肯定没问题，60%也行。关键有个概念，知道性能测试怎么回事，有问题该往哪个方向想就行了。 </strong><br><br># 6 自动化相关<br><br>自动化永远是避不开的，反正你入职的岗位要不要用自动化，你必须得会一点，加分项。这一块包括，自动化一些理念和自动化的工具使用。<br><br>理念和概念：<br><br>如何看待自动化和手动测试？怎样的一个比例才是健康的？<br></p><p><font color="red">见仁见智，一切能提高软件质量的方法都应该尝试。<br>兵无常形，符合自己项目实际情况是最好的。当然你要面试自动化测试，肯定是一切稳定了的功能最好全部自动化掉。 :)</font></p><p><br><br>你们公司的自动化投入产出比怎样？效益怎样？<br></p><p><font color="red">实话实说，UI自动化测试发现新bug的效益很低，主要用在回归测试上，减少测试工作量。接口测试可就不一样了，可以小步快跑，也可以集团作战。</font></p><p><br><br>自动化测试用例的覆盖率多少？<br></p><p><font color="red">有个50%了不得了吧， 一般核心业务里的最高优先级用例100%覆盖，这些用例也是用来跑冒烟的。 另外的看项目资源了。</font></p><p><br><br>完整运行一次自动化用例需要多久时间？<br></p><p><font color="red">Google说它们分钟级或者秒级别， 为毛我们都是小时级别 ：（</font></p><p><br><br>什么是分层自动化？<br></p><p><font color="red">金字塔结构， 最底层UnitTest，往上接口API/集成起来的service， 最上面UI自动化</font></p><p><br><br>你的测试数据是怎么准备的？<br></p><p><font color="red">当然是提前准备的了：）<br>写在脚本里/外部文件（excel， XML）/数据库， 逼格逐级提升</font></p><p><br><br>测试脚本的维护成本是怎么样的？<br></p><p><font color="red">两个原则：<br>1.不坏就不要修<br>2.终身追责，谁污染谁治理</font></p><p><br><br><br><strong> 工具使用 </strong><br><br>WebDriver 相关<br><br>请问你的定位策略是什么？<br></p><p><font color="red">啊啊啊，已经两个小时了，要抓狂了。<br>ID， Clas， CSS， XPath， jquery脚本， 总之能不麻烦开发就不麻烦开发。</font></p><p><br><br>请问如何实现用例失败或者异常时候需要截图？<br></p><p><font color="red">框架自带， python+webdriver里是get_screenshot_as_file， 一般写一个装饰器，放在要执行的类上，try， catch下。</font></p><p><br><br>请问如何分布式执行webdriver用例？<br></p><p><font color="red">两种策略：<br>1.利用Jenkins等，部署部分代码到多个机器上执行<br>2.RemoteWebDriver</font></p><p><br><br>如何在脚本中执行 JavaScript 代码？<br></p><p><font color="red">driver.execute_scripts(‘脚本’) </font></p><p><br><br><strong> 移动应用相关 </strong><br><br>Appium 的定位策略有哪些？<br></p><p><font color="red">使用Appium-Python-Client情况下， 除了以下常规八种定位方式外：<br>driver.find_element_by_id() –元素的 resrouce-id 属性<br>driver.find_element_by_AccessibilityId() – content-desc属性，替代以前的name。<br>driver.find_element_by_xpath() –比css定位慢<br>driver.find_element_by_class_name() –元素的 class 属性<br>driver.find_element_by_css_selector()<br>driver.find_element_by_link_text() –链接元素的全部显示文字<br>driver.find_element_by_tag_name() –元素的标签名<br>driver.find_element_by_partial_link_text() –链接元素的部分显示文字</font></p><p><br></p><p><font color="red">iOS和Android上还有独特的定位方法：<br>iOS：<br>IosUIAutomation –iOS9.3或以下的定位方法<br>driver.find_element_by_ios_uiautomation(‘.elements()[0]’)<br>Android：<br>AndroidUIAutomator， 仅支持 Android 4.2或以上，可支持元素的单个属性和多个属性定位。<br>driver.find_element_by_android_uiautomator(‘new UiSelector().text(“Animation”)’)<br>关于移动端元素的定位的定位，我公众号testertalk也发过系列文章，详细内容请移步。</font></p><p><br><br>请简述Appium的原理<br></p><p><font color="red">真想跟面试官说，您能帮忙打开官网吗？Appium对iOS和Anroid的实现原理不尽相同，并且对同一个平台不同操作系统版本的实现原理也不相同。<br><img src="/2018/04/10/面试相关/算法/想进BAT？这些面试题助你一臂之力/Appium_philosophy1.PNG" alt=""><br>我倾向大家往简单了说：<br>1.Appium是C/S架构的，更像是一个proxy，连接其被测移动平台和测试脚本。<br>2.appium是基于 webdriver 协议添加对移动设备自化api扩展而成的。<br>网上有个很清晰的图，截图如下：<br><img src="/2018/04/10/面试相关/算法/想进BAT？这些面试题助你一臂之力/Appium_philosophy2.PNG" alt=""><br>实际上我个人理解，这个题就是想了解，当你使用一个工具时，你是否关心过它的内部实现，也可以过渡到当你测试一个应用时，你是否关注它的实现。</font></p><p><br><br>iOS 和 Android 的 UI 自动化的原理是什么？<br></p><p><font color="red">上面已经答了，如下：<br>iOS 9.3 and above: Apple’s XCUITest<br>iOS 9.3 and lower: Apple’s UIAutomation<br>Android 4.2+: Google’s UiAutomator/UiAutomator2<br>Android 2.3+: Google’s Instrumentation. (Instrumentation support is provided by bundling a separate project, Selendroid)</font></p><p><br><br>当定位策略都失败的时候，你该怎么做？<br></p><p><font color="red">80%是你元素定位的不对，那么多定位方法，一个不行换另外一个，直接不能定位，先定位父元素，再循环找子元素。一般来说XPATH都能定位到，无非是可阅读性不强。真的全部失效，请求开发帮你改个元素属性好了。<br>这题其实还是”测试sense”问题，扩大点变成了怎么解决工作中困难。反正别认怂， 最好甭废话，直接开干。</font></p><p><br><br>请问Monkey测试的优缺点？<br></p><p><font color="red">没接触过，此题不会</font></p><p><br>如果使用monkey发现了一个毕现闪退，请问怎么使用monkey重现它？<br></p><p><font color="red">同上</font></p><p><br><br>Jmeter<br><br>你用jmeter做什么测试？<br></p><p><font color="red">接口，性能。</font></p><p><br><br>如果有一个登录接口需要服务端返回参数，再带着这个参数去请求才能完成登录，用jmeter 怎么做？<br></p><p><font color="red">可以利用Regular  Expression Extractor传参。 具体请参考我公众号testertalk Jmeter 系列文章。</font></p><p><br><br>———-     最后，来点硬题，嚯嚯嚯！    ———-<br><br># 7 硬 题<br><br>所谓硬题就是答案一般都是固定或者标准的，答案也不会模棱两可，包括：算法，编程，sql，linux<br><br>算法：<br><br>请写出冒泡排序<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">def maopao（l）：</div><div class="line">	def maopao(l):</div><div class="line">    if not isinstance(l, list):</div><div class="line">        raise TypeError("Need a list as parameter")</div><div class="line">    for i in range(len(l)):</div><div class="line">        for j in range(len(l)-1-i):</div><div class="line">            if l[j]&gt;l[j+1]:</div><div class="line">                l[j], l[j+1] = l[j+1], l[j]</div><div class="line">    return l</div></pre></td></tr></table></figure><br><br>1~9999数列中数字3出现的次数。用递推方法解出。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div></pre></td><td class="code"><pre><div class="line">#本来以为很简单，写了一下，2位数能算出来结果，3位数会报递归次数太多， 觉得蹊跷， 仔细一查，尼玛这题大有来历，我跪的心服口服。经过查找资料，解答如下：</div><div class="line">1位数： 0～9</div><div class="line">个位数为3： 3， 共1次。</div><div class="line">故0~9之间，3的个数为1</div><div class="line"></div><div class="line">2位数： 10～99</div><div class="line">个位数是3: 13, 23, 33 ...93, 共9个。</div><div class="line">十位数是3： 30， 31， ....39.   共10个。</div><div class="line">故0~99之间，3的个数为1+9+10=20个</div><div class="line"></div><div class="line">3位数： 100～999</div><div class="line">个位数是3： 103， 113， ....193  共10个。</div><div class="line">		 203， 213， ....293  共10个。</div><div class="line">		 。</div><div class="line">		 。</div><div class="line">		 。</div><div class="line">		 903， 913， ....993  共10个。</div><div class="line">		 一共9×10=90次。 </div><div class="line">十位数是3： 130， 132  ....139  共10个。</div><div class="line">		 230， 232  ....239  共10个。</div><div class="line">		 。</div><div class="line">		 。</div><div class="line">		 。</div><div class="line">		 930， 931， ....939  共10个。</div><div class="line">		 一共9×10=90次。</div><div class="line">百位数是3： 300， 301， ....399  共100个。</div><div class="line">故0~999之间，3的个数为20+90+90+100=300次</div><div class="line">也可以这样考虑：</div><div class="line">0~999之间：十位个 位共有10个0~99（解释0～99，100～199，。。。900～999），故有10*20=200次，而百位为1的有100次，共200+100=300次</div><div class="line">300=10*20+100</div><div class="line">4位数： 0～9999</div><div class="line">个位数是3： 1003，1013，1023， 。。。1093 共10个</div><div class="line">		 1103，1113，1123， 。。。1193 共10个  </div><div class="line">		 1203.....				 共10个 </div><div class="line">		 1903....                共10个 </div><div class="line">		 共9个10，我们记为A</div><div class="line">		 还有2003～2903， 3003～3903.。。9003～9903 还有9个一样的A。</div><div class="line">		 所有一共有10个（A）， 是10×9×10=900</div><div class="line">十位数是3： 1030，1031，。。。。。。1039， 共10个。</div><div class="line">		 1131～1139， </div><div class="line">		 1231～1239.</div><div class="line">		 。。。</div><div class="line">		 1931～1939， 共有10×10个=100个。我们记为B	</div><div class="line">		 还有千位数是2开头的，到9开头的，加起来共有9个（B） 9×10*10=900个。</div><div class="line">百位数是3： 1300， 1301，。。。。1399 共100个。</div><div class="line">		 2300</div><div class="line">		 .。</div><div class="line">		 9300 </div><div class="line">		 共10×100=1000个。</div><div class="line">千位数是3： 3000，3001，3999 共 1000次。</div><div class="line"></div><div class="line">故0~9999之间，3的个数为300+900*900*900+1000=4000</div><div class="line">也可以这样考虑：</div><div class="line">0~9999之间：百位十位 个位共有10个0~999（0～999， 1000～1999， 。。9000～9999），故有10*300=3000次，而千位为1的有1000次，共3000+1000=4000次</div><div class="line">4000=10*300+1000		</div><div class="line">规律：</div><div class="line">0~9：1</div><div class="line">0~99：20=10*1+10</div><div class="line">0~999：300=10*20+100</div><div class="line">0~9999：4000=10*300+1000</div><div class="line">0~99999：50000=10*4000+10000</div><div class="line">0~999999：600000=10*50000+100000</div><div class="line">f（1）=1</div><div class="line">f(2)=10*f(1)+10 **1</div><div class="line">f(3)=10*f(2)+10 **2</div><div class="line">f(4)=10*f(3)+10 **3</div><div class="line">...</div><div class="line">f(n)=10*f(n-1) + 10*(n-1)</div><div class="line"></div><div class="line">代码如下：</div><div class="line"></div><div class="line">def count_n_times(digit_number): #传入的是位数</div><div class="line">    if digit_number==1:</div><div class="line">        return 1</div><div class="line">    if digit_number&lt;=0:</div><div class="line">        return 0</div><div class="line">    return 10*count_n_times(digit_number-1) + 10**(digit_number-1)</div><div class="line"></div><div class="line">def count_digit_number(number): #给定是一个数</div><div class="line">    return len(str(number))</div><div class="line"></div><div class="line">print(count_n_times(count_digit_number(999)))</div><div class="line"></div><div class="line">我们再来假设下，如果给你的不是9999而是2345呢？即对于任意给定的数n，怎样能快速得到0~n之间3的个数呢?(这就是google的原题了（原题是算1），这题太硬了，我啃了几个小时了，不啃了..)</div></pre></td></tr></table></figure><br><br><br>从一个数组中找出前4个最大的数，用最优解。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#这个就是排序问题了吧，我想法先排好序，在取前4个，那么多排序，冒泡啊，选择啊，快排啊。。</span></div><div class="line">这里面快排最快，用大O算法O (n * log n )。</div><div class="line"></div><div class="line">思想：</div><div class="line">少于<span class="number">2</span>个元素的数组不需要排序</div><div class="line">找一个元素作为基数</div><div class="line">小于基数的放一个数组</div><div class="line">大于基数的放一个数组</div><div class="line">针对小于基数的数组做快速排序，暂且叫low</div><div class="line">针对大于基数的数组做快速排序, 暂且叫high</div><div class="line">最终排序后的 low + 【基数】+ high，就是排好序的数组</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">quicksort</span><span class="params">(l)</span>:</span></div><div class="line">    low = []</div><div class="line">    high = []</div><div class="line">    <span class="keyword">if</span> len(l)&lt;<span class="number">2</span>:</div><div class="line">        <span class="keyword">return</span> l</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        base = l[<span class="number">0</span>]</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,len(l)):</div><div class="line">            <span class="keyword">if</span> base &lt;l[i]:</div><div class="line">                high.append(l[i])</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                low.append(l[i])</div><div class="line">    <span class="keyword">return</span> quicksort(low) + [base] + quicksort(high)</div><div class="line"></div><div class="line">print(quicksort([<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">8</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">6</span>])[:<span class="number">4</span>])</div><div class="line">其实python里内置了很多优秀的方法来解决其他语言很繁琐的问题，比如本题目可以直接：</div><div class="line">print(sorted([<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">8</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">6</span>])[:<span class="number">4</span>])  （据说python里sorted实现也是快排，没有经过求证。）</div><div class="line">哈哈，这样，面试官会不会鄙视我 ：）</div><div class="line">我之前也分享过基本的算法，大家可以去我的公众号testertalk查看。</div></pre></td></tr></table></figure><br><br>写一段程序，删除字符串a中包含的字符串b，举例 输入a = “asdw”,b = “sd” 返回 字符串 “aw”，并且测试这个程序。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">del_ele</span><span class="params">(a, b)</span>:</span></div><div class="line">    r = <span class="string">''</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> [x <span class="keyword">for</span> x <span class="keyword">in</span> a <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> b]:</div><div class="line">        r +=i</div><div class="line">    <span class="keyword">return</span> r</div><div class="line">print(del_ele(<span class="string">"asdw"</span>, <span class="string">"sd"</span>))</div><div class="line">这个就比较简单了，测试用例就不写了。</div></pre></td></tr></table></figure><br><br>写一个方法，把字符串转为数字，比如 str=”1234”，变成 int 1234。并且测试这个程序。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_format</span><span class="params">(a)</span>:</span></div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(a, str):</div><div class="line">        <span class="keyword">raise</span> TypeError(<span class="string">"You need a str"</span>)</div><div class="line">    <span class="keyword">return</span> int(a)</div><div class="line">print(convert_format(<span class="string">"1234"</span>))</div><div class="line">啃完了google的题，我觉得我肯定没有领会这两道题目的意图， 紧张中。。。。  测试用例就不写了。</div><div class="line"></div><div class="line">**个人总结下，硬题是比较好的一个筛选人的方式，但是也比较容易作弊，这个最多能看出来候选人有没有看算法的意识。 对于中高级测试来说，平时一定要刷点算法题，不然百分百被刷下**</div></pre></td></tr></table></figure><br><br><strong> 编程： </strong><br><br>什么是面向对象编程？<br></p><p><font color="red">把一切看成对象，三大特性 继承，封装，多态</font></p>
+
+<p>讲下Java多线程的使用</p>
+<p><font color="red">java多线程跟别的语言的多线程有区别吗？<br>多线程一般用来更好的利用CPU资源，解决诸如程序“在一部分上会阻塞”，“在另一部分上需要持续运行”的场合。多线程一般用来更好的利用CPU资源，解决诸如程序“在一部分上会阻塞”，“在另一部分上需要持续运行”的场合。<br>例如有个程序需要接受多个用户输入并向服务器发送数据，那么如果不用多线程，一旦程序在等待某个用户输入时，程序就会阻塞。这段时间其它用户也不能使用了</font></p>
+
+<p>有三个线程T1，T2，T3，怎么确保它们按顺序执行？</p>
+<p><font color="red">在主线程中，每一个线程start（）后立即join（）</font></p>
+
+<p>Thread 类中的start() 和 run() 方法有什么区别？</p>
+<p><font color="red">个人理解start（）会启动线程，然后调用run（），run（）方法一般要重写。<br>网上资料：<br>调用start（）后，线程会被放到等待队列，等待CPU调度，并不一定要马上开始执行，只是将这个线程置于可动行状态。然后通过JVM，线程Thread会调用run（）方法，执行本线程的线程体。先调用start后调用run，这么麻烦，为了不直接调用run？就是为了实现多线程的优点，没这个start不行。<br>1.start（）方法来启动线程，真正实现了多线程运行。这时无需等待run方法体代码执行完毕，可以直接继续执行下面的代码；通过调用Thread类的start()方法来启动一个线程， 这时此线程是处于就绪状态， 并没有运行。 然后通过此Thread类调用方法run()来完成其运行操作的， 这里方法run()称为线程体，它包含了要执行的这个线程的内容， Run方法运行结束， 此线程终止。然后CPU再调度其它线程。<br>2.run（）方法当作普通方法的方式调用。程序还是要顺序执行，要等待run方法体执行完毕后，才可继续执行下面的代码； 程序中只有主线程——这一个线程， 其程序执行路径还是只有一条， 这样就没有达到写线程的目的。<br>记住：多线程就是分时利用CPU，宏观上让所有线程一起执行 ，也叫并发</font></p>
+
+<p>请写一个线程安全的单例模型</p>
+<p><font color="red">网上搜下吧，java不熟悉</font></p>
+
+<p><strong> SQL： </strong></p>
+<p>说下左连接和右连接<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">比如有两张表A和B。 A表B表都有ID列， </div><div class="line">select* <span class="keyword">from</span> A left join B where A.ID=B.ID. 会把A表所有记录显示，B表里没有和A表ID对应的，会显示NULL。</div><div class="line">左连接是把符合条件的所有的A表的内容列出来，B表里如果没有内容匹配就用NULL代替。 右连接是符合条件的 B表的内容全显示出来，A表里没有匹配就用NULL代替。</div></pre></td></tr></table></figure></p>
+<p>介绍下什么是索引<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">索引是与表或视图关联的磁盘上结构，可以加快从表或视图中检索行的速度。索引包含由表或视图中的一列或多列生成的键。这些键存储在一个结构（B树）中，使 SQL Server 可以快速有效地查找与键值关联的行。 </div><div class="line">SQL里索引的语法：</div><div class="line"></div><div class="line">SQL CREATE INDEX 语法</div><div class="line">在表上创建一个简单的索引。允许使用重复的值：</div><div class="line">CREATE INDEX index_name</div><div class="line">ON table_name (column_name)</div><div class="line"></div><div class="line">注释：<span class="string">"column_name"</span> 规定需要索引的列。</div><div class="line">SQL CREATE UNIQUE INDEX 语法</div><div class="line">在表上创建一个唯一的索引。唯一的索引意味着两个行不能拥有相同的索引值。</div><div class="line">CREATE UNIQUE INDEX index_name</div><div class="line">ON table_name (column_name)</div><div class="line">CREATE INDEX 实例</div><div class="line">本例会创建一个简单的索引，名为 <span class="string">"PersonIndex"</span>，在 Person 表的 LastName 列：</div><div class="line">CREATE INDEX PersonIndex</div><div class="line">ON Person (LastName) </div><div class="line"></div><div class="line">如果您希望以降序索引某个列中的值，您可以在列名称之后添加保留字 DESC：</div><div class="line">CREATE INDEX PersonIndex</div><div class="line">ON Person (LastName DESC) </div><div class="line"></div><div class="line">假如您希望索引不止一个列，您可以在括号中列出这些列的名称，用逗号隔开：</div><div class="line">CREATE INDEX PersonIndex</div><div class="line">ON Person (LastName, FirstName)</div><div class="line"></div><div class="line">更新一个包含索引的表需要比更新一个没有索引的表更多的时间，这是由于索引本身也需要更新。因此，理想的做法是仅仅在常常被搜索的列（以及表）上面创建索引。</div><div class="line">索引不适用于需要频繁写入的表，适合只读多插入少的表。</div></pre></td></tr></table></figure></p>
+<p>使用sql生产10万条数据</p>
+<p><font color="red">平常没接触过这么大数据量，分批次吧，每次插入1w条，应该没什么压力</font></p><br>给你一张表，根据要求写sql，这个题目比较多，自己百度吧。<br><br><strong> Linux： </strong><br><br>你常用的命令是什么？<br><p><font color="red">ls, mkdir, cat, vi, ps touch</font></p>
+
+<p>用什么查看log？</p>
+<p><font color="red">watch, tail、cat、tac、head、echo</font></p>
+
+<p>如何查找一个文件大小超过5M的文件<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">find . -type f -size +<span class="number">800</span>M</div><div class="line">常用的参数有: </div><div class="line">- type:类型。POSIX支持——b:块设备文档、d:目录、c:字符设备文档、P:管道文档、l:符号链接文档、f:普通文档 </div><div class="line">- name:按文件名查找。支持*模糊匹配 </div><div class="line">- size:文件大小。+表示大于，-表示小于。支持k,M,G单位</div></pre></td></tr></table></figure></p>
+<p>如何查看进程？<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ps命令。它能显示当前运行中进程的相关信息，包括进程的PID。Linux和UNIX都支持ps命令，显示所有运行中进程的相关信息。</div><div class="line">ps命令能提供一份当前进程的快照。如果想状态可以自动刷新，可以使用top命令。</div><div class="line">ps aux | less  <span class="comment">#显示所有运行中的进程</span></div></pre></td></tr></table></figure></p>
+<h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><ol>
+<li>这68道题目，我花费了2个晚上总结整理，用的时间我都不好意思说。</li>
+<li>从个人角度看，这些面试题很接地气，很多考题也跟实际工作密切相关，大大增加了筛掉水货的几率，我也曾用部分相似题来筛选别人。</li>
+<li>对于初级测试来说，测试理论，测试基础都应该掌握，移动端测试，服务器端测试，自动化测试，性能测试，也应该逐渐接触起来，不会答没关系，但要大致了解，面试官喜欢有追求的人。</li>
+<li>对于中高级测试来说，除了硬题，其它题目经过充分准备都不应该丢分，回答正确率要在85%以上，另外，回答的深度非常重要，决定了你是年龄资深还是技术资深。</li>
+<li>对于硬题，虽然大部分的测试，甚至测试开发，工作中用到算法的几率也不高，但你如果都答对了，还是能让人眼前一亮的。<br>对于这部分试题，稍有难度的例如google面试题那个，你有个大致思路也行，对于非常基础的，二分啊，排序啊，还是建议多练练，起码应该做到手写正确。<br>现在有能力做好普通测试工作的人太多了，算法也跟学历，长相一样，用人单位不得不拿这些筛选掉很多合适的人，有时候你比别人更优秀的能力，也许就来自于你昨天刷了一道面试题。<br>怎么说呢，面试造火箭，进来拧螺丝，接受现实吧。</li>
+<li>我本人其实是反对面试突击的，所以我公众号从没有发过面试题。 本文目的也不希望大家背答案就面试（面试从来也没有标准答案，背了估计也面不上 ：0），而是希望大家通过做这些面试题，发现自己的不足，从而有针对性的提升自己。</li>
+<li>感谢大家的阅读，能读到这里的都是真粉丝， 欢迎大家提出更好的意见，谢谢。</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="iTesting WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="iTesting Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------<i class="fa-snowflake-o"></i>更多内容，请关注微信公众号iTesting-------------</div>
+    
+</div>
+	  
+	</div>
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="iTesting wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫码关注，跟作者互动</div>
+</div>
+
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+        </div>
+      
+	<div>
+		  
+			
+		  
+	</div>
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/04/自动化测试系列/Python+webdriver一劳永逸解决弹出框识别问题/" rel="next" title="Python+webdriver一劳永逸解决弹出框识别问题">
+                <i class="fa fa-chevron-left"></i> Python+webdriver一劳永逸解决弹出框识别问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/24/面试相关/算法/求1000以内的素数/" rel="prev" title="求1000以内的素数">
+                求1000以内的素数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="iTesting" />
+		  
+          <p class="site-author-name" itemprop="name"><a href= "/about">iTesting</a></p>
+		  
+          <p class="site-description motion-element" itemprop="description">Python， 测试开发， 软件测试， 自动化测试， 接口测试， Appium， Selenium， Jmeter， 职场感悟。</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">94</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/thinkbig" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-user-circle-o"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://qahome.cn" target="_blank" title="wechat">
+                  
+                    <i class="fa fa-fw fa-wechat"></i>
+                  
+                  wechat
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/thinkbig" title="知乎" target="_blank">知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-软性热身题"><span class="nav-number">1.</span> <span class="nav-text">1 软性热身题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写在最后"><span class="nav-number">2.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  Copyright &nbsp 
+  &copy; 2017 - 
+  <span itemprop="copyrightYear">2018 &nbsp&nbsp Designed by helloqa</span>
+  
+  <span class="with-love">
+    <i class="fa fa-wechat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iTesting</span>
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+
+-->  
+
+
+        <!-- 
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+ -->
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

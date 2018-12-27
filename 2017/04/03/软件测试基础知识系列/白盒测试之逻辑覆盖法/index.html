@@ -1,0 +1,1110 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误，请关注公众号iTesting获取密码');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="basic-knowledge," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="逻辑覆盖是以程序内部的逻辑结构为基础的设计测试用例的技术。根据覆盖目标的不同和覆盖源程序语句的详尽程度，逻辑覆盖又可分为：
+
+语句覆盖(SC)
+判定覆盖(DC)
+条件覆盖(CC)
+条件/判定覆盖(CC)
+条件组合覆盖(MCC)
+修正判定条件覆盖(MCDC)
+点覆盖
+边覆盖
+路径覆盖
+
+几种逻辑覆盖标准发现错误的能力呈由弱至强的变化。
+下面我们来逐一举例详解：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="白盒测试之逻辑覆盖法">
+<meta property="og:url" content="http://www.helloqa.com/2017/04/03/软件测试基础知识系列/白盒测试之逻辑覆盖法/index.html">
+<meta property="og:site_name" content="iTesting软件测试知识分享">
+<meta property="og:description" content="逻辑覆盖是以程序内部的逻辑结构为基础的设计测试用例的技术。根据覆盖目标的不同和覆盖源程序语句的详尽程度，逻辑覆盖又可分为：
+
+语句覆盖(SC)
+判定覆盖(DC)
+条件覆盖(CC)
+条件/判定覆盖(CC)
+条件组合覆盖(MCC)
+修正判定条件覆盖(MCDC)
+点覆盖
+边覆盖
+路径覆盖
+
+几种逻辑覆盖标准发现错误的能力呈由弱至强的变化。
+下面我们来逐一举例详解：">
+<meta property="og:updated_time" content="2017-04-03T15:05:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="白盒测试之逻辑覆盖法">
+<meta name="twitter:description" content="逻辑覆盖是以程序内部的逻辑结构为基础的设计测试用例的技术。根据覆盖目标的不同和覆盖源程序语句的详尽程度，逻辑覆盖又可分为：
+
+语句覆盖(SC)
+判定覆盖(DC)
+条件覆盖(CC)
+条件/判定覆盖(CC)
+条件组合覆盖(MCC)
+修正判定条件覆盖(MCDC)
+点覆盖
+边覆盖
+路径覆盖
+
+几种逻辑覆盖标准发现错误的能力呈由弱至强的变化。
+下面我们来逐一举例详解：">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.helloqa.com/2017/04/03/软件测试基础知识系列/白盒测试之逻辑覆盖法/"/>
+
+
+
+
+
+  <title> 白盒测试之逻辑覆盖法 | iTesting软件测试知识分享 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/Light07/flask_blog" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+<!--
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">iTesting软件测试知识分享</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">iTesting</h1>
+    
+</div>
+-->
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+		
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-basic-knowledge">
+          <a href="/categories/basic-knowledge" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            测试理论
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-dev-in-test">
+          <a href="/categories/dev-in-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-flask"></i> <br />
+            
+            测试开发
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-automation">
+          <a href="/categories/automation" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-desktop"></i> <br />
+            
+            自动化测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-api-test">
+          <a href="/categories/api-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane-o"></i> <br />
+            
+            接口测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-mobile-test">
+          <a href="/categories/mobile-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mobile"></i> <br />
+            
+            移动端测试
+          </a>
+        </li>
+		
+      
+        
+		
+      
+        
+		
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.helloqa.com/2017/04/03/软件测试基础知识系列/白盒测试之逻辑覆盖法/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="iTesting">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="iTesting软件测试知识分享">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="iTesting软件测试知识分享" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                白盒测试之逻辑覆盖法
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-03T21:49:55+08:00">
+                2017-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/basic-knowledge/" itemprop="url" rel="index">
+                    <span itemprop="name">basic-knowledge</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/basic-knowledge/white-box/" itemprop="url" rel="index">
+                    <span itemprop="name">white-box</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">全文共计2.2k字</span>
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">预计阅读时间7分钟</span>	  
+			  
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>逻辑覆盖是以程序内部的逻辑结构为基础的设计测试用例的技术。<br>根据覆盖目标的不同和覆盖源程序语句的详尽程度，逻辑覆盖又可分为：</p>
+<ol>
+<li>语句覆盖(SC)</li>
+<li>判定覆盖(DC)</li>
+<li>条件覆盖(CC)</li>
+<li>条件/判定覆盖(CC)</li>
+<li>条件组合覆盖(MCC)</li>
+<li>修正判定条件覆盖(MCDC)</li>
+<li>点覆盖</li>
+<li>边覆盖</li>
+<li>路径覆盖</li>
+</ol>
+<p>几种逻辑覆盖标准发现错误的能力呈由弱至强的变化。</p>
+<p>下面我们来逐一举例详解：</p>
+<a id="more"></a>
+<h5 id="1-语句覆盖（SC）："><a href="#1-语句覆盖（SC）：" class="headerlink" title="1. 语句覆盖（SC）："></a>1. 语句覆盖（SC）：</h5><p>语句覆盖是指选择足够的测试用例，使得运行这些测试用例时，被测程序的每一个语句至少执行一次，其覆盖标准无法发现判定中逻辑运算的错误.</p>
+<p>我们看下面的被测试代码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">return</span> a / b;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br>假如我们的测试人员编写如下测试案例：<br>TeseCase: a = 10, b = 5</p>
+<p>测试人员的测试结果会告诉你，他的代码覆盖率达到了100%，并且所有测试案例都通过了。然而遗憾的是，我们的语句覆盖率达到了所谓的100%，但是却没有发现最简单的 Bug，比如，当我让b=0时，会抛出一个除零异常。</p>
+<p>简言之，语句覆盖，就是设计若干个测试用例，运行被测程序，使得每一可执行语句至少执行一次。这里的“若干个”，意味着使用测试用例越少越好。</p>
+<p>语句覆盖率的公式可以表示如下：<br>语句覆盖率=可执行的语句总数/被评价到的语句数量 x 100%</p>
+<h5 id="2-判定覆盖-DC"><a href="#2-判定覆盖-DC" class="headerlink" title="2. 判定覆盖(DC)"></a>2. 判定覆盖(DC)</h5><p>判定覆盖是设计足够多的测试用例，使得程序中的每一个判断至少获得一次“真”和一次“假”，即使得程序流程图中的每一个真假分支至少被执行一次。<br>但若程序中的判定是有几个条件联合构成时，它未必能发现每个条件的错误。<br>例：<br>int a,b;<br>if(a || b)<br>执行语句1<br>else<br>执行语句2</p>
+<p>要达到这段程序的判断覆盖,我们采用测试用例:<br>1)a = true , b = false;<br>2)a = false, b = false</p>
+<h5 id="3-条件覆盖-CC"><a href="#3-条件覆盖-CC" class="headerlink" title="3. 条件覆盖(CC)"></a>3. 条件覆盖(CC)</h5><p>条件覆盖是指选择足够的测试用例，使得运行这些测试用例时，判定中每个条件的所有可能结果至少出现一次，但未必能覆盖全部分支.<br>例：<br>int a,b;<br>if(a || b)<br>执行语句1<br>else<br>执行语句2</p>
+<p>要达到这段程序的条件覆盖,我们采用测试用例:<br>1)a = true , b = false ;<br>2)a = false, b = true</p>
+<h5 id="4-判定-条件覆盖（CDC）"><a href="#4-判定-条件覆盖（CDC）" class="headerlink" title="4. 判定/条件覆盖（CDC）"></a>4. 判定/条件覆盖（CDC）</h5><p>判定/条件覆盖是使判定中每个条件的所有可能结果至少出现一次，并且每个判定本身的所有可能结果也至少出现一次。<br>例：<br>int a,b;<br>if(a || b)<br>执行语句1<br>else<br>执行语句2</p>
+<p>要达到这段程序的判定/条件覆盖,我们采用测试用例:<br>1)a = true , b = true;<br>2)a = false, b = false</p>
+<h5 id="5-条件组合覆盖（MCC）"><a href="#5-条件组合覆盖（MCC）" class="headerlink" title="5. 条件组合覆盖（MCC）"></a>5. 条件组合覆盖（MCC）</h5><p>选择足够的测试用例，使得每个判定中条件的各种可能组合都至少出现一次。显然，满足“条件组合覆盖”的测试用例是一定满足“判定覆盖”、“条件覆盖”和“判定/条件覆盖”的。</p>
+<p>例：<br>int a,b;<br>if(a || b)<br>执行语句1<br>else<br>执行语句2</p>
+<p>要达到这段程序的判定/条件覆盖,我们采用测试用例:<br>1)a = true , b = true;<br>2)a = false, b = false<br>3)a = true,  b = false<br>4)a = false,  b = ture</p>
+<h5 id="6-修正判定条件覆盖（MC-DC）"><a href="#6-修正判定条件覆盖（MC-DC）" class="headerlink" title="6. 修正判定条件覆盖（MC/DC）"></a>6. 修正判定条件覆盖（MC/DC）</h5><p>MC/DC首先要求实现条件覆盖、判定覆盖，在此基础上，对于每一个条件C，要求存在符合以下条件的两次计算：<br>    1）条件C所在判定内的所有条件，除条件C外，其他条件的取值完全相同；<br>    2）条件C的取值相反；<br>    3）判定的计算结果相反。</p>
+<pre><code>核心意思是每个条件都要独立影响判定结果。为什么说“两次计算”，而不是“两个用例”呢？当循环中有判定时，一个用例下同一判定可能被计算多次，每次的条件值和判定值也可能不同，因此，一个用例就可能完成循环中判定的MC/DC。
+
+MC/DC是条件组合覆盖的子集。条件组合覆盖要求覆盖判定中所有条件取值的所有可能组合，需要大量的测试用例，实用性较差。MC/DC具有条件组合覆盖的优势，同时大幅减少用例数。满足MC/DC的用例数下界为条件数+1，上界为条件数的两倍，例如，判定中有三个条件，条件组合覆盖需要8个用例，而MC/DC需要的用例数为4至6个。如果判定中条件很多，用例数的差别将非常大，例如，判定中有10个条件，条件组合覆盖需要1024个用例，而MC/DC只需要11至20个用例。
+
+下面是MC/DC的示例：
+
+代码：
+{% codeblock lang:c %}
+    int func(BOOL A, BOOL B, BOOL C)
+    {
+        if(A && (B || C))
+            return 1;
+        return 0;
+    }
+	{% endcodeblock %}
+用例：
+
+对于条件A，用例1和用例2，A取值相反，B和C相同，判定结果分别为1和0；
+对于条件B，用例1和用例3，B取值相反，A和C相同，判定结果分别为1和0；
+对于条件C，用例3和用例4，C取值相反，A和B相同，判定结果分别为0和1。
+</code></pre><h5 id="7-路径覆盖（PC）"><a href="#7-路径覆盖（PC）" class="headerlink" title="7. 路径覆盖（PC）"></a>7. 路径覆盖（PC）</h5><p>MC/DC被称为“最严格的标准”，但这种说法是将条件组合覆盖和路径覆盖排除在外为基础的。MC/DC显然不如条件组合覆盖严格，但是条件组合覆盖需要太多用例，实际应用中难以做到，所以排除，那么，路径覆盖是否也难以做到？使用先进的工具，对于一般的代码，实现路径覆盖还是可能的。另外，路径代表了从函数入口到出口的所有可能的代码组合，这些组合会不会出问题？只有路径覆盖能发现，这与MC/DC侧重于判定内的条件的组合关系是完全不同的。</p>
+<pre><code>ＭC/DC与路径覆盖的侧重点不同，两者都有其优势和局限性，如果组合起来，优势互补，形成“MC/DC-路径覆盖”，就是真正意义上的“最严格的标准”了。
+
+有些程序，路径数量可能大得惊人，可用以下规则和方法减少路径数量：
+计算路径时，不考虑循环的次数，将循环结构视为循环体“至少执行一次”和“从不执行”两个分支；
+不考虑条件的计算结果只考虑判定的计算结果，条件间的组合关系由条件覆盖、C/DC和MC/DC负责；
+一个分支如果不可达，通过该分支的所有路径也不可达，可以让工具自动排除；
+当代码很复杂时，理想的处置方式是将部分代码独立为函数，如果做不到，可以让工具来模拟，即在逻辑结构图中，将部分代码临时屏蔽，被屏蔽的代码视为一个函数调用。交替屏蔽可以既减少路径数量，又保证路径覆盖的效果。
+
+对于一般复杂度的代码，采用以上规则和方法后，路径数量和用例数量可以维持在一个现实可覆盖的的范围内。
+
+路径覆盖的主要缺陷是：不相关的逻辑块会组合出大量没有意义的路径。一个函数的路径，可能达到几万条甚至几百万条。如果路径超过100条，通常路径覆盖就没有意义了。对于一般企业来说，建议用MC/DC作为统一的覆盖标准，只有特别关键的代码，才要求完成“MC/DC-路径覆盖”。
+</code></pre><p>路径覆盖要求设计足够多的测试用例，在白盒测试法中，覆盖程度最高的就是路径覆盖，因为其覆盖程序中所有可能的路径。<br>对于比较简单的小程序来说，实现路径覆盖是可能的，但是如果程序中出现了多个判断和多个循环，可能的路径数目将会急剧增长，以致实现路径覆盖是几乎不可能的。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="iTesting WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="iTesting Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------<i class="fa-snowflake-o"></i>更多内容，请关注微信公众号iTesting-------------</div>
+    
+</div>
+	  
+	</div>
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="iTesting wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫码关注，跟作者互动</div>
+</div>
+
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/basic-knowledge/" rel="tag"># basic-knowledge</a>
+          
+        </div>
+      
+	<div>
+		  
+			
+		  
+	</div>
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/03/软件测试基础知识系列/黑盒测试用例设计/" rel="next" title="黑盒测试用例设计">
+                <i class="fa fa-chevron-left"></i> 黑盒测试用例设计
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/03/软件测试基础知识系列/白盒测试之基本路径测试法/" rel="prev" title="白盒测试之基本路径测试法">
+                白盒测试之基本路径测试法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="iTesting" />
+		  
+          <p class="site-author-name" itemprop="name"><a href= "/about">iTesting</a></p>
+		  
+          <p class="site-description motion-element" itemprop="description">Python， 测试开发， 软件测试， 自动化测试， 接口测试， Appium， Selenium， Jmeter， 职场感悟。</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">94</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/thinkbig" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-user-circle-o"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://qahome.cn" target="_blank" title="wechat">
+                  
+                    <i class="fa fa-fw fa-wechat"></i>
+                  
+                  wechat
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/thinkbig" title="知乎" target="_blank">知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-语句覆盖（SC）："><span class="nav-number">1.</span> <span class="nav-text">1. 语句覆盖（SC）：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-判定覆盖-DC"><span class="nav-number">2.</span> <span class="nav-text">2. 判定覆盖(DC)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-条件覆盖-CC"><span class="nav-number">3.</span> <span class="nav-text">3. 条件覆盖(CC)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-判定-条件覆盖（CDC）"><span class="nav-number">4.</span> <span class="nav-text">4. 判定/条件覆盖（CDC）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-条件组合覆盖（MCC）"><span class="nav-number">5.</span> <span class="nav-text">5. 条件组合覆盖（MCC）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-修正判定条件覆盖（MC-DC）"><span class="nav-number">6.</span> <span class="nav-text">6. 修正判定条件覆盖（MC/DC）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-路径覆盖（PC）"><span class="nav-number">7.</span> <span class="nav-text">7. 路径覆盖（PC）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  Copyright &nbsp 
+  &copy; 2017 - 
+  <span itemprop="copyrightYear">2018 &nbsp&nbsp Designed by helloqa</span>
+  
+  <span class="with-love">
+    <i class="fa fa-wechat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iTesting</span>
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+
+-->  
+
+
+        <!-- 
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+ -->
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
