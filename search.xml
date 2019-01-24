@@ -24,84 +24,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[[web开发] Flask+Python开发个人博客（六）]]></title>
-    <url>%2F2018%2F12%2F24%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%5Bweb%E5%BC%80%E5%8F%91%5D%20Flask%2BPython%E5%BC%80%E5%8F%91%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E5%85%AD%EF%BC%89%2F</url>
-    <content type="text"><![CDATA[Flask开发中的一些技巧。 旧文五篇：[web开发] Flask+Python开发个人博客（一）[web开发] Flask+Python开发个人博客（二）[web开发] Flask+Python开发个人博客（三）[web开发] Flask+Python开发个人博客（四）[web开发] Flask+Python开发个人博客（五） 在Flask开发中，我们常常会用到很多配置变量，这些变量一开始是我们的本地环境变量，等你开发好后，会替换成线上产品变量，这样就导致你经常需要把一个变量的值改来改去。其实Flask提供了一个很好的方式来解决这个问题， 那就是instance。正常情况下，我们的变量都存在config.py的文件里，当使用的时候，在__init__.py里，加入：1234567from flask import Flaskapp = Flask(__name__)app.config.from_object('config')#后面的代码中，如果需要用到某个变量，只需要：app.config["variable"] 就可以访问了 那么当你需要隔离某些变量时怎么办， 只需要在项目根目录下建立一个instance文件夹，然后里面建config文件，目录大概如下： 使用方式是在__init__.py里，加入：12345from flask import Flaskapp = Flask(__name__, instance_relative_config=True)app.config.from_pyfile('config.py')#这样，如果你instance文件里定义了某个变量，系统就会从instance文件夹下面的config文件里寻找。 同时你可以把instance这个文件加入到git的ignore名单，这样就无需再频繁改动config文件了。]]></content>
-      <categories>
-        <category>dev-in-test</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>dev-in-test</tag>
-        <tag>开发个人博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[[web开发] Flask+Python开发个人博客（五）]]></title>
-    <url>%2F2018%2F12%2F14%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%5Bweb%E5%BC%80%E5%8F%91%5D%20Flask%2BPython%E5%BC%80%E5%8F%91%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%BA%94%EF%BC%89%2F</url>
-    <content type="text"><![CDATA[开发任意一个博客或者网页，如果不是静态的，你就绕不过一个问题，数据怎么存储？ 今天是 [web开发] Flask+Python开发个人博客 第五篇，旧文四篇：[web开发] Flask+Python开发个人博客（四）[web开发] Flask+Python开发个人博客（三）[Web开发] Flask+Python 开发个人博客（二）[web开发] Flask+Python开发个人博客（一） 开发任意一个博客或者网页，如果不是静态的，你就绕不过一个问题，数据怎么存储？ 这个摊开来讲就是一个硕大的工程，今天仅就我的博客为例， 来讲下数据库设计。 我选择SQL Server2008 来存储我的数据， 我们看看都有什么内容要存？1.有登录和注册模块，那必然要存用户的相关信息 — Members2.要实现用户发帖和修改，那必须要有权限管理。 — Role， Privilege，RolePrivilege3.要发布文章，文章必须要管理起来 –Categories， Posts。 再来看下这些表之间的关系： 用户应该分组，所以Members表和Role表就有对应关系，具体表现为Members表每一个user有对应的RoleID。 分组不同，权限应该不同，RolePrivilege展示这个不同。 即使不是管理员用户，他自己发布的文章应该可以修改，删除，即每个用户对自己的文章有绝对权限，那么，文章Posts表应该有用户的Memerid。 每个文章应该都有一个类别，Posts表格和Categories应该有关联，同时Posts表应该表现这个不同。 根据上述要求，数据库表关应该如下： 最后，附上数据库设计的代码：1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556use kevin_forumgocreate table Role(RoleId int not null IDENTITY(1,1) primary key,RoleName varchar(50) not null, Description varchar(100) )create table Privilege(PrivilegeId int not null IDENTITY(1,1) primary key, PrivilegeName varchar(50) not null, Description varchar(100))create table RolePrivilege(RolePrivilegeId int not null primary key,RoleId int not null foreign key references Role(RoleId),PrivilegeId int foreign key references Privilege(PrivilegeId))create table Members(MemberId int not null IDENTITY(1,1) primary key, UserName varchar(50) unique NOT NULL, PassWord varchar(50) not null, RoleId int not null default(2) foreign key references Role(RoleId),PhoneNumber varchar(50) unique NOT NULL)CREATE TABLE [dbo].[Categories]( [CId] [int] IDENTITY(1,1) NOT NULL primary key, [CName] [varchar](100) NOT NULL,)CREATE TABLE [dbo].[Posts]( [PId] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY, [Title] [varchar](100) NULL, [Contents] [varchar](max) NULL, [MemberId] [int] NOT NULL foreign key references Members(MemberId), [CId] [int] NOT NULL, [Comments] [varchar](max) NULL, [InsertTime] [datetime] DEFAULT(getdate()), [ModifyTime] [datetime] DEFAULT(getdate()), [ModifyByMemberId] [int] NOT NULL)alter table [dbo].[Posts]add constraint posts_members_conn foreign key(MemberId) references [dbo].[Members](MemberId) alter table [dbo].[Posts]add foreign key(CId) references [dbo].[Categories](CId) 如果要了解数据库设计的原则，请自行搜索。]]></content>
-      <categories>
-        <category>dev-in-test</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>dev-in-test</tag>
-        <tag>开发个人博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[[web开发] Flask+Python开发个人博客（四）]]></title>
-    <url>%2F2018%2F12%2F13%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%5Bweb%E5%BC%80%E5%8F%91%5D%20Flask%2BPython%E5%BC%80%E5%8F%91%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E5%9B%9B%EF%BC%89%2F</url>
-    <content type="text"><![CDATA[Ckeditor， 最好的富文本编辑器之一。 这是[web开发] Flask+Python开发个人博客 系列 第四篇， 在线编辑器的使用。旧文三篇：[web开发] Flask+Python开发个人博客（三）[Web开发] Flask+Python 开发个人博客（二）[web开发] Flask+Python开发个人博客（一） 既然是博客，就免不了发布文章，而一个便利的，所见即所得的在线编辑器就显得至关重要，flask + WTF Forms 提供的textarea 功能太少，而且样式难以定制， 这个时候优秀的第3方控件就变成了我们的第一选择。经过比较，我选用了Ckeditor，今天我们来讲下如何把它嵌入到我们的项目里去。先看下嵌入到页面中的样子： 应用： 从ckeditor.com下载文件，放到flask目录下的static文件夹内。 在要引用的HTML head里引入如下代码：···python&lt;script src=&quot;{{ url_for('static', filename='ckeditor/ckeditor.js') }}&quot;&gt;&lt;/script&gt; ··· HTML页面嵌入ckeditor代码：12345678&lt;textarea name=&quot;editor1&quot; id=&quot;editor1&quot; rows=&quot;10&quot; cols=&quot;80&quot;&gt; This is my textarea to be replaced with CKEditor. &lt;/textarea&gt; &lt;script&gt; // Replace the &lt;textarea id=&quot;editor1&quot;&gt; with a CKEditor // instance, using default configuration. CKEDITOR.replace( &apos;editor1&apos; ); &lt;/script&gt; 就这么简单，那么CKeditor如何跟flask结合起来呢？我写了一个sample project： 项目目录如下： static文件夹就是我们下载下来的ckeditor源文件。 templates下面是我们的HTML页面， 代码如下： 1234567891011121314151617181920212223242526&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;title&gt;A Simple Page with CKEditor&lt;/title&gt; &lt;!-- 请确保CKEditor文件路径正确 --&gt; &lt;script src="&#123;&#123; url_for('static', filename='ckeditor/ckeditor.js') &#125;&#125;"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;form method = 'post' action=''&gt; &#123;&#123; form.csrf_token &#125;&#125; title: &#123;&#123; form.title &#125;&#125; category: &#123;&#123; form.category &#125;&#125; &lt;textarea name="editor1" id="editor1" rows="10" cols="80"&gt; &#123;&#123; content &#125;&#125; &lt;/textarea&gt; &lt;script&gt; // 用CKEditor替换&lt;textarea id="editor1"&gt; // 使用默认配置 CKEDITOR.replace('editor1'); &lt;/script&gt; &#123;&#123; content &#125;&#125; publish: &#123;&#123; form.publish &#125;&#125; &lt;/form&gt; &lt;/body&gt;&lt;/html&gt; 4.run.py 是整个工程源码:1234567891011121314151617181920212223242526272829303132#coding=utf-8from flask import Flaskfrom flask import render_templatefrom flask import requestfrom flask_wtf import FlaskForm, validatorsfrom wtforms import StringField, SubmitFieldclass PostEditor(FlaskForm): title = StringField('标题', [validators.DataRequired("Please enter your title")]) category = StringField('类别', [validators.DataRequired("Please enter your category")]) content = StringField('内容', [validators.DataRequired("Please enter your content")]) publish = SubmitField('发布')app = Flask(__name__)app.secret_key = 'iTesting'@app.route('/', methods=['GET', 'POST'])def index(): form = PostEditor() if request.method == "POST" or form.validate_on_submit(): content = request.form.get('editor1') return render_template('ckeditor.html', content=content, form=form) return render_template('ckeditor.html', form=form)if __name__ == "__main__": app.run(debug=True) 演示效果如下：初始效果：提交以后效果： 可以看到， 当点击提交时候，我们在CKeditor里的内容被记下来发给flask后端了，所以我们才能再次看见我们输入的内容。 以上就是CKEditor结合flask的简单使用， 但是缺点是只能接受文本内容，我们写博客肯定希望图文并茂，那么就需要配置ckeditor下的config.js了： 在config.js文件合适位置添加： 1config.filebrowserUploadUrl = '/ckupload/'; 在run.py 合适位置添加后台处理上传请求代码： 12345678910111213141516171819202122232425262728293031323334353637383940def gen_rnd_filename(): filename_prefix = datetime.datetime.now().strftime('%Y%m%d%H%M%S') return '%s%s' % (filename_prefix, str(random.randrange(1000, 10000)))@app.route('/ckupload/', methods=['POST'])def ckupload(): """CKEditor file upload""" error = '' url = '' callback = request.args.get("CKEditorFuncNum") if request.method == 'POST' and 'upload' in request.files: fileobj = request.files['upload'] fname, fext = os.path.splitext(fileobj.filename) rnd_name = '%s%s' % (gen_rnd_filename(), fext) filepath = os.path.join(app.static_folder, 'upload', rnd_name) # 检查路径是否存在，不存在则创建 dirname = os.path.dirname(filepath) if not os.path.exists(dirname): try: os.makedirs(dirname) except: error = 'ERROR_CREATE_DIR' elif not os.access(dirname, os.W_OK): error = 'ERROR_DIR_NOT_WRITEABLE' if not error: fileobj.save(filepath) url = url_for('static', filename='%s/%s' % ('upload', rnd_name)) else: error = 'post error' res = """&lt;script type="text/javascript"&gt; window.parent.CKEDITOR.tools.callFunction(%s, '%s', '%s');&lt;/script&gt;""" % (callback, url, error) response = make_response(res) response.headers["Content-Type"] = "text/html" return response 这段代码获取上传的文件，并把它保存在项目static根目录下的ckupload文件夹内。我们看下一个上传成功的例子：通过运行python run.py,访问http://localhost:5000, 填写相应内容提交：至此，项目结构变为： 这样ckeditor和flask的集成就做好了，后续需要我们设计数据库表格来保存我们写的博客文章内容，这个放到下次讲。 如果你对ckeditor的配置有疑问，请留言给我或者直接访问官网]]></content>
-      <categories>
-        <category>dev-in-test</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>dev-in-test</tag>
-        <tag>开发个人博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[[web开发] Flask+Python开发个人博客（三）]]></title>
-    <url>%2F2018%2F12%2F10%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%5Bweb%E5%BC%80%E5%8F%91%5D%20Flask%2BPython%E5%BC%80%E5%8F%91%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%89%EF%BC%89%2F</url>
-    <content type="text"><![CDATA[Blue print 蓝图应用指南 今天我们来讲讲flask里的blue print – 蓝图。旧文两篇：[web开发] Flask+Python开发个人博客（一）[Web开发] Flask+Python 开发个人博客（二） 在前两篇的时候，大家还记得不同类型的账户，访问到的同一个页面元素有不同吗？这个是怎么做到呢？这就是蓝图的妙用了。什么是蓝图，我们为什么要用蓝图？我们来看下exploreflask上的解释： What is a blueprint?一个蓝图定义了可用于单个应用的视图，模板，静态文件等等的集合。举个例子，想象一下我们有一个用于管理面板的蓝图。这个蓝图将定义像/admin/login和/admin/dashboard这样的路由的视图。它可能还包括所需的模板和静态文件。你可以把这个蓝图当做你的应用的管理面板，管它是宇航员的交友网站，还是火箭推销员的CRM系统。 Why would you use blueprints?蓝图的杀手锏是将你的应用组织成不同的组件。假如我们有一个微博客，我们可能需要有一个蓝图用于网站页面，比如index.html和about.html。然后我们还需要一个用于在登录面板中展示最新消息的蓝图，以及另外一个用于管理员面板的蓝图。站点中每一个独立的区域也可以在代码上隔绝开来。最终你将能够把你的应用依据许多能完成单一任务的小应用组织起来。 Where do you put them? 以我的blog为例，对于同一篇文章，我希望不同权限的人看到的内容不同，但是我又想最大程度的重用一个模板，我的目录应该如下面的类似组织： How to use： 前提条件，forms需要定义好， forum_app/forms.py 12345678from flask_wtf import FlaskFormfrom wtforms import StringField, SubmitField, validators,from wtforms.validators import Regexpclass PostEditor(FlaskForm): title = StringField('标题', [validators.DataRequired("Please enter your title")]) category = StringField('类别') publish = SubmitField('发布') 在views里定义好路由 以admin_views为例： views.py12345678910111213141516171819202122232425262728293031#coding=utf-8import timefrom flask import render_template,request, Blueprint, redirect, url_forfrom forum_app.db_helper.db_helper import update_postfrom forum_app.forms import PostEditorblue_admin = Blueprint('blue_admin', __name__, template_folder='admin_forums')@blue_admin.route('/detail_posts', methods =['GET', 'POST'])def posts_detail(): form = PostEditor() pid = request.args.get("id") post_title = request.args.get("title") post_category = request.args.get("category") post_author = request.args.get("author") post_contents = request.args.get("contents") post_create_time = request.args.get("create_time") blue_print_name = "blue_admin" form.category.data = request.args.get("category") form.title.data = request.args.get("title") if request.method == "POST" and form.validate_on_submit(): if request.form.get('publish') == '发布': update_post(request.form.get('title'), request.form.get('category'), request.form.get('editor1'), id=pid) return redirect(url_for('forum')) return render_template('admin_forums/posts.html', post_title=post_title,\ post_category=post_category, \ post_author=post_author, post_contents=post_contents, \ blue_print_name=blue_print_name, post_create_time=post_create_time, pid=pid, form=form) 创建一个蓝图的语法如下：1blue_admin = Blueprint('blue_admin', __name__, template_folder='admin_forums') To create a blueprint object, we import the Blueprint() class and initialize it with the arguments name and import_name. Usually import_name will just be name, which is a special Python variable containing the name of the current module.The last parameter tell flask that the blueprint has its own template and static direcories. 定义好蓝图后，要把它注册到我们的程序上：run.py 1234567from flask import Flaskfrom forum_app.views.admin_views.views import blue_adminapp = Flask(__name__)app.register_blueprint(blue_admin, url_prefix='/admin')app.run(debug=True) 最后一步，构造URL，绑定路由和HTML template。你只需要在 URL 的末端加上蓝图的名称和一个点（ . ）作为前缀即可完成绑定:url_for(‘blue_admin.post_detail’)templates/forum.html 部分代码 本例中我为了方便，user的post_detail路由和admin的post_detail路由所指向的html template我分开了：两个posts.html，在应用中你也可以用一个template，中间用if语句引导不同的路由渲染不同的templates。 到此就完成了所有blue print的应用，blueprint 给我们提供了一种类插件功能，我们可以利用它完成很多功能，比如admin用户的control panel功能，这样方便了我们定制功能。 更多内容，查看官方文文档： http://docs.jinkan.org/docs/flask/blueprints.html]]></content>
-      <categories>
-        <category>dev-in-test</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>dev-in-test</tag>
-        <tag>开发个人博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[[Web开发] Flask+Python 开发个人博客（二）]]></title>
-    <url>%2F2018%2F12%2F05%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%5BWeb%E5%BC%80%E5%8F%91%5D%20Flask%2BPython%20%E5%BC%80%E5%8F%91%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%BA%8C%EF%BC%89%2F</url>
-    <content type="text"><![CDATA[Flask打造个人博客系列,今天是第一篇，我们详细讲解登录，注册模块。 旧文一篇：[web开发] Flask+Python开发个人博客（一） 既然是Flask来开发，你得: 安装 1pip install Flask 实现最简单的一个hello word：views.py 123@app.route("/")def hello(): return "Hello World!" run.py 123456from flask import Flaskapp = Flask(__name__)if __name__ == "__main__": app.run(debug=True) 在terminal里输入python run.py, 现在在浏览器打开http://127.0.0.1:5000, 看看发生了什么？：） 很简单吧？貌似第2部分点陌生：@app.route是什么鬼？它正是用于在Flask应用中给视图函数设定路由URL的装饰器。一头雾水？装饰器是什么？ WTF？Python装饰器让我们可以用其他函数包装特定函数。 当一个函数被一个装饰器”装饰”时，那个装饰器会被调用，接着会做额外的工作，修改变量，调用原来的那个函数. 视图， 路由又是啥玩意，简单解释下： 上面的@app.route就等价于图中的Routes部分。@app.route（’/‘）就是注册了一个路由（注册路由就是建立URL规则和处理函数之间的关联。Flask框架依赖于路由 完成HTTP请求的分发）。这样当你访问“/”这个path的时候，python就自动把要它联系到hello（）这个function上，controller处理完后就会返还给你。 现在我们知道了，视图函数hello既然可以返回hello word， 那么我们也可以定义其他视图函数来返回注册和登录页面。代码示意如下：views.py views.py这段代码作用就是你在url里输入 “127.0.0.1:5000/login后，flask会找到login对应的函数，处理后返回login.html中的内容。那么， login.html 里有哪些内容呢？templates/login.htmlHTML我们都会写一点, 但是{}是什么符号起什么作用呢？因为Python直接写html太麻烦，于是Flask 内置了 Jinja2 模板引擎，帮你更方便的写html。你可以在这个模板里使用变量或者表达式，当这个页面显示的时候，变量或者表达式的值就会填充到你HTML页面相应的部分，这个变量或者表达式的值是从哪里取来的呢？当然是从你flask程序里.一般Flask 会在 templates 文件夹里寻找模板。所以，你只需要用HTML写两个页面login.html 和signup.html，然后放到根目录下的templates文件夹下就可以了。flask会自己找到这两个页面并渲染。 下面简述下如何使用inja2模板来写html页面.1.安装： 1pip install Jinja2 2.使用：如上的HTML。 介绍两个常用的变量标志符： {% ... %} for Statements，例如上文的for循环语句。 {{ ... }} for Expressions to print to the template output， 例如上文的 {{ form.username }}，{{ form.password }}. 我们知道登录的时候，需要输入用户名和密码，点击登录按钮，这个通常放到表单里来做，那么点击登录会发生什么呢？ 表单里用户名和密码的内容会提交到程序后端处理，对于Flask来说，它使用Flask-WTF来自动化表单的操作， 我们来看看如何处理表单： 1. 安装 1pip install Flask-WTF forms.py表单定义好后，需要配合视图使用， 也就是我们在views.py的文件头里，加上：1from forum_app.forms import LoginForm 这样你在浏览器里输入 http://127.0.0.1:5000/login，就会转到login页面，输入用户名密码，提交，就会走login这个视图函数的逻辑了。现在再回去看下views.py，你会发现 1get_member_id_by_username（username） 这个是什么呢？就是后端的代码逻辑了，此处为了从数据库里根据用户名找到用户id。这个需要用到SQLAlchemy这个库，我之前写过相关的文章，点击这里查看SQLAlchemy用法。 通过这种方法Jinja2 用来写前端页面templates， Views用来处理url绑定和视图，wtf-forms用来简化表单操作，Flask就这样实现了一个简单的注册登录。]]></content>
-      <categories>
-        <category>dev-in-test</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>dev-in-test</tag>
-        <tag>开发个人博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[[web开发] Flask+Python开发个人博客（一）]]></title>
-    <url>%2F2018%2F12%2F05%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%5BWeb%E5%BC%80%E5%8F%91%5D%20Flask%2BPython%20%E5%BC%80%E5%8F%91%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%80%EF%BC%89%2F</url>
-    <content type="text"><![CDATA[纯flask实现的一个blog。 网站的整体效果：登录页面（也是首页）： 注册页面: 这两个页面都实现了基本的验证，比如：用户名密码为空 密码不正确： 正确登录后会跳转到系统主页面，长下面的样子： 页面模块： Header Footer 文章模块点击主页上的模块，或者在任何文章的类别上点击，会进入下面的两个页面：一个是列在Header上的类别，类别选中会高亮。： 一个是未列在Header上的类别，无高亮： 文章分类tag 分页模块 参考了Flask上的分页，加上用了Bootstrap的样式 新建/修改/删除 文章模块。 用了CK Editor，最好的编辑器之一。 新建： 修改： 删除： 文章详页模块 一个是对文章只有浏览权限，没有修改和删除按钮： 一个是文章的作者或者Admin用户组的用户，对文章有full control权限 权限控制模块（包括用户，权限，登录验证，管理员验证等） 项目配置（使用instance）]]></content>
-      <categories>
-        <category>dev-in-test</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>dev-in-test</tag>
-        <tag>开发个人博客</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[测试框架实践--实现TestFixture]]></title>
     <url>%2F2018%2F11%2F24%2F%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%2F%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E5%AE%9E%E8%B7%B5--%E5%AE%9E%E7%8E%B0TestFixture%2F</url>
     <content type="text"><![CDATA[前面几期分享我实现了一个可以并发运行的”框架“， 其实只能叫半成品， 但好歹可以并发运行， 测试用例动态挑选了。那么还少了什么呢？一个测试类，通常有多个测试方法，有时候一个或多个测试方法都需要某些共用的”数据“， 比如说都要访问某个数据库的某张表，比如说都需要起浏览器，都需要调用post方法等。 这个时候每个测试用例单独写就显得很多余，TestFixture就应运而生。我们先来看下Test Fixture的定义： A test fixture represents the preparation needed to perform one or more tests, and any associate cleanup actions. This may involve, for example, creating temporary or proxy databases, directories, or starting a server process. 由此可见，Test Fixture用在测试方法前，或者测试方法后，主要功能是提供一些测试需要用的装置，这些装置可以是数据，可以是环境配置也可以是一个运行前状态。Fixture有下面两种： setup(), teardown（）的方式，分别在每个测试方法执行前后执行。setUpClass（）， tearDownClass（）的方式，分别在每个测试类执行前后执行, setUpClass（）和tearDownClass（）只会执行一次，即使这个测试类有多个测试函数。我们在实现这个之前，先看下上次我们实现并发时，真正执行一个测试函数的代码块， 它的代码：12345678910111213def f(case): name, func, value = case try: if value: func.__call__(name, *value) else: func.__call__(name) except: # traceback.print_exc() cases_run_fail.append(name) else: cases_run_success.append(name) return cases_run_fail, cases_run_success这个代码块是针对每一个测试函数的，那么我们多线程运行时，每个测试函数都会执行这段代码，这样就好办了，直接把setup和teardown加进来就能实现每个测试函数都执行setup和teardown方法了。123456789101112131415161718192021def f(case): cls， name, func, value = case try: # Run setUP method for each test method. #看这里 getattr(cls, "setUp").__call__(cls) if value: func.__call__(name, *value) else: func.__call__(name) #看这里 # Run tearDown method for each test method. getattr(cls, "tearDown").__call__(cls) except: # traceback.print_exc() cases_run_fail.append(name) else: cases_run_success.append(name) return cases_run_fail, cases_run_success可以看到这个函数传入的参数也改变了，case的值里加入了cls这个类。要达成这个效果， 相当于如何根据测试方法找到所属的测试类，利用inspect模块很简单的就拿到了。当然你也可以用name拿到函数名。 setup和teardown这两个方法每个测试用例都会执行，看到这里想明白了吗？这就意味着如果你在这里做初始化浏览器的操作，那么这个框架就可以做UI自动化，如果你做的是HTTP的get或者post的操作，那么这个框架也就是API接口框架。 setup和teardown实现了。我们再来看下setUpClass, tearDownClass的实现。那么我是怎么共享线程间的变量呢？ 常规情况下，我们可以用数据持久化的方式实现，具体来说，就是每个测试函数执行时候先去找一个文件，这个文件在就不再执行setUpClass，当然你得做好线程安全。大家还记得我的多线程是怎么实现的呢？12345#多线程部分代码with ThreadPool(number_of_threads) as p: p.map(f, cases_to_run)p.close()p.join()对于每一个线程，都去调用f函数，这个函数就是上方实现了每个函数setup和teardown的f。现在好了，我们用map可以不关心这些，直接嵌套实现：我把所有的用例重新组织，形成一种特殊的数据结构，具体来说，就是每个测试类和属于这个测试类的所有函数， 以如下方式组织(cls, [cls.method1, cls.method2])最终所有的测试类，在放到一个列表对象里。这样第一层次的并发，是基于测试类的，然后针对每一个测试类，我再进行并发。具体代码如下：123456789101112131415161718192021#部分代码def run(case): #cls是测试类 cls = case[0] #func_pack是测试函数及所有参数 func_pack = case[1] #实现setUPClass #到这一层只是类并发，真正的测试函数还没有并发。 #setUPClass应该做到测试类有设置就执行，否则就不执行。 handle_before_class_fixture(cls) p = ThreadPool(number_of_threads) #真正的测试函数并发 #这个func_run就相当于我们之前的f。 p.map(func_run, func_pack) p.close() p.join() #实现tearDownClass handle__after_class_fixture(cls)为了验证正确性，我把我们的测试类和方法改进如下：1234567891011121314151617181920212223242526@TestClass()class TestSumData: @BeforeClass() def before_class(cls): print("haha") cls.status = 1 def setUp(self): print("Now starting") @data_provider([(1, 2, 3), (4, 5, 9)]) @Test() def test_sum_data(self, x, y, z): print('Case &#123;0&#125; are running with data &#123;1&#125; -- thread id &#123;2&#125;'.format( self, (x, y, z), current_process())) print(self.status) assert SumData().sum_data(x, y) == z @Test(enabled=True) def test_sum_data2(self): print('Case &#123;0&#125; are running with data &#123;1&#125; -- thread id &#123;2&#125;'.format( self, None , current_process())) print(self.status) assert SumData().sum_data(4, 5) == 7 def tearDown(self): print("Now finished") @AfterClass() def after_class(cls): cls.status =0跑一下看看： 可以看到，cls.status这个共享数据，成功被测试函数接收到了。 setUpClass（我这里对应before_class）也成功运行， 且只运行了一次。 毫无破绽：） 到此为止，我已经实现了一个测试框架的绝大数功能，下一步，就要改造我的log还有接收用户参数了，敬请期待。历史文章：测试框架–教你用Python实现数据驱动1测试框架–教你用Python实现数据驱动2测试框架–数据驱动动态增加测试用例测试框架实践–动态挑选待运行测试用例Python测试框架实现(五)–多线程]]></content>
@@ -393,6 +315,19 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[[web开发] Flask+Python开发个人博客（六）]]></title>
+    <url>%2F2017%2F12%2F24%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%5Bweb%E5%BC%80%E5%8F%91%5D%20Flask%2BPython%E5%BC%80%E5%8F%91%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E5%85%AD%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[Flask开发中的一些技巧。 旧文五篇：[web开发] Flask+Python开发个人博客（一）[web开发] Flask+Python开发个人博客（二）[web开发] Flask+Python开发个人博客（三）[web开发] Flask+Python开发个人博客（四）[web开发] Flask+Python开发个人博客（五） 在Flask开发中，我们常常会用到很多配置变量，这些变量一开始是我们的本地环境变量，等你开发好后，会替换成线上产品变量，这样就导致你经常需要把一个变量的值改来改去。其实Flask提供了一个很好的方式来解决这个问题， 那就是instance。正常情况下，我们的变量都存在config.py的文件里，当使用的时候，在__init__.py里，加入：1234567from flask import Flaskapp = Flask(__name__)app.config.from_object('config')#后面的代码中，如果需要用到某个变量，只需要：app.config["variable"] 就可以访问了 那么当你需要隔离某些变量时怎么办， 只需要在项目根目录下建立一个instance文件夹，然后里面建config文件，目录大概如下： 使用方式是在__init__.py里，加入：12345from flask import Flaskapp = Flask(__name__, instance_relative_config=True)app.config.from_pyfile('config.py')#这样，如果你instance文件里定义了某个变量，系统就会从instance文件夹下面的config文件里寻找。 同时你可以把instance这个文件加入到git的ignore名单，这样就无需再频繁改动config文件了。]]></content>
+      <categories>
+        <category>dev-in-test</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>dev-in-test</tag>
+        <tag>开发个人博客</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Python算法分享系列 -- 查找，排序，递归]]></title>
     <url>%2F2017%2F12%2F19%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E7%AE%97%E6%B3%95%2FPython%E7%AE%97%E6%B3%95%E5%88%86%E4%BA%AB%E7%B3%BB%E5%88%97%20--%20%E6%9F%A5%E6%89%BE%EF%BC%8C%E6%8E%92%E5%BA%8F%EF%BC%8C%E9%80%92%E5%BD%92%2F</url>
     <content type="text"><![CDATA[沉寂了一段时间，继续学习。算法这个系列我想分享很久了，奈何本身对算法不是特别了解，又找不到合适的载体来分享。最近看了本有趣的算法书， 文中通过图文并茂的讲解给我很大启发，尝试着分享下 需要注意的是， 文中各个算法的写法不是简单的拷贝，算理解思想后拿Python3重新写了遍，分享的代码和书中的例子也稍有不同，加了些日常工作中会做的处理，如有不适，请联系我。 二分查找 –仅当列表是有序的时候才能用思想： 1.目标是找数组中的某一个元素，暂叫item2.找出整个数组中间的那个元素，它下标mid，数组被它一分为二3.比较下标mid对应的元素和item，如果mid对应的元素大，查找范围缩小到mid前面的那一半数组，反之，缩小到mid后的那一半数组4.重复3，直到item==mid 对于包含N个元素的列表，用二分查找最多需要log2 N 步。（对数是幂运算的逆运算） 大O表示法指出了算法有多快。例如，假设列表包含n 个元素。简单查找需要检查每个元素，因此需要执行n 次操作。使用大O表示法，这个运行时间为O (n )。单位秒呢？没有——大O表示法指的并非以秒为单位的速度。大O表示法让你能够比较操作数，它指出了算法运行时间的增速 。 再来看一个例子。为检查长度为n 的列表，二分查找需要执行log n 次操作。使用大O表示法，这个运行时间怎么表示呢？O (log n )。一般而言，大O表示法按从快到慢的顺序列出了你经常会遇到的5种大O运行时间。 O (log n )，也叫对数时间 ，这样的算法包括二分查找。O (n )，也叫线性时间 ，这样的算法包括简单查找。O (n * log n )，这样的算法包括第4章将介绍的快速排序——一种速度较快的排序算法。O (n 2 )，这样的算法包括第2章将介绍的选择排序——一种速度较慢的排序算法。O (n !)，这样的算法包括接下来将介绍的旅行商问题的解决方案——一种非常慢的算法。 大O表示法指出了最糟情况下的运行时间. 选择排序思想： 找出数组中最小的元素把数组中最小的元素pop出来到新的数组里。重复以上操作直到原数组为空 需要存储多个元素时，可使用数组或链表。数组的元素都在一起。链表的元素是分开的，其中每个元素都存储了下一个元素的地址。数组的读取速度很快。链表的插入和删除速度很快。在同一个数组中，所有元素的类型都必须相同（都为int、double等） 数字和链表区别：数组： 连续空间， 预留空间， 查找方便， 插入麻烦，必须移动后面的所有元素，如果没有空间，必须将数组复制到其他地方。链表： 分散空间，查找麻烦，插入方便，只需移动前面元素指向的地址。 数组 链表 读取 O（1） O（n） 插入 O（n） O（1） 删除 O（n） O(1) 访问 顺序访问 随机访问 O(n)=线性时间O(1)=常量时间 递归每个递归函数都有两部分：基线条件 （base case）和递归条件 （recursive case）。递归条件指的是函数调用自己，而基线条件则指的是函数不再调用自己，从而避免形成无限循环。12345678 def fact(x): if x&lt;=1: #----基线条件 return 1 else: fact(x-1) #---递归条件print(fact(6)) 我们拿 最大公约数 来举例： 思想： 假定x &gt; y（如果x &lt; y，则互换）求x对y的余数，假定余数为z求y与z的最大公约数即为x，与y的最大公约数0没有公约数 最小公倍数 ：思想： 两个数(x, y)的最小公倍数数的算法为：两个数相乘再除以他们的最大公约数0没有公倍数 公约数，公倍数，适用于自然数。 快速排序思想： 少于2个元素的数组不需要排序找一个元素作为基数小于基数的放一个数组大于基数的放一个数组针对小于基数的数组做快速排序，暂且叫low针对大于基数的数组做快速排序, 暂且叫high最终排序后的 low + 【基数】+ high，就是排好序的数组 总结下： D&amp;C算法（divided and conqure）是递归的。使用D&amp;C解决问题的过程包括两个步骤。(1) 找出基线条件，这种条件必须尽可能简单。(2) 不断将问题分解（或者说缩小规模），直到符合基线条件。 散列表（Hash Table）散列函数： 散列函数是这样的函数，即无论你给它什么数据，它都还你一个数字。散列函数总是将同样的输入映射到相同的索引。例如你每次输入iTesting，它返回你的总是同一个数字。散列函数将不同的输入映射到不同的索引。比如iTesting对应6， python对于0. 如果散列函数将不同的键映射到同一个位置，就在这个位置存储一个链表。散列函数知道数组有多大，只返回有效的索引。如果数组包含5个元素，散列函数就不会返回无效索引100。 结合使用散列函数和数组创建了一种被称为散列表 （hash table）的数据结构。不需要自己去实现散列表，任一优秀的语言都提供了散列表实现。Python提供的散列表实现为字典 ，你可使用函数dict 来创建散列表。 散列表被用于大海捞针式的查找，散列表适合用于：模拟映射关系；防止重复；缓存/记住数据，以免服务器再通过处理来生成它们。 总结： 你可以结合散列函数和数组来创建散列表。冲突很糟糕，你应使用可以最大限度减少冲突的散列函数。散列表的查找、插入和删除速度都非常快。散列表适合用于模拟映射关系。一旦填装因子超过0.7，就该调整散列表的长度（通常将数组长度加倍）。散列表可用于缓存数据（例如，在Web服务器上）。散列表非常适合用于防止重复。（填装因子是数组中被占用的位置，例如大小为3的数字，有2个被占用，则填装因子为2/3）]]></content>
@@ -413,6 +348,71 @@
       </categories>
       <tags>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[[web开发] Flask+Python开发个人博客（五）]]></title>
+    <url>%2F2017%2F12%2F14%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%5Bweb%E5%BC%80%E5%8F%91%5D%20Flask%2BPython%E5%BC%80%E5%8F%91%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%BA%94%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[开发任意一个博客或者网页，如果不是静态的，你就绕不过一个问题，数据怎么存储？ 今天是 [web开发] Flask+Python开发个人博客 第五篇，旧文四篇：[web开发] Flask+Python开发个人博客（四）[web开发] Flask+Python开发个人博客（三）[Web开发] Flask+Python 开发个人博客（二）[web开发] Flask+Python开发个人博客（一） 开发任意一个博客或者网页，如果不是静态的，你就绕不过一个问题，数据怎么存储？ 这个摊开来讲就是一个硕大的工程，今天仅就我的博客为例， 来讲下数据库设计。 我选择SQL Server2008 来存储我的数据， 我们看看都有什么内容要存？1.有登录和注册模块，那必然要存用户的相关信息 — Members2.要实现用户发帖和修改，那必须要有权限管理。 — Role， Privilege，RolePrivilege3.要发布文章，文章必须要管理起来 –Categories， Posts。 再来看下这些表之间的关系： 用户应该分组，所以Members表和Role表就有对应关系，具体表现为Members表每一个user有对应的RoleID。 分组不同，权限应该不同，RolePrivilege展示这个不同。 即使不是管理员用户，他自己发布的文章应该可以修改，删除，即每个用户对自己的文章有绝对权限，那么，文章Posts表应该有用户的Memerid。 每个文章应该都有一个类别，Posts表格和Categories应该有关联，同时Posts表应该表现这个不同。 根据上述要求，数据库表关应该如下： 最后，附上数据库设计的代码：1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556use kevin_forumgocreate table Role(RoleId int not null IDENTITY(1,1) primary key,RoleName varchar(50) not null, Description varchar(100) )create table Privilege(PrivilegeId int not null IDENTITY(1,1) primary key, PrivilegeName varchar(50) not null, Description varchar(100))create table RolePrivilege(RolePrivilegeId int not null primary key,RoleId int not null foreign key references Role(RoleId),PrivilegeId int foreign key references Privilege(PrivilegeId))create table Members(MemberId int not null IDENTITY(1,1) primary key, UserName varchar(50) unique NOT NULL, PassWord varchar(50) not null, RoleId int not null default(2) foreign key references Role(RoleId),PhoneNumber varchar(50) unique NOT NULL)CREATE TABLE [dbo].[Categories]( [CId] [int] IDENTITY(1,1) NOT NULL primary key, [CName] [varchar](100) NOT NULL,)CREATE TABLE [dbo].[Posts]( [PId] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY, [Title] [varchar](100) NULL, [Contents] [varchar](max) NULL, [MemberId] [int] NOT NULL foreign key references Members(MemberId), [CId] [int] NOT NULL, [Comments] [varchar](max) NULL, [InsertTime] [datetime] DEFAULT(getdate()), [ModifyTime] [datetime] DEFAULT(getdate()), [ModifyByMemberId] [int] NOT NULL)alter table [dbo].[Posts]add constraint posts_members_conn foreign key(MemberId) references [dbo].[Members](MemberId) alter table [dbo].[Posts]add foreign key(CId) references [dbo].[Categories](CId) 如果要了解数据库设计的原则，请自行搜索。]]></content>
+      <categories>
+        <category>dev-in-test</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>dev-in-test</tag>
+        <tag>开发个人博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[[web开发] Flask+Python开发个人博客（四）]]></title>
+    <url>%2F2017%2F12%2F13%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%5Bweb%E5%BC%80%E5%8F%91%5D%20Flask%2BPython%E5%BC%80%E5%8F%91%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E5%9B%9B%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[Ckeditor， 最好的富文本编辑器之一。 这是[web开发] Flask+Python开发个人博客 系列 第四篇， 在线编辑器的使用。旧文三篇：[web开发] Flask+Python开发个人博客（三）[Web开发] Flask+Python 开发个人博客（二）[web开发] Flask+Python开发个人博客（一） 既然是博客，就免不了发布文章，而一个便利的，所见即所得的在线编辑器就显得至关重要，flask + WTF Forms 提供的textarea 功能太少，而且样式难以定制， 这个时候优秀的第3方控件就变成了我们的第一选择。经过比较，我选用了Ckeditor，今天我们来讲下如何把它嵌入到我们的项目里去。先看下嵌入到页面中的样子： 应用： 从ckeditor.com下载文件，放到flask目录下的static文件夹内。 在要引用的HTML head里引入如下代码：···python&lt;script src=&quot;{{ url_for('static', filename='ckeditor/ckeditor.js') }}&quot;&gt;&lt;/script&gt; ··· HTML页面嵌入ckeditor代码：12345678&lt;textarea name=&quot;editor1&quot; id=&quot;editor1&quot; rows=&quot;10&quot; cols=&quot;80&quot;&gt; This is my textarea to be replaced with CKEditor. &lt;/textarea&gt; &lt;script&gt; // Replace the &lt;textarea id=&quot;editor1&quot;&gt; with a CKEditor // instance, using default configuration. CKEDITOR.replace( &apos;editor1&apos; ); &lt;/script&gt; 就这么简单，那么CKeditor如何跟flask结合起来呢？我写了一个sample project： 项目目录如下： static文件夹就是我们下载下来的ckeditor源文件。 templates下面是我们的HTML页面， 代码如下： 1234567891011121314151617181920212223242526&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;title&gt;A Simple Page with CKEditor&lt;/title&gt; &lt;!-- 请确保CKEditor文件路径正确 --&gt; &lt;script src="&#123;&#123; url_for('static', filename='ckeditor/ckeditor.js') &#125;&#125;"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;form method = 'post' action=''&gt; &#123;&#123; form.csrf_token &#125;&#125; title: &#123;&#123; form.title &#125;&#125; category: &#123;&#123; form.category &#125;&#125; &lt;textarea name="editor1" id="editor1" rows="10" cols="80"&gt; &#123;&#123; content &#125;&#125; &lt;/textarea&gt; &lt;script&gt; // 用CKEditor替换&lt;textarea id="editor1"&gt; // 使用默认配置 CKEDITOR.replace('editor1'); &lt;/script&gt; &#123;&#123; content &#125;&#125; publish: &#123;&#123; form.publish &#125;&#125; &lt;/form&gt; &lt;/body&gt;&lt;/html&gt; 4.run.py 是整个工程源码:1234567891011121314151617181920212223242526272829303132#coding=utf-8from flask import Flaskfrom flask import render_templatefrom flask import requestfrom flask_wtf import FlaskForm, validatorsfrom wtforms import StringField, SubmitFieldclass PostEditor(FlaskForm): title = StringField('标题', [validators.DataRequired("Please enter your title")]) category = StringField('类别', [validators.DataRequired("Please enter your category")]) content = StringField('内容', [validators.DataRequired("Please enter your content")]) publish = SubmitField('发布')app = Flask(__name__)app.secret_key = 'iTesting'@app.route('/', methods=['GET', 'POST'])def index(): form = PostEditor() if request.method == "POST" or form.validate_on_submit(): content = request.form.get('editor1') return render_template('ckeditor.html', content=content, form=form) return render_template('ckeditor.html', form=form)if __name__ == "__main__": app.run(debug=True) 演示效果如下：初始效果：提交以后效果： 可以看到， 当点击提交时候，我们在CKeditor里的内容被记下来发给flask后端了，所以我们才能再次看见我们输入的内容。 以上就是CKEditor结合flask的简单使用， 但是缺点是只能接受文本内容，我们写博客肯定希望图文并茂，那么就需要配置ckeditor下的config.js了： 在config.js文件合适位置添加： 1config.filebrowserUploadUrl = '/ckupload/'; 在run.py 合适位置添加后台处理上传请求代码： 12345678910111213141516171819202122232425262728293031323334353637383940def gen_rnd_filename(): filename_prefix = datetime.datetime.now().strftime('%Y%m%d%H%M%S') return '%s%s' % (filename_prefix, str(random.randrange(1000, 10000)))@app.route('/ckupload/', methods=['POST'])def ckupload(): """CKEditor file upload""" error = '' url = '' callback = request.args.get("CKEditorFuncNum") if request.method == 'POST' and 'upload' in request.files: fileobj = request.files['upload'] fname, fext = os.path.splitext(fileobj.filename) rnd_name = '%s%s' % (gen_rnd_filename(), fext) filepath = os.path.join(app.static_folder, 'upload', rnd_name) # 检查路径是否存在，不存在则创建 dirname = os.path.dirname(filepath) if not os.path.exists(dirname): try: os.makedirs(dirname) except: error = 'ERROR_CREATE_DIR' elif not os.access(dirname, os.W_OK): error = 'ERROR_DIR_NOT_WRITEABLE' if not error: fileobj.save(filepath) url = url_for('static', filename='%s/%s' % ('upload', rnd_name)) else: error = 'post error' res = """&lt;script type="text/javascript"&gt; window.parent.CKEDITOR.tools.callFunction(%s, '%s', '%s');&lt;/script&gt;""" % (callback, url, error) response = make_response(res) response.headers["Content-Type"] = "text/html" return response 这段代码获取上传的文件，并把它保存在项目static根目录下的ckupload文件夹内。我们看下一个上传成功的例子：通过运行python run.py,访问http://localhost:5000, 填写相应内容提交：至此，项目结构变为： 这样ckeditor和flask的集成就做好了，后续需要我们设计数据库表格来保存我们写的博客文章内容，这个放到下次讲。 如果你对ckeditor的配置有疑问，请留言给我或者直接访问官网]]></content>
+      <categories>
+        <category>dev-in-test</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>dev-in-test</tag>
+        <tag>开发个人博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[[web开发] Flask+Python开发个人博客（三）]]></title>
+    <url>%2F2017%2F12%2F10%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%5Bweb%E5%BC%80%E5%8F%91%5D%20Flask%2BPython%E5%BC%80%E5%8F%91%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%89%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[Blue print 蓝图应用指南 今天我们来讲讲flask里的blue print – 蓝图。旧文两篇：[web开发] Flask+Python开发个人博客（一）[Web开发] Flask+Python 开发个人博客（二） 在前两篇的时候，大家还记得不同类型的账户，访问到的同一个页面元素有不同吗？这个是怎么做到呢？这就是蓝图的妙用了。什么是蓝图，我们为什么要用蓝图？我们来看下exploreflask上的解释： What is a blueprint?一个蓝图定义了可用于单个应用的视图，模板，静态文件等等的集合。举个例子，想象一下我们有一个用于管理面板的蓝图。这个蓝图将定义像/admin/login和/admin/dashboard这样的路由的视图。它可能还包括所需的模板和静态文件。你可以把这个蓝图当做你的应用的管理面板，管它是宇航员的交友网站，还是火箭推销员的CRM系统。 Why would you use blueprints?蓝图的杀手锏是将你的应用组织成不同的组件。假如我们有一个微博客，我们可能需要有一个蓝图用于网站页面，比如index.html和about.html。然后我们还需要一个用于在登录面板中展示最新消息的蓝图，以及另外一个用于管理员面板的蓝图。站点中每一个独立的区域也可以在代码上隔绝开来。最终你将能够把你的应用依据许多能完成单一任务的小应用组织起来。 Where do you put them? 以我的blog为例，对于同一篇文章，我希望不同权限的人看到的内容不同，但是我又想最大程度的重用一个模板，我的目录应该如下面的类似组织： How to use： 前提条件，forms需要定义好， forum_app/forms.py 12345678from flask_wtf import FlaskFormfrom wtforms import StringField, SubmitField, validators,from wtforms.validators import Regexpclass PostEditor(FlaskForm): title = StringField('标题', [validators.DataRequired("Please enter your title")]) category = StringField('类别') publish = SubmitField('发布') 在views里定义好路由 以admin_views为例： views.py12345678910111213141516171819202122232425262728293031#coding=utf-8import timefrom flask import render_template,request, Blueprint, redirect, url_forfrom forum_app.db_helper.db_helper import update_postfrom forum_app.forms import PostEditorblue_admin = Blueprint('blue_admin', __name__, template_folder='admin_forums')@blue_admin.route('/detail_posts', methods =['GET', 'POST'])def posts_detail(): form = PostEditor() pid = request.args.get("id") post_title = request.args.get("title") post_category = request.args.get("category") post_author = request.args.get("author") post_contents = request.args.get("contents") post_create_time = request.args.get("create_time") blue_print_name = "blue_admin" form.category.data = request.args.get("category") form.title.data = request.args.get("title") if request.method == "POST" and form.validate_on_submit(): if request.form.get('publish') == '发布': update_post(request.form.get('title'), request.form.get('category'), request.form.get('editor1'), id=pid) return redirect(url_for('forum')) return render_template('admin_forums/posts.html', post_title=post_title,\ post_category=post_category, \ post_author=post_author, post_contents=post_contents, \ blue_print_name=blue_print_name, post_create_time=post_create_time, pid=pid, form=form) 创建一个蓝图的语法如下：1blue_admin = Blueprint('blue_admin', __name__, template_folder='admin_forums') To create a blueprint object, we import the Blueprint() class and initialize it with the arguments name and import_name. Usually import_name will just be name, which is a special Python variable containing the name of the current module.The last parameter tell flask that the blueprint has its own template and static direcories. 定义好蓝图后，要把它注册到我们的程序上：run.py 1234567from flask import Flaskfrom forum_app.views.admin_views.views import blue_adminapp = Flask(__name__)app.register_blueprint(blue_admin, url_prefix='/admin')app.run(debug=True) 最后一步，构造URL，绑定路由和HTML template。你只需要在 URL 的末端加上蓝图的名称和一个点（ . ）作为前缀即可完成绑定:url_for(‘blue_admin.post_detail’)templates/forum.html 部分代码 本例中我为了方便，user的post_detail路由和admin的post_detail路由所指向的html template我分开了：两个posts.html，在应用中你也可以用一个template，中间用if语句引导不同的路由渲染不同的templates。 到此就完成了所有blue print的应用，blueprint 给我们提供了一种类插件功能，我们可以利用它完成很多功能，比如admin用户的control panel功能，这样方便了我们定制功能。 更多内容，查看官方文文档： http://docs.jinkan.org/docs/flask/blueprints.html]]></content>
+      <categories>
+        <category>dev-in-test</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>dev-in-test</tag>
+        <tag>开发个人博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[[Web开发] Flask+Python 开发个人博客（二）]]></title>
+    <url>%2F2017%2F12%2F05%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%5BWeb%E5%BC%80%E5%8F%91%5D%20Flask%2BPython%20%E5%BC%80%E5%8F%91%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%BA%8C%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[Flask打造个人博客系列,今天是第一篇，我们详细讲解登录，注册模块。 旧文一篇：[web开发] Flask+Python开发个人博客（一） 既然是Flask来开发，你得: 安装 1pip install Flask 实现最简单的一个hello word：views.py 123@app.route("/")def hello(): return "Hello World!" run.py 123456from flask import Flaskapp = Flask(__name__)if __name__ == "__main__": app.run(debug=True) 在terminal里输入python run.py, 现在在浏览器打开http://127.0.0.1:5000, 看看发生了什么？：） 很简单吧？貌似第2部分点陌生：@app.route是什么鬼？它正是用于在Flask应用中给视图函数设定路由URL的装饰器。一头雾水？装饰器是什么？ WTF？Python装饰器让我们可以用其他函数包装特定函数。 当一个函数被一个装饰器”装饰”时，那个装饰器会被调用，接着会做额外的工作，修改变量，调用原来的那个函数. 视图， 路由又是啥玩意，简单解释下： 上面的@app.route就等价于图中的Routes部分。@app.route（’/‘）就是注册了一个路由（注册路由就是建立URL规则和处理函数之间的关联。Flask框架依赖于路由 完成HTTP请求的分发）。这样当你访问“/”这个path的时候，python就自动把要它联系到hello（）这个function上，controller处理完后就会返还给你。 现在我们知道了，视图函数hello既然可以返回hello word， 那么我们也可以定义其他视图函数来返回注册和登录页面。代码示意如下：views.py views.py这段代码作用就是你在url里输入 “127.0.0.1:5000/login后，flask会找到login对应的函数，处理后返回login.html中的内容。那么， login.html 里有哪些内容呢？templates/login.htmlHTML我们都会写一点, 但是{}是什么符号起什么作用呢？因为Python直接写html太麻烦，于是Flask 内置了 Jinja2 模板引擎，帮你更方便的写html。你可以在这个模板里使用变量或者表达式，当这个页面显示的时候，变量或者表达式的值就会填充到你HTML页面相应的部分，这个变量或者表达式的值是从哪里取来的呢？当然是从你flask程序里.一般Flask 会在 templates 文件夹里寻找模板。所以，你只需要用HTML写两个页面login.html 和signup.html，然后放到根目录下的templates文件夹下就可以了。flask会自己找到这两个页面并渲染。 下面简述下如何使用inja2模板来写html页面.1.安装： 1pip install Jinja2 2.使用：如上的HTML。 介绍两个常用的变量标志符： {% ... %} for Statements，例如上文的for循环语句。 {{ ... }} for Expressions to print to the template output， 例如上文的 {{ form.username }}，{{ form.password }}. 我们知道登录的时候，需要输入用户名和密码，点击登录按钮，这个通常放到表单里来做，那么点击登录会发生什么呢？ 表单里用户名和密码的内容会提交到程序后端处理，对于Flask来说，它使用Flask-WTF来自动化表单的操作， 我们来看看如何处理表单： 1. 安装 1pip install Flask-WTF forms.py表单定义好后，需要配合视图使用， 也就是我们在views.py的文件头里，加上：1from forum_app.forms import LoginForm 这样你在浏览器里输入 http://127.0.0.1:5000/login，就会转到login页面，输入用户名密码，提交，就会走login这个视图函数的逻辑了。现在再回去看下views.py，你会发现 1get_member_id_by_username（username） 这个是什么呢？就是后端的代码逻辑了，此处为了从数据库里根据用户名找到用户id。这个需要用到SQLAlchemy这个库，我之前写过相关的文章，点击这里查看SQLAlchemy用法。 通过这种方法Jinja2 用来写前端页面templates， Views用来处理url绑定和视图，wtf-forms用来简化表单操作，Flask就这样实现了一个简单的注册登录。]]></content>
+      <categories>
+        <category>dev-in-test</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>dev-in-test</tag>
+        <tag>开发个人博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[[web开发] Flask+Python开发个人博客（一）]]></title>
+    <url>%2F2017%2F12%2F05%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%5BWeb%E5%BC%80%E5%8F%91%5D%20Flask%2BPython%20%E5%BC%80%E5%8F%91%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%80%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[纯flask实现的一个blog。 网站的整体效果：登录页面（也是首页）： 注册页面: 这两个页面都实现了基本的验证，比如：用户名密码为空 密码不正确： 正确登录后会跳转到系统主页面，长下面的样子： 页面模块： Header Footer 文章模块点击主页上的模块，或者在任何文章的类别上点击，会进入下面的两个页面：一个是列在Header上的类别，类别选中会高亮。： 一个是未列在Header上的类别，无高亮： 文章分类tag 分页模块 参考了Flask上的分页，加上用了Bootstrap的样式 新建/修改/删除 文章模块。 用了CK Editor，最好的编辑器之一。 新建： 修改： 删除： 文章详页模块 一个是对文章只有浏览权限，没有修改和删除按钮： 一个是文章的作者或者Admin用户组的用户，对文章有full control权限 权限控制模块（包括用户，权限，登录验证，管理员验证等） 项目配置（使用instance）]]></content>
+      <categories>
+        <category>dev-in-test</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>dev-in-test</tag>
+        <tag>开发个人博客</tag>
       </tags>
   </entry>
   <entry>
@@ -767,8 +767,8 @@
         <category>automation</category>
       </categories>
       <tags>
-        <tag>automation</tag>
         <tag>Mobile-Test</tag>
+        <tag>automation</tag>
         <tag>Appium</tag>
       </tags>
   </entry>
@@ -781,8 +781,8 @@
         <category>automation</category>
       </categories>
       <tags>
-        <tag>automation</tag>
         <tag>Mobile-Test</tag>
+        <tag>automation</tag>
         <tag>Appium</tag>
         <tag>自动化测试定位元素</tag>
       </tags>
@@ -796,8 +796,8 @@
         <category>automation</category>
       </categories>
       <tags>
-        <tag>automation</tag>
         <tag>Mobile-Test</tag>
+        <tag>automation</tag>
         <tag>Appium</tag>
         <tag>自动化测试定位元素</tag>
       </tags>
@@ -811,8 +811,8 @@
         <category>automation</category>
       </categories>
       <tags>
-        <tag>automation</tag>
         <tag>Mobile-Test</tag>
+        <tag>automation</tag>
         <tag>Appium</tag>
         <tag>自动化测试定位元素</tag>
       </tags>
@@ -826,8 +826,8 @@
         <category>automation</category>
       </categories>
       <tags>
-        <tag>automation</tag>
         <tag>Mobile-Test</tag>
+        <tag>automation</tag>
         <tag>Appium</tag>
         <tag>自动化测试定位元素</tag>
       </tags>
