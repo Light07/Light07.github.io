@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[测试左移和开发赋能分享]]></title>
+    <url>%2F2019%2F04%2F02%2F%E6%B5%8B%E8%AF%95%E6%84%9F%E6%82%9F%2F%E6%B5%8B%E8%AF%95%E5%B7%A6%E7%A7%BB%E5%92%8C%E5%BC%80%E5%8F%91%E8%B5%8B%E8%83%BD%E5%88%86%E4%BA%AB%2F</url>
+    <content type="text"><![CDATA[之前我写过测试工程师的出路问题 测试往何处去 – 新时期测试如何面对挑战 , 今天看到同事发的这篇文章，感觉写的非常好，特转载如下： 从事测试开发很长一段时间，一直不知道怎么去评价和衡量这个职业的目标是什么，超高的自动化测试覆盖率？或者超稳定超包容的自动化测试框架？ 怎么才算得上是一个优秀的测试开发人员？上2周有机会去听了阿里2天的公开课，好像明白了一些，拿来跟大家分享一下。 内建质量 在微软有一句名言：“质量是设计出来，而不是测出来的。” 当然，这是理想情况，如果产品经理都这么优秀，这个世界早就和平了。 今天我们不说产品经理，我们从测试和开发的角度看，怎么内建质量。 让测试内建质量为了内建质量，测试同学就要尽可能早地干预开发写bug，让bug死在摇篮里。换句话说就是让开发不要写出可以避免的bug： •产品，开发，测试应该同时参与需求评审会议，澄清需求，达成共识•将关键测试点作为需求的一部分，让开发同学交付需求时完成自测 让开发内建质量从开发的角度看，要提高代码的质量可以有很多种方式： •提高自测意识，借助单元测试或者质量分析工具•真正理解需求和技术架构，进行Code Review或者结对编程•评估代码质量或者bug数量，跟绩效挂钩 排除开发的自身能力问题，80%的bug都是需求理解不准确的问题，如果开发不愿背这个锅，那就甩给产品经理吧。 由此可见，如果测试不想看见这些bug，那么你就要帮产品表达需求，帮开发理解需求。 测试左移 上面我们说内建质量其实已经涉及到了测试左移，例如让QA在参与需求研讨时提出问题，列出测试点其实已经开始在进行测试了。 为什么我们要测试左移呢？因为发现问题的时间越晚，修复的成本就越高。 图中橙色线条代表了传统测试发现缺陷的时间，大多数bug都是在功能测试和集成测试时发现的，最后导致的结果就是发布前加班加点，祈祷不要有bug漏到生产环境。 如果我们能把测试活动向左移动，那么就意味着修复成本大幅下降。 但是谈何容易？想要把大部分测试点放在单元测试环境完成，非常依赖成熟的开发环境和极其资深的开发人员。 在阿里是这样实践的，让测试给开发赋能。 开发赋能 从字面上解释就是，测试同学给开发赋于一定的能力，让他们有能力去完成测试，比如： •降低测试门槛•使用测试工具（自动化）•获取测试数据•培养测试意识 举个例子，开发同学在完成需求代码后，可以点击一个按钮得到测试数据，再点击一个按钮验证测试覆盖点，喝杯咖啡后就可以看到测试报告。 从上面这个例子看，开发同学其实他并不需要懂测试数据的设计，自动化测试的开发，测试报告的编排，但是他依然可以快速完成需求测试（门槛低），只要他养成习惯（培养意识）。 那么你就会说，这对测试的同学要求是不是很高啊？对啊，回到开篇的问题，如何评判一个测试人员的能力？在我看来就是评判他给开发和团队赋能的能力。在阿里是这样，在微软和谷歌也是这样。 一个优秀的测试人员将测试左移时，并不会将负担转移给开发。相反地，而是帮开发写出更高质量的代码，更高效率地交付需求。 那么测试能左移到什么程度呢？比如让开发在Coding时就发现问题，或者还没Coding就发现问题，那应该是极好的。 怎么做到呢？刚才已经说过了，测试即需求，把bug扼杀在摇篮里。 实践方法想实践测试左移可以有很多种方法，每个组织需要根据实践情况进行裁剪和调整。 •参与需求评审，帮助开发理解需求•参与架构、设计分析，提早预防问题•践行BDD，TDD•单元测试提案，接口测试提案•提供模拟数据能力，测试工具•制定提测标准，拒绝低质量代码•回归测试自动化•静态代码分析，单元测试覆盖率 测试左移的概念给整个测试角色带来了巨大的转变。软件测试不仅仅是“发现bug”，而是致力于“尽可能早的检测和预防bug”。]]></content>
+      <categories>
+        <category>basic-knowledge</category>
+      </categories>
+      <tags>
+        <tag>测试感悟</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[一小时学会接口测试]]></title>
     <url>%2F2018%2F12%2F30%2F%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%2F%E4%B8%80%E5%B0%8F%E6%97%B6%E5%AD%A6%E4%BC%9A%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%2F</url>
     <content type="text"><![CDATA[接口测试最近几年越来越流行了，特别是随着微服务的兴起，系统和系统之间，甚至系统内部模块之间的互相调用都开始大量使用接口了（一般采用RESTFUL风格的http调用），这就给我们的质量保证工作带来的新的机遇，在业务测试之前验证接口的正确性，将使得我们在更早的阶段发现问题，提升效率。 如果你从来没接触过接口测试，请查看：接口测试系列 接口测试如何做呢？一般已经上线接口都会自动化掉，关于接口自动化，可以使用现成的接口框架，也可以移步我之前关于测试框架的文章，pytest测试框架自研测试框架ktst 对于正在开发或还未达到上线条件的接口，手工测试就必不可少。对于这部分测试，相信大家都有自己的心得，简单的接口，可以通过fiddler或者Charles模拟请求，也可以在接口请求发送前或服务器结果返回前加入断点，更改请求内容或返回内容。但对于复杂的接口，或者需要多次定时运行，甚至接口间有先后调用顺序的接口，或者团队成员需要轮换测试不同的接口时，Postman就是唯一一个选择了。 我将分以下几个方面介绍： 1. 介绍 &amp; 安装2. 常见请求：3. 变量定义，重用, 环境变量。4. Collection5. Conditional Workflows6. Newman7. 跟Jenkins集成8. Moniter &amp; Mock Server &amp; API Documentation总结起来就一句话，看完本篇，让你玩转“手工”接口测试。 1. 介绍 &amp; 安装什么是postman？ Postman Makes API Development Simple, so does the API testing. 自己去官网下载后安装，你可以创建一个用户，或者关闭注册窗口继续使用， 我用的企业版，直接登录后使用，你会看到如下图。 2. 常见请求：界面左上角 “+New” -&gt; “Request”，或者根据上图选第一个Request，创建你的第一个request： GET: URL里填写， 点击send request 注意， get请求的参数实际上就是我们在url里看到的？后面的一串，如果有多个参数你可以在Params里添加。 POST：对于POST类型的请求， 填写好body内容， Headers内容一般的POST方法都需要authentication，那么你可以在Authorization里添加相应的类型（现在用Bearer Toeken较多)，实际情况用什么认证需问开发。 这部分非常基础， 不展开。 3. 变量定义，重用, 环境变量 和Scripts。一个请求常常需要用不同数据在不同测试环境测试多次，那么参数化就必不可少。Postman里变量用1来表示。 环境变量的定义在这里： ![](一小时学会接口测试/postman5.png) 以上图的例子来说，我定义个变量名为url， ![](一小时学会接口测试/postman6.png) 定义好后，使用上只要就可以了。环境变量可以导出供其它用户使用，注意环境变量是全局的，即定义好后，任何请求都可以重用。 ![](一小时学会接口测试/postman7.png) 本地变量和全局变量在pre-scripts和Tests里的定义： ** 设置：** ![](一小时学会接口测试/postman8.png) ** 获得(我新建了一个请求)：** ![](一小时学会接口测试/postman9.png) 注意定义的local variables不能在其他请求里使用，但是global变量可以，定义的环境变量也是全局的，同时定义好后它可以在Environment里可以看到。 在接口测试里，我们经常需要发送一个接口后进行检查，postman给我们提供了一些通用的检查模板，在Tests里编写代码如下： 123456789101112131415161718192021222324252627// example using pm.response.to.havepm.test("response is ok", function () &#123; pm.response.to.have.status(200);&#125;);// example using pm.expect()pm.test("environment to be production", function () &#123; pm.expect(pm.environment.get("env")).to.equal("production"); &#125;);// example using response assertionspm.test("response should be okay to process", function () &#123; pm.response.to.not.be.error; pm.response.to.have.jsonBody(""); // 关注iTesting，跟万人测试团一起成长 pm.response.to.not.have.jsonBody("error"); &#125;);// example using pm.response.to.be*pm.test("response must be valid and have a body", function () &#123; // assert that the status code is 200 pm.response.to.be.ok; // info, success, redirection, clientError, serverError, are other variants // assert that the response has a valid JSON body pm.response.to.be.withBody; pm.response.to.be.json; // this assertion also checks if a body exists, so the above check is not needed&#125;); 有时候某些接口入参需要一些随机数，postman也贴心的提供了如下方案：1234 : Adds a v4 style guid: Adds the current timestamp: Adds a random integer between 0 and 1000#需要注意的是这些参数只能在request URL / headers / body里使用。 4. Collection什么是Collection？ A Postman Collection lets you group individual requests together. You can organize these requests into folders. 测试时候需要根据一个个用户scenario来，collection是最好的方式 5. Conditional Workflows创建好Collection，你可以把一个个接口请求放入Collection里，方便以后测试：我们知道，测试的时候接口之间往往要有调用顺序的要求，如此我们只要在第一个接口请求的Tests里加入即可：1234postman.setNextRequest('get-example');#注意事项：0. 如果没有设置setNextRequest，Collection的各个请求是顺序运行的。1. 设置了setNextRequest后，最好设置工作流停止条件在最后一条请求的Tests里，设置方法： postman.setNextRequest(null); 否则可能会导致无限循环。Runner里设置，运行环境， Iteration次数， 及使用数据文件。之前我讲过数据驱动，同一个接口，需要不同数据来验证，Postman允许使用datefile。我们先来看一个请求：我们定义了两个参数 path 和value，在Tests里写我们的验证点：1234var jsonData = JSON.parse(responseBody);tests['Response has data value'] = jsonData.form.foo === data.value//打印出foo的值console.log(jsonData.form.foo) 我们再定义一个datafile, 格式可以是json，csv。1234567891011121314# 1.json[&#123; "path": "post", "value": "1"&#125;, &#123; "path": "post", "value": "2"&#125;, &#123; "path": "post", "value": "3"&#125;, &#123; "path": "post", "value": "4"&#125;] datafile也可以用csv的格式：123456# 1.jsonpath， valuepost， 1post， 2post， 3post， 4我们来运行下，点击菜单栏上的Runner：配置如下，然后点击”Run with data files”：运行好后来看结果：注意，Iteration需要跟datafile的一致，如果超出会用最后一个data。 6. Newman什么是Newman： Newman is a command line Collection Runner for Postman. It allows you to run and test a Postman Collection directly from the command line.安装：1npm install -g newman 最简单使用：导出Collection（mycollection.json）command line里切换目录到你的mycollection所在文件夹：12345678910111213141516171819202122232425#直接运行导出的collection：newman run mycollection.json#如果你的collection用到了environment的变量，你需要将它导出(本例是env.json)，#并在运行时加参数 -enewman run mycollection.json -e env.json#newman 命令行有很多参数，其中常用的是如下：# --folder [folderName] Specify a single folder to run from a collection.# -e, --environment [file|URL] Specify a Postman environment as a JSON [file]# -d, --data [file] Specify a data file to use either json or csv# -g, --globals [file] Specify a Postman globals file as JSON [file]# -n, --iteration-count [number] Define the number of iterations to run# 更多命令，以 newman run -h 查看。# newman还支持把运行结果导出以方便后续分析。#json格式newman run mycollection.json -e env.json --reporters cli,json --reporter-json-export outputfile.json#junit格式newman run mycollection.json -e env.json --reporters cli,json,junit --reporter-junit-export outputfile.xml#html格式，首先要安装：npm install -g newman-reporter-html#然后执行命令newman run mycollection.json -e env.json --reporters html --reporter-html-export outputfile.html 7. 跟Jenkins集成newman命令知道了，跟Jenkins集成就非常简单了，建立一个自由风格的项目，然后在Build选择Execute Shell即可命令就填写我们在6里的命令即可：注意：1.需要在Jenkins服务器本地安装newman程序。2.如果你设置了junit类型的报告给Jenkins用，记得在Jenkins的Post Action里选择Publish JUnit test result report，把生成的报告路径填对。3.Jenkins其它参数配置例如定时运行请自行了解。 8. Moniter &amp; Mock Server &amp; API Documentation这都是企业版的功能，也非常强大，设置来说都是三步，可以针对一个请求或者一个Collection来操作。拿Moniter举例， New-&gt;Moniter, 我设置一个Moniter来定时运行一个Collection，也可以选择时区。设置好后，会看到一个webdashboard，点击进去看看，里面会显示这个moniter的情况，可以手工运行也可以让它自己运行，运行成功后你的邮箱将会收到结果文件（企业版可以用邮箱登陆），这个其实就是替换jenkins的。Mocker Server就是可以对某一个请求或一个Colection做mock，直接返回结果。API Documentation 可以为一个请求或者一个collection生成API文档，postman也会提供你一个网址访问。因为绝多数朋友不会用专业版，这里我就不详细介绍了。 再很长的一段时间内，手工测试绝对不会消失，那么如何高效的开展手工测试，提高个人生产率，从而对业界平均生产率产生价值差，就是我们不懈的追求了。希望大家花个一个小时左右通读本篇，彻底玩转手工接口测试。还有几分钟马上2019年了，我预祝大家生活有追求，技术不落伍，祝大家新年快乐！（新的一年，请继续关注iTesting，多点赞多转发，帮助更多的人提升自己。）]]></content>
@@ -329,17 +340,6 @@
   </entry>
   <entry>
     <title><![CDATA[Python算法分享系列 -- 查找，排序，递归]]></title>
-    <url>%2F2017%2F12%2F19%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E7%AE%97%E6%B3%95%2FPython%E7%AE%97%E6%B3%95%E5%88%86%E4%BA%AB%E7%B3%BB%E5%88%97%20--%20%E6%9F%A5%E6%89%BE%EF%BC%8C%E6%8E%92%E5%BA%8F%EF%BC%8C%E9%80%92%E5%BD%92%2F</url>
-    <content type="text"><![CDATA[沉寂了一段时间，继续学习。算法这个系列我想分享很久了，奈何本身对算法不是特别了解，又找不到合适的载体来分享。最近看了本有趣的算法书， 文中通过图文并茂的讲解给我很大启发，尝试着分享下 需要注意的是， 文中各个算法的写法不是简单的拷贝，算理解思想后拿Python3重新写了遍，分享的代码和书中的例子也稍有不同，加了些日常工作中会做的处理，如有不适，请联系我。 二分查找 –仅当列表是有序的时候才能用思想： 1.目标是找数组中的某一个元素，暂叫item2.找出整个数组中间的那个元素，它下标mid，数组被它一分为二3.比较下标mid对应的元素和item，如果mid对应的元素大，查找范围缩小到mid前面的那一半数组，反之，缩小到mid后的那一半数组4.重复3，直到item==mid 对于包含N个元素的列表，用二分查找最多需要log2 N 步。（对数是幂运算的逆运算） 大O表示法指出了算法有多快。例如，假设列表包含n 个元素。简单查找需要检查每个元素，因此需要执行n 次操作。使用大O表示法，这个运行时间为O (n )。单位秒呢？没有——大O表示法指的并非以秒为单位的速度。大O表示法让你能够比较操作数，它指出了算法运行时间的增速 。 再来看一个例子。为检查长度为n 的列表，二分查找需要执行log n 次操作。使用大O表示法，这个运行时间怎么表示呢？O (log n )。一般而言，大O表示法按从快到慢的顺序列出了你经常会遇到的5种大O运行时间。 O (log n )，也叫对数时间 ，这样的算法包括二分查找。O (n )，也叫线性时间 ，这样的算法包括简单查找。O (n * log n )，这样的算法包括第4章将介绍的快速排序——一种速度较快的排序算法。O (n 2 )，这样的算法包括第2章将介绍的选择排序——一种速度较慢的排序算法。O (n !)，这样的算法包括接下来将介绍的旅行商问题的解决方案——一种非常慢的算法。 大O表示法指出了最糟情况下的运行时间. 选择排序思想： 找出数组中最小的元素把数组中最小的元素pop出来到新的数组里。重复以上操作直到原数组为空 需要存储多个元素时，可使用数组或链表。数组的元素都在一起。链表的元素是分开的，其中每个元素都存储了下一个元素的地址。数组的读取速度很快。链表的插入和删除速度很快。在同一个数组中，所有元素的类型都必须相同（都为int、double等） 数字和链表区别：数组： 连续空间， 预留空间， 查找方便， 插入麻烦，必须移动后面的所有元素，如果没有空间，必须将数组复制到其他地方。链表： 分散空间，查找麻烦，插入方便，只需移动前面元素指向的地址。 数组 链表 读取 O（1） O（n） 插入 O（n） O（1） 删除 O（n） O(1) 访问 顺序访问 随机访问 O(n)=线性时间O(1)=常量时间 递归每个递归函数都有两部分：基线条件 （base case）和递归条件 （recursive case）。递归条件指的是函数调用自己，而基线条件则指的是函数不再调用自己，从而避免形成无限循环。12345678 def fact(x): if x&lt;=1: #----基线条件 return 1 else: fact(x-1) #---递归条件print(fact(6)) 我们拿 最大公约数 来举例： 思想： 假定x &gt; y（如果x &lt; y，则互换）求x对y的余数，假定余数为z求y与z的最大公约数即为x，与y的最大公约数0没有公约数 最小公倍数 ：思想： 两个数(x, y)的最小公倍数数的算法为：两个数相乘再除以他们的最大公约数0没有公倍数 公约数，公倍数，适用于自然数。 快速排序思想： 少于2个元素的数组不需要排序找一个元素作为基数小于基数的放一个数组大于基数的放一个数组针对小于基数的数组做快速排序，暂且叫low针对大于基数的数组做快速排序, 暂且叫high最终排序后的 low + 【基数】+ high，就是排好序的数组 总结下： D&amp;C算法（divided and conqure）是递归的。使用D&amp;C解决问题的过程包括两个步骤。(1) 找出基线条件，这种条件必须尽可能简单。(2) 不断将问题分解（或者说缩小规模），直到符合基线条件。 散列表（Hash Table）散列函数： 散列函数是这样的函数，即无论你给它什么数据，它都还你一个数字。散列函数总是将同样的输入映射到相同的索引。例如你每次输入iTesting，它返回你的总是同一个数字。散列函数将不同的输入映射到不同的索引。比如iTesting对应6， python对于0. 如果散列函数将不同的键映射到同一个位置，就在这个位置存储一个链表。散列函数知道数组有多大，只返回有效的索引。如果数组包含5个元素，散列函数就不会返回无效索引100。 结合使用散列函数和数组创建了一种被称为散列表 （hash table）的数据结构。不需要自己去实现散列表，任一优秀的语言都提供了散列表实现。Python提供的散列表实现为字典 ，你可使用函数dict 来创建散列表。 散列表被用于大海捞针式的查找，散列表适合用于：模拟映射关系；防止重复；缓存/记住数据，以免服务器再通过处理来生成它们。 总结： 你可以结合散列函数和数组来创建散列表。冲突很糟糕，你应使用可以最大限度减少冲突的散列函数。散列表的查找、插入和删除速度都非常快。散列表适合用于模拟映射关系。一旦填装因子超过0.7，就该调整散列表的长度（通常将数组长度加倍）。散列表可用于缓存数据（例如，在Web服务器上）。散列表非常适合用于防止重复。（填装因子是数组中被占用的位置，例如大小为3的数字，有2个被占用，则填装因子为2/3）]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>dev-in-test</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Python算法分享系列 -- 查找，排序，递归]]></title>
     <url>%2F2017%2F12%2F19%2F%E9%9D%A2%E8%AF%95%E7%9B%B8%E5%85%B3%2F%E7%AE%97%E6%B3%95%2FPython%E7%AE%97%E6%B3%95%E5%88%86%E4%BA%AB%E7%B3%BB%E5%88%97%20--%20%E6%9F%A5%E6%89%BE%EF%BC%8C%E6%8E%92%E5%BA%8F%EF%BC%8C%E9%80%92%E5%BD%92%2F</url>
     <content type="text"><![CDATA[沉寂了一段时间，继续学习。算法这个系列我想分享很久了，奈何本身对算法不是特别了解，又找不到合适的载体来分享。最近看了本有趣的算法书， 文中通过图文并茂的讲解给我很大启发，尝试着分享下 需要注意的是， 文中各个算法的写法不是简单的拷贝，算理解思想后拿Python3重新写了遍，分享的代码和书中的例子也稍有不同，加了些日常工作中会做的处理，如有不适，请联系我。 二分查找 –仅当列表是有序的时候才能用思想： 1.目标是找数组中的某一个元素，暂叫item2.找出整个数组中间的那个元素，它下标mid，数组被它一分为二3.比较下标mid对应的元素和item，如果mid对应的元素大，查找范围缩小到mid前面的那一半数组，反之，缩小到mid后的那一半数组4.重复3，直到item==mid 对于包含N个元素的列表，用二分查找最多需要log2 N 步。（对数是幂运算的逆运算） 大O表示法指出了算法有多快。例如，假设列表包含n 个元素。简单查找需要检查每个元素，因此需要执行n 次操作。使用大O表示法，这个运行时间为O (n )。单位秒呢？没有——大O表示法指的并非以秒为单位的速度。大O表示法让你能够比较操作数，它指出了算法运行时间的增速 。 再来看一个例子。为检查长度为n 的列表，二分查找需要执行log n 次操作。使用大O表示法，这个运行时间怎么表示呢？O (log n )。一般而言，大O表示法按从快到慢的顺序列出了你经常会遇到的5种大O运行时间。 O (log n )，也叫对数时间 ，这样的算法包括二分查找。O (n )，也叫线性时间 ，这样的算法包括简单查找。O (n * log n )，这样的算法包括第4章将介绍的快速排序——一种速度较快的排序算法。O (n 2 )，这样的算法包括第2章将介绍的选择排序——一种速度较慢的排序算法。O (n !)，这样的算法包括接下来将介绍的旅行商问题的解决方案——一种非常慢的算法。 大O表示法指出了最糟情况下的运行时间. 选择排序思想： 找出数组中最小的元素把数组中最小的元素pop出来到新的数组里。重复以上操作直到原数组为空 需要存储多个元素时，可使用数组或链表。数组的元素都在一起。链表的元素是分开的，其中每个元素都存储了下一个元素的地址。数组的读取速度很快。链表的插入和删除速度很快。在同一个数组中，所有元素的类型都必须相同（都为int、double等） 数字和链表区别：数组： 连续空间， 预留空间， 查找方便， 插入麻烦，必须移动后面的所有元素，如果没有空间，必须将数组复制到其他地方。链表： 分散空间，查找麻烦，插入方便，只需移动前面元素指向的地址。 数组 链表 读取 O（1） O（n） 插入 O（n） O（1） 删除 O（n） O(1) 访问 顺序访问 随机访问 O(n)=线性时间O(1)=常量时间 递归每个递归函数都有两部分：基线条件 （base case）和递归条件 （recursive case）。递归条件指的是函数调用自己，而基线条件则指的是函数不再调用自己，从而避免形成无限循环。12345678 def fact(x): if x&lt;=1: #----基线条件 return 1 else: fact(x-1) #---递归条件print(fact(6)) 我们拿 最大公约数 来举例： 思想： 假定x &gt; y（如果x &lt; y，则互换）求x对y的余数，假定余数为z求y与z的最大公约数即为x，与y的最大公约数0没有公约数 最小公倍数 ：思想： 两个数(x, y)的最小公倍数数的算法为：两个数相乘再除以他们的最大公约数0没有公倍数 公约数，公倍数，适用于自然数。 快速排序思想： 少于2个元素的数组不需要排序找一个元素作为基数小于基数的放一个数组大于基数的放一个数组针对小于基数的数组做快速排序，暂且叫low针对大于基数的数组做快速排序, 暂且叫high最终排序后的 low + 【基数】+ high，就是排好序的数组 总结下： D&amp;C算法（divided and conqure）是递归的。使用D&amp;C解决问题的过程包括两个步骤。(1) 找出基线条件，这种条件必须尽可能简单。(2) 不断将问题分解（或者说缩小规模），直到符合基线条件。 散列表（Hash Table）散列函数： 散列函数是这样的函数，即无论你给它什么数据，它都还你一个数字。散列函数总是将同样的输入映射到相同的索引。例如你每次输入iTesting，它返回你的总是同一个数字。散列函数将不同的输入映射到不同的索引。比如iTesting对应6， python对于0. 如果散列函数将不同的键映射到同一个位置，就在这个位置存储一个链表。散列函数知道数组有多大，只返回有效的索引。如果数组包含5个元素，散列函数就不会返回无效索引100。 结合使用散列函数和数组创建了一种被称为散列表 （hash table）的数据结构。不需要自己去实现散列表，任一优秀的语言都提供了散列表实现。Python提供的散列表实现为字典 ，你可使用函数dict 来创建散列表。 散列表被用于大海捞针式的查找，散列表适合用于：模拟映射关系；防止重复；缓存/记住数据，以免服务器再通过处理来生成它们。 总结： 你可以结合散列函数和数组来创建散列表。冲突很糟糕，你应使用可以最大限度减少冲突的散列函数。散列表的查找、插入和删除速度都非常快。散列表适合用于模拟映射关系。一旦填装因子超过0.7，就该调整散列表的长度（通常将数组长度加倍）。散列表可用于缓存数据（例如，在Web服务器上）。散列表非常适合用于防止重复。（填装因子是数组中被占用的位置，例如大小为3的数字，有2个被占用，则填装因子为2/3）]]></content>
       <categories>
@@ -348,6 +348,17 @@
       </categories>
       <tags>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Python算法分享系列 -- 查找，排序，递归]]></title>
+    <url>%2F2017%2F12%2F19%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E7%AE%97%E6%B3%95%2FPython%E7%AE%97%E6%B3%95%E5%88%86%E4%BA%AB%E7%B3%BB%E5%88%97%20--%20%E6%9F%A5%E6%89%BE%EF%BC%8C%E6%8E%92%E5%BA%8F%EF%BC%8C%E9%80%92%E5%BD%92%2F</url>
+    <content type="text"><![CDATA[沉寂了一段时间，继续学习。算法这个系列我想分享很久了，奈何本身对算法不是特别了解，又找不到合适的载体来分享。最近看了本有趣的算法书， 文中通过图文并茂的讲解给我很大启发，尝试着分享下 需要注意的是， 文中各个算法的写法不是简单的拷贝，算理解思想后拿Python3重新写了遍，分享的代码和书中的例子也稍有不同，加了些日常工作中会做的处理，如有不适，请联系我。 二分查找 –仅当列表是有序的时候才能用思想： 1.目标是找数组中的某一个元素，暂叫item2.找出整个数组中间的那个元素，它下标mid，数组被它一分为二3.比较下标mid对应的元素和item，如果mid对应的元素大，查找范围缩小到mid前面的那一半数组，反之，缩小到mid后的那一半数组4.重复3，直到item==mid 对于包含N个元素的列表，用二分查找最多需要log2 N 步。（对数是幂运算的逆运算） 大O表示法指出了算法有多快。例如，假设列表包含n 个元素。简单查找需要检查每个元素，因此需要执行n 次操作。使用大O表示法，这个运行时间为O (n )。单位秒呢？没有——大O表示法指的并非以秒为单位的速度。大O表示法让你能够比较操作数，它指出了算法运行时间的增速 。 再来看一个例子。为检查长度为n 的列表，二分查找需要执行log n 次操作。使用大O表示法，这个运行时间怎么表示呢？O (log n )。一般而言，大O表示法按从快到慢的顺序列出了你经常会遇到的5种大O运行时间。 O (log n )，也叫对数时间 ，这样的算法包括二分查找。O (n )，也叫线性时间 ，这样的算法包括简单查找。O (n * log n )，这样的算法包括第4章将介绍的快速排序——一种速度较快的排序算法。O (n 2 )，这样的算法包括第2章将介绍的选择排序——一种速度较慢的排序算法。O (n !)，这样的算法包括接下来将介绍的旅行商问题的解决方案——一种非常慢的算法。 大O表示法指出了最糟情况下的运行时间. 选择排序思想： 找出数组中最小的元素把数组中最小的元素pop出来到新的数组里。重复以上操作直到原数组为空 需要存储多个元素时，可使用数组或链表。数组的元素都在一起。链表的元素是分开的，其中每个元素都存储了下一个元素的地址。数组的读取速度很快。链表的插入和删除速度很快。在同一个数组中，所有元素的类型都必须相同（都为int、double等） 数字和链表区别：数组： 连续空间， 预留空间， 查找方便， 插入麻烦，必须移动后面的所有元素，如果没有空间，必须将数组复制到其他地方。链表： 分散空间，查找麻烦，插入方便，只需移动前面元素指向的地址。 数组 链表 读取 O（1） O（n） 插入 O（n） O（1） 删除 O（n） O(1) 访问 顺序访问 随机访问 O(n)=线性时间O(1)=常量时间 递归每个递归函数都有两部分：基线条件 （base case）和递归条件 （recursive case）。递归条件指的是函数调用自己，而基线条件则指的是函数不再调用自己，从而避免形成无限循环。12345678 def fact(x): if x&lt;=1: #----基线条件 return 1 else: fact(x-1) #---递归条件print(fact(6)) 我们拿 最大公约数 来举例： 思想： 假定x &gt; y（如果x &lt; y，则互换）求x对y的余数，假定余数为z求y与z的最大公约数即为x，与y的最大公约数0没有公约数 最小公倍数 ：思想： 两个数(x, y)的最小公倍数数的算法为：两个数相乘再除以他们的最大公约数0没有公倍数 公约数，公倍数，适用于自然数。 快速排序思想： 少于2个元素的数组不需要排序找一个元素作为基数小于基数的放一个数组大于基数的放一个数组针对小于基数的数组做快速排序，暂且叫low针对大于基数的数组做快速排序, 暂且叫high最终排序后的 low + 【基数】+ high，就是排好序的数组 总结下： D&amp;C算法（divided and conqure）是递归的。使用D&amp;C解决问题的过程包括两个步骤。(1) 找出基线条件，这种条件必须尽可能简单。(2) 不断将问题分解（或者说缩小规模），直到符合基线条件。 散列表（Hash Table）散列函数： 散列函数是这样的函数，即无论你给它什么数据，它都还你一个数字。散列函数总是将同样的输入映射到相同的索引。例如你每次输入iTesting，它返回你的总是同一个数字。散列函数将不同的输入映射到不同的索引。比如iTesting对应6， python对于0. 如果散列函数将不同的键映射到同一个位置，就在这个位置存储一个链表。散列函数知道数组有多大，只返回有效的索引。如果数组包含5个元素，散列函数就不会返回无效索引100。 结合使用散列函数和数组创建了一种被称为散列表 （hash table）的数据结构。不需要自己去实现散列表，任一优秀的语言都提供了散列表实现。Python提供的散列表实现为字典 ，你可使用函数dict 来创建散列表。 散列表被用于大海捞针式的查找，散列表适合用于：模拟映射关系；防止重复；缓存/记住数据，以免服务器再通过处理来生成它们。 总结： 你可以结合散列函数和数组来创建散列表。冲突很糟糕，你应使用可以最大限度减少冲突的散列函数。散列表的查找、插入和删除速度都非常快。散列表适合用于模拟映射关系。一旦填装因子超过0.7，就该调整散列表的长度（通常将数组长度加倍）。散列表可用于缓存数据（例如，在Web服务器上）。散列表非常适合用于防止重复。（填装因子是数组中被占用的位置，例如大小为3的数字，有2个被占用，则填装因子为2/3）]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>dev-in-test</tag>
       </tags>
   </entry>
   <entry>
@@ -532,8 +543,8 @@
         <category>微信开发</category>
       </categories>
       <tags>
-        <tag>微信开发</tag>
         <tag>dev-in-test</tag>
+        <tag>微信开发</tag>
       </tags>
   </entry>
   <entry>
@@ -767,8 +778,8 @@
         <category>automation</category>
       </categories>
       <tags>
-        <tag>Mobile-Test</tag>
         <tag>automation</tag>
+        <tag>Mobile-Test</tag>
         <tag>Appium</tag>
       </tags>
   </entry>
@@ -781,8 +792,8 @@
         <category>automation</category>
       </categories>
       <tags>
-        <tag>Mobile-Test</tag>
         <tag>automation</tag>
+        <tag>Mobile-Test</tag>
         <tag>Appium</tag>
         <tag>自动化测试定位元素</tag>
       </tags>
@@ -796,8 +807,8 @@
         <category>automation</category>
       </categories>
       <tags>
-        <tag>Mobile-Test</tag>
         <tag>automation</tag>
+        <tag>Mobile-Test</tag>
         <tag>Appium</tag>
         <tag>自动化测试定位元素</tag>
       </tags>
@@ -811,8 +822,8 @@
         <category>automation</category>
       </categories>
       <tags>
-        <tag>Mobile-Test</tag>
         <tag>automation</tag>
+        <tag>Mobile-Test</tag>
         <tag>Appium</tag>
         <tag>自动化测试定位元素</tag>
       </tags>
@@ -826,8 +837,8 @@
         <category>automation</category>
       </categories>
       <tags>
-        <tag>Mobile-Test</tag>
         <tag>automation</tag>
+        <tag>Mobile-Test</tag>
         <tag>Appium</tag>
         <tag>自动化测试定位元素</tag>
       </tags>
@@ -1106,8 +1117,8 @@
         <category>微信开发</category>
       </categories>
       <tags>
-        <tag>微信开发</tag>
         <tag>dev-in-test</tag>
+        <tag>微信开发</tag>
       </tags>
   </entry>
   <entry>

@@ -1,0 +1,1033 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误，请关注公众号iTesting获取密码');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="测试感悟," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="之前我写过测试工程师的出路问题   测试往何处去 – 新时期测试如何面对挑战 , 今天看到同事发的这篇文章，感觉写的非常好，特转载如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="测试左移和开发赋能分享">
+<meta property="og:url" content="http://www.helloqa.com/2019/04/02/测试感悟/测试左移和开发赋能分享/index.html">
+<meta property="og:site_name" content="iTesting软件测试知识分享">
+<meta property="og:description" content="之前我写过测试工程师的出路问题   测试往何处去 – 新时期测试如何面对挑战 , 今天看到同事发的这篇文章，感觉写的非常好，特转载如下：">
+<meta property="og:image" content="http://www.helloqa.com/2019/04/02/测试感悟/测试左移和开发赋能分享/1.webp.jpg">
+<meta property="og:image" content="http://www.helloqa.com/2019/04/02/测试感悟/测试左移和开发赋能分享/2.gif">
+<meta property="og:image" content="http://www.helloqa.com/2019/04/02/测试感悟/测试左移和开发赋能分享/3.gif">
+<meta property="og:updated_time" content="2019-04-02T15:17:35.070Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="测试左移和开发赋能分享">
+<meta name="twitter:description" content="之前我写过测试工程师的出路问题   测试往何处去 – 新时期测试如何面对挑战 , 今天看到同事发的这篇文章，感觉写的非常好，特转载如下：">
+<meta name="twitter:image" content="http://www.helloqa.com/2019/04/02/测试感悟/测试左移和开发赋能分享/1.webp.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.helloqa.com/2019/04/02/测试感悟/测试左移和开发赋能分享/"/>
+
+
+
+
+
+  <title> 测试左移和开发赋能分享 | iTesting软件测试知识分享 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/Light07/flask_blog" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+<!--
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">iTesting软件测试知识分享</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">iTesting</h1>
+    
+</div>
+-->
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+		
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-basic-knowledge">
+          <a href="/categories/basic-knowledge" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            测试理论
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-dev-in-test">
+          <a href="/categories/dev-in-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-flask"></i> <br />
+            
+            测试开发
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-automation">
+          <a href="/categories/automation" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-desktop"></i> <br />
+            
+            自动化测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-api-test">
+          <a href="/categories/api-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane-o"></i> <br />
+            
+            接口测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-mobile-test">
+          <a href="/categories/mobile-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mobile"></i> <br />
+            
+            移动端测试
+          </a>
+        </li>
+		
+      
+        
+		
+      
+        
+		
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.helloqa.com/2019/04/02/测试感悟/测试左移和开发赋能分享/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="iTesting">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="iTesting软件测试知识分享">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="iTesting软件测试知识分享" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                测试左移和开发赋能分享
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-02T22:52:47+08:00">
+                2019-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/basic-knowledge/" itemprop="url" rel="index">
+                    <span itemprop="name">basic-knowledge</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">全文共计1.3k字</span>
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">预计阅读时间4分钟</span>	  
+			  
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前我写过测试工程师的出路问题  <strong> <a href="https://helloqa.com/2017/11/22/%E6%B5%8B%E8%AF%95%E6%84%9F%E6%82%9F/%E6%B5%8B%E8%AF%95%E5%BE%80%E4%BD%95%E5%A4%84%E5%8E%BB/" target="_blank" rel="external">测试往何处去 – 新时期测试如何面对挑战</a> </strong>, 今天看到同事发的这篇文章，感觉写的非常好，特转载如下：</p>
+<a id="more"></a>
+<p>从事测试开发很长一段时间，一直不知道怎么去评价和衡量这个职业的目标是什么，超高的自动化测试覆盖率？或者超稳定超包容的自动化测试框架？</p>
+<p>怎么才算得上是一个优秀的测试开发人员？上2周有机会去听了阿里2天的公开课，好像明白了一些，拿来跟大家分享一下。</p>
+<p><center><font face="黑体" size="5"> 内建质量 </font></center><br>在微软有一句名言：“质量是设计出来，而不是测出来的。” 当然，这是理想情况，如果产品经理都这么优秀，这个世界早就和平了。</p>
+<p>今天我们不说产品经理，我们从测试和开发的角度看，怎么内建质量。</p>
+<p>让测试内建质量<br>为了内建质量，测试同学就要尽可能早地干预开发写bug，让bug死在摇篮里。换句话说就是让开发不要写出可以避免的bug：</p>
+<p>•产品，开发，测试应该同时参与需求评审会议，澄清需求，达成共识<br>•将关键测试点作为需求的一部分，让开发同学交付需求时完成自测</p>
+<p>让开发内建质量<br>从开发的角度看，要提高代码的质量可以有很多种方式：</p>
+<p>•提高自测意识，借助单元测试或者质量分析工具<br>•真正理解需求和技术架构，进行Code Review或者结对编程<br>•评估代码质量或者bug数量，跟绩效挂钩</p>
+<p>排除开发的自身能力问题，80%的bug都是需求理解不准确的问题，如果开发不愿背这个锅，那就甩给产品经理吧。</p>
+<p>由此可见，如果测试不想看见这些bug，那么你就要帮产品表达需求，帮开发理解需求。</p>
+<p><center><font face="黑体" size="5"> 测试左移 </font></center><br>上面我们说内建质量其实已经涉及到了测试左移，例如让QA在参与需求研讨时提出问题，列出测试点其实已经开始在进行测试了。</p>
+<p>为什么我们要测试左移呢？因为发现问题的时间越晚，修复的成本就越高。</p>
+<p><img src="/2019/04/02/测试感悟/测试左移和开发赋能分享/1.webp.jpg" alt=""></p>
+<p>图中橙色线条代表了传统测试发现缺陷的时间，大多数bug都是在功能测试和集成测试时发现的，最后导致的结果就是发布前加班加点，祈祷不要有bug漏到生产环境。</p>
+<p>如果我们能把测试活动向左移动，那么就意味着修复成本大幅下降。<br><img src="/2019/04/02/测试感悟/测试左移和开发赋能分享/2.gif" alt=""></p>
+<p>但是谈何容易？想要把大部分测试点放在单元测试环境完成，非常依赖成熟的开发环境和极其资深的开发人员。</p>
+<p>在阿里是这样实践的，让测试给开发赋能。</p>
+<p><center><font face="黑体" size="5"> 开发赋能 </font></center><br>从字面上解释就是，测试同学给开发赋于一定的能力，让他们有能力去完成测试，比如：</p>
+<p>•降低测试门槛<br>•使用测试工具（自动化）<br>•获取测试数据<br>•培养测试意识</p>
+<p>举个例子，开发同学在完成需求代码后，可以点击一个按钮得到测试数据，再点击一个按钮验证测试覆盖点，喝杯咖啡后就可以看到测试报告。</p>
+<p>从上面这个例子看，开发同学其实他并不需要懂测试数据的设计，自动化测试的开发，测试报告的编排，但是他依然可以快速完成需求测试（门槛低），只要他养成习惯（培养意识）。</p>
+<p>那么你就会说，这对测试的同学要求是不是很高啊？对啊，回到开篇的问题，如何评判一个测试人员的能力？在我看来就是评判他给开发和团队赋能的能力。在阿里是这样，在微软和谷歌也是这样。</p>
+<p>一个优秀的测试人员将测试左移时，并不会将负担转移给开发。相反地，而是帮开发写出更高质量的代码，更高效率地交付需求。</p>
+<p>那么测试能左移到什么程度呢？比如让开发在Coding时就发现问题，或者还没Coding就发现问题，那应该是极好的。</p>
+<p><img src="/2019/04/02/测试感悟/测试左移和开发赋能分享/3.gif" alt=""></p>
+<p>怎么做到呢？刚才已经说过了，测试即需求，把bug扼杀在摇篮里。</p>
+<p>实践方法<br>想实践测试左移可以有很多种方法，每个组织需要根据实践情况进行裁剪和调整。</p>
+<p>•参与需求评审，帮助开发理解需求<br>•参与架构、设计分析，提早预防问题<br>•践行BDD，TDD<br>•单元测试提案，接口测试提案<br>•提供模拟数据能力，测试工具<br>•制定提测标准，拒绝低质量代码<br>•回归测试自动化<br>•静态代码分析，单元测试覆盖率</p>
+<p>测试左移的概念给整个测试角色带来了巨大的转变。软件测试不仅仅是“发现bug”，而是致力于“尽可能早的检测和预防bug”。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="iTesting WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="iTesting Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------评论, 吐槽, 学习交流，请关注微信公众号 iTesting-------------</i></div>
+    
+</div>
+	  
+	</div>
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="iTesting wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫码关注，跟作者互动</div>
+</div>
+
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/测试感悟/" rel="tag"># 测试感悟</a>
+          
+        </div>
+      
+	<div>
+		  
+			
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2019/04/02/测试感悟/测试左移和开发赋能分享/">测试左移和开发赋能分享</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 iTesting 的个人博客">iTesting</a></p>
+  <p><span>发布时间:</span>2019年04月02日 - 22:04</p>
+  <p><span>最后更新:</span>2019年04月02日 - 23:04</p>
+  <p><span>原始链接:</span><a href="/2019/04/02/测试感悟/测试左移和开发赋能分享/" title="测试左移和开发赋能分享">http://www.helloqa.com/2019/04/02/测试感悟/测试左移和开发赋能分享/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.helloqa.com/2019/04/02/测试感悟/测试左移和开发赋能分享/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+		  
+	</div>
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/30/接口测试/一小时学会接口测试/" rel="next" title="一小时学会接口测试">
+                <i class="fa fa-chevron-left"></i> 一小时学会接口测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="iTesting" />
+		  
+          <p class="site-author-name" itemprop="name"><a href= "/about">iTesting</a></p>
+		  
+          <p class="site-description motion-element" itemprop="description">Python， 测试开发， 软件测试， 自动化测试， 接口测试， Appium， Selenium， Jmeter， 职场感悟。</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">96</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/thinkbig" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-user-circle-o"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://qahome.cn" target="_blank" title="wechat">
+                  
+                    <i class="fa fa-fw fa-wechat"></i>
+                  
+                  wechat
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/thinkbig" title="知乎" target="_blank">知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  Copyright &nbsp 
+  &copy; 2017 - 
+  <span itemprop="copyrightYear">2019 &nbsp&nbsp Designed by helloqa</span>
+  
+  <span class="with-love">
+    <i class="fa fa-wechat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iTesting</span>
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+
+-->  
+
+
+        <!-- 
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+ -->
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
