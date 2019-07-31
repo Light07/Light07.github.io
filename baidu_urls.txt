@@ -1,1 +1,1 @@
-http://www.helloqa.com/2019/05/26/自动化测试系列/前端测试框架Cypress从入门到精通/
+http://www.helloqa.com/2019/07/31/面试相关/分库分表小结－论ＱＡ的自我修养/

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[分库分表小结－论ＱＡ的自我修养]]></title>
+    <url>%2F2019%2F07%2F31%2F%E9%9D%A2%E8%AF%95%E7%9B%B8%E5%85%B3%2F%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8%E5%B0%8F%E7%BB%93%EF%BC%8D%E8%AE%BA%EF%BC%B1%EF%BC%A1%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB%2F</url>
+    <content type="text"><![CDATA[前几天有小伙伴在微信群里吐槽说，自己面试碰见面试官不问测试技术，一直关注代码和工具的底层实现，甚至问到了分库分表的实现原理，面试的结果呢当然是“今天的面试到此结束，如果合适的话后续会有通知”。 本着“有什么不开心的事说出来，让大家开心开心的原则”， 群里的小伙伴们纷纷出言献策，ＹＹ着要是自己面试会怎么回答。 随着互联网技术的演进，可以说，软件测试行业也进入了深水区，整个行业对ＱＡ的要求也越来越高，去ＱＥ的趋势特别明显，代码实现逻辑，设计模式这些以往问开发的问题也越来越常规的出现在ＱＡ的面试里，作为一名ＱＡ，靠”点点点“捣糨糊混江湖的日子一去不复返了，就我自己来说，面试中也越来越看重候选人对技术的深入是停留于表面还是锲而不舍的追宗溯源。 在日常的测试里，ＱＡ免不了跟数据库打交道，那么知道分库分表的原理并以此来设计你的测试用例，必然对你的测试结果有增效作用。 本着ＱＡ的自我修养精神，我总结了分库分表的知识点，供大家参考。 １. 为什么要分库分表？因为服务器承受不住了啊。 随着业务的发展到一定程度，如果数据库没有采用分库分表，那么必然出现单位时间内的访问海量增加，导致的后果是同样的ＳＱＬ语句返回结果变慢，性能变差，出现甚至无响应的情况，接着ＣＰＵ或者ＩＯ出现瓶颈。如果不想线上出事故导致今年白干一年，分库分表就变成了必要操作。 需要注意的是，分库和分表是业务发展到一定阶段才会面临的问题。 分库和分表是两个操作，可以只分库不分表，也可以只分表不分库，还可以分库又分表。 ２. 分库分表的方式？目前业界的方式有两种：水平划分和垂直划分。 水平切分 把一个表的数据分散到多个表里去，达到的效果： 每个表的结构都一样； 每个表的数据都不一样，没有交集； 所有表的并集是全量数据； 水平切分的优点： 不存在单库数据量过大、高并发的性能瓶颈，提升系统稳定性和负载能力 应用端改造较小，不需要拆分业务模块 缺点： 跨分片的事务一致性难以保证 跨库的join关联查询性能较差 数据多次扩展难度和维护量极大 水平切分的具体实现方法： 1、根据数值范围 按照时间区间或ID区间来切分。 这样的优点在于： 单表大小可控 天然便于水平扩展，后期如果想对整个分片集群扩容时，只需要添加节点即可，无需对其他分片的数据进行迁移 使用分片字段进行范围查找时，连续分片可快速定位分片进行快速查询，有效避免跨分片查询的问题。 缺点： 热点数据成为性能瓶颈。 连续分片可能存在数据热点，例如按时间字段分片，有些分片存储最近时间段内的数据，可能会被频繁的读写，而有些分片存储的历史数据，则很少被查询。 2、根据数值取模 一般采用hash取模mod的切分方式，例如：余数为0的放到第一个库，余数为1的放到第二个库，以此类推。这样同一个用户的数据会分散到同一个库中。 优点： 数据分片相对比较均匀，不容易出现热点和并发访问的瓶颈 缺点： 后期分片集群扩容时，需要迁移旧的数据（使用一致性hash算法能较好的避免这个问题） 容易面临跨分片查询的复杂问题。比如上例中，如果频繁用到的查询条件中不带cusno时，将会导致无法定位数据库，从而需要同时向4个库发起查询，再在内存中合并数据，取最小集返回给应用，分库反而成为拖累。 垂直切分 垂直分库：基本的思路就是按照业务模块来划分出不同的数据库，而不是像早期一样将所有的数据表都放到同一个数据库中。 垂直分表： “大表拆小表”，每个表的结构都不一样； 每个表的数据也不一样，一般来说，每个表的字段至少有一列交集，一般是主键，用于关联数据； 所有表的并集是全量数据 垂直切分的优点： 解决业务系统层面的耦合，业务清晰 与微服务的治理类似，也能对不同业务的数据进行分级管理、维护、监控、扩展等 高并发场景下，垂直切分一定程度的提升IO、数据库连接数、单机硬件资源的瓶颈 缺点： 部分表无法join，只能通过接口聚合方式解决，提升了开发的复杂度 分布式事务处理复杂 依然存在单表数据量过大的问题（需要水平切分） ３. 分库分表的工具？ cobar TDDL atlas sharding-jdbc mycat 参考资料： 《数据库架构：分库分表-垂直？水平？》，公号：搜云库技术团队。 《数据库分库分表思路》， 公号：后端技术精选。 其余有价值参考资料（直接搜）：《数据库分库分表，何时分？怎样分？》，方志朋。《分库分表的几种常见形式以及可能遇到的难题》，InfoQ。 关注公众号iTesting，回复 进群， 跟万人测试团一起提升自己。]]></content>
+      <categories>
+        <category>dev-in-test</category>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[前端测试框架Cypress从入门到精通（预告）]]></title>
     <url>%2F2019%2F05%2F26%2F%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%B3%BB%E5%88%97%2F%E5%89%8D%E7%AB%AF%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6Cypress%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A%2F</url>
     <content type="text"><![CDATA[自动化过程中，Selenium作为主流测试工具虽然仍占据比较重要地位，但已经不再适应当前日新月异的技术架构了，特别作为UI自动化测试， 业界已经有了很多好的实践，在本文里， 我将带领大家领略前端测试框架Cypress的强大之处。这两天周末，天气不是很好，所以待在家里，因为身体不能出去浪，干脆让心灵爽一爽，在我重温了人性的黑暗， 体验了信仰的震撼后， 我感觉自己也是这么的无敌和寂寞，于是我忍不住证明了一把自己 忽然我就感觉有点惆怅， 莫名其妙我就理解了建安某年，也是在这样的一个狂风大雨适合小酌的日子，大耳贼酒饱饭足后的空虚与无奈 回首我刚刚毕业时， 没想到已是沧海桑田。 好长时间没有写过系列了，熟悉我的朋友们都知道，我是一个很守信用的人，之前一直跟大家说要分享前端测试框架，结果一直没（想）时（偷）间（懒）。 今天先放个大致的架子出来，后面我再慢慢补充，具体的形式我还没有想好，也许还是直播，也许是别的，无论是哪种形式，你们都将等得到我 前端测试框架Cypress从入门到精通 因为内容比较多，并且我想针对每一个内容，不仅讲解怎么用，还要拿例子说明，估计会花费很长时间的准备，敬请期待如果你觉得我的文章好，请赞赏我杯咖啡 ：）]]></content>
@@ -161,8 +173,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>面试</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -207,8 +219,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>面试</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -315,17 +327,6 @@
   </entry>
   <entry>
     <title><![CDATA[Python算法分享系列 -- 二叉树]]></title>
-    <url>%2F2018%2F02%2F07%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E7%AE%97%E6%B3%95%2FPython%E7%AE%97%E6%B3%95%E5%88%86%E4%BA%AB%E7%B3%BB%E5%88%97%20--%20%E4%BA%8C%E5%8F%89%E6%A0%91%2F</url>
-    <content type="text"><![CDATA[最近比较懒，一直没有更新，耐不住迷妹们在后台频繁的鼓励，今天我们来蹭个热点，了解下二叉树。 最近最火的一个新闻莫过于某著名程序员面试Google被拒，原因是不会反转二叉树。今天我们就来学习二叉树。 什么是二叉树 二叉树是每个节点最多有两个子树的树结构。通常子树被称作“左子树”（left subtree）和“右子树”（right subtree）。二叉树常被用于实现二叉查找树和二叉堆。 如何定义一个二叉树根据定义，我们知道二叉树最重要的是根节点，左节点和右节点，我们来实现一个类来代表二叉树：12345class BinaryTree(object): def __init__(self, val, left=None, right=None): self.val = val self.left = left self.right = right 实现二叉查找树（Binary Search Tree）首先， 二叉查找树，又称二叉排序树（Binary Sort Tree）， 二叉搜索树，它有如下特点：（0）它是一颗空树，如果不是，它一定符合下列性质： （1）若左子树不空，则左子树上所有结点的值均小于或等于它的根结点的值； （2）若右子树不空，则右子树上所有结点的值均大于或等于它的根结点的值； （3）左、右子树也分别为二叉排序树； 先看一个二叉查找树的例子：下面来实现它：12345678910111213class BST: def insert_tree(self, root, value): if root.val &gt; value: if not root.left: root.left = Node(value) else: self.insert_tree(root.left, value) if root.val &lt; value: if not root.right: root.right = Node(value) else: self.insert_tree(root.right, value) 那么，二叉树如何实现查找呢？根据二叉树的特点，我们知道：1.如果要查找的值等于根节点的值，成功退出。2.如果要查找的值小于根节点的值， 递归查找左分支树， 否则，递归查找右分支树，3.如果发现等同于要查找的值，成功退出。4.如果子树为空，返回空。 在查找之前，我们先看看如何遍历二叉树： 1234567891011121314151617181920212223242526272829 #先访问根节点，再遍历左子树，最后遍历右子树；#并且在遍历左右子树时，仍需先访问根节点，然后遍历左子树，最后遍历右子树。 def preorder(self, root): if not root: return [] result = [root.val] left_result = self.preorder(root.left) right_result = self.preorder(root.right) return result + left_result + right_result #中序遍历：先遍历左子树、然后访问根节点，最后遍历右子树；#并且在遍历左右子树的时候。仍然是先遍历左子树，然后访问根节点，最后遍历右子树。 def midorder(self, root): if not root: return [] left_result = self.midorder(root.left) result = [root.val] right_result = self.midorder(root.right) return left_result + result + right_result #后续遍历：先遍历左子树，然后遍历右子树，最后访问根节点；#同样，在遍历左右子树的时候同样要先遍历左子树，然后遍历右子树，最后访问根节点。 def postorder(self, root): if not root: return [] left_result = self.postorder(root.left) right_result = self.postorder(root.right) result = [root.val] return left_result + right_result + result 查找：123def search_node(self, root, value): if value in self.postorder(root): return True 最后，我们来看下大神回答不出来的那个问题， 交换二叉树的左右节点。1234567def switch_node(self, root): if not root: return None root.left, root.right = root.right, root.left self.switch_node(root.left) self.switch_node(root.right) return self.preorder(root)由此可以看出， 二叉树的操作，最多的用到的是递归,递归的本质是自己调用自己，下面给一个函数来理解：12345678910111213141516171819202122#求阶乘 def factorial(n): if n&lt;=1: return 1 else: return n*factorial(n-1) 如何理解呢？n = 5; x = factorial (n); x = factorial (5); # first call to function x = (5 * factorial (4)); # recursion starts, until logic requirement satisfied x = (5 * (4 * factorial (3))); x = (5 * (4 * (3 * factorial (2)))); x = (5 * (4 * (3 * (2 * factorial (1))))); x = (5 * (4 * (3 * (2 * (1))))); # all calls made, logic ceases the recursion x = (5 * (4 * (3 * (2 * 1)))); # returns start as resolutions/calculations begin x = (5 * (4 * (3 * 2))); x = (5 * (4 * 6)); x = (5 * 24); x = (120); # final resolution/calculation before return x = 120;递归的理解不尽相同， 不过读者大可不必去关心函数如何一层层调用的，因为 Recursion is the process of solving a problem in terms of smaller versions of the same problem. Since the problem gets smaller each time, the process eventually terminates in a problem (the “base case”) that can be solved directly. Be sure of three things: The problem gets smaller each time. You include a solution for the base case. Each case is handled correctly. That’s really all there is to it.参考资料：！递归理解1！递归理解2]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>dev-in-test</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Python算法分享系列 -- 二叉树]]></title>
     <url>%2F2018%2F02%2F07%2F%E9%9D%A2%E8%AF%95%E7%9B%B8%E5%85%B3%2F%E7%AE%97%E6%B3%95%2FPython%E7%AE%97%E6%B3%95%E5%88%86%E4%BA%AB%E7%B3%BB%E5%88%97%20--%20%E4%BA%8C%E5%8F%89%E6%A0%91%2F</url>
     <content type="text"><![CDATA[最近比较懒，一直没有更新，耐不住迷妹们在后台频繁的鼓励，今天我们来蹭个热点，了解下二叉树。 最近最火的一个新闻莫过于某著名程序员面试Google被拒，原因是不会反转二叉树。今天我们就来学习二叉树。 什么是二叉树 二叉树是每个节点最多有两个子树的树结构。通常子树被称作“左子树”（left subtree）和“右子树”（right subtree）。二叉树常被用于实现二叉查找树和二叉堆。 如何定义一个二叉树根据定义，我们知道二叉树最重要的是根节点，左节点和右节点，我们来实现一个类来代表二叉树：12345class BinaryTree(object): def __init__(self, val, left=None, right=None): self.val = val self.left = left self.right = right 实现二叉查找树（Binary Search Tree）首先， 二叉查找树，又称二叉排序树（Binary Sort Tree）， 二叉搜索树，它有如下特点：（0）它是一颗空树，如果不是，它一定符合下列性质： （1）若左子树不空，则左子树上所有结点的值均小于或等于它的根结点的值； （2）若右子树不空，则右子树上所有结点的值均大于或等于它的根结点的值； （3）左、右子树也分别为二叉排序树； 先看一个二叉查找树的例子：下面来实现它：12345678910111213class BST: def insert_tree(self, root, value): if root.val &gt; value: if not root.left: root.left = Node(value) else: self.insert_tree(root.left, value) if root.val &lt; value: if not root.right: root.right = Node(value) else: self.insert_tree(root.right, value) 那么，二叉树如何实现查找呢？根据二叉树的特点，我们知道：1.如果要查找的值等于根节点的值，成功退出。2.如果要查找的值小于根节点的值， 递归查找左分支树， 否则，递归查找右分支树，3.如果发现等同于要查找的值，成功退出。4.如果子树为空，返回空。 在查找之前，我们先看看如何遍历二叉树： 1234567891011121314151617181920212223242526272829 #先访问根节点，再遍历左子树，最后遍历右子树；#并且在遍历左右子树时，仍需先访问根节点，然后遍历左子树，最后遍历右子树。 def preorder(self, root): if not root: return [] result = [root.val] left_result = self.preorder(root.left) right_result = self.preorder(root.right) return result + left_result + right_result #中序遍历：先遍历左子树、然后访问根节点，最后遍历右子树；#并且在遍历左右子树的时候。仍然是先遍历左子树，然后访问根节点，最后遍历右子树。 def midorder(self, root): if not root: return [] left_result = self.midorder(root.left) result = [root.val] right_result = self.midorder(root.right) return left_result + result + right_result #后续遍历：先遍历左子树，然后遍历右子树，最后访问根节点；#同样，在遍历左右子树的时候同样要先遍历左子树，然后遍历右子树，最后访问根节点。 def postorder(self, root): if not root: return [] left_result = self.postorder(root.left) right_result = self.postorder(root.right) result = [root.val] return left_result + right_result + result 查找：123def search_node(self, root, value): if value in self.postorder(root): return True 最后，我们来看下大神回答不出来的那个问题， 交换二叉树的左右节点。1234567def switch_node(self, root): if not root: return None root.left, root.right = root.right, root.left self.switch_node(root.left) self.switch_node(root.right) return self.preorder(root)由此可以看出， 二叉树的操作，最多的用到的是递归,递归的本质是自己调用自己，下面给一个函数来理解：12345678910111213141516171819202122#求阶乘 def factorial(n): if n&lt;=1: return 1 else: return n*factorial(n-1) 如何理解呢？n = 5; x = factorial (n); x = factorial (5); # first call to function x = (5 * factorial (4)); # recursion starts, until logic requirement satisfied x = (5 * (4 * factorial (3))); x = (5 * (4 * (3 * factorial (2)))); x = (5 * (4 * (3 * (2 * factorial (1))))); x = (5 * (4 * (3 * (2 * (1))))); # all calls made, logic ceases the recursion x = (5 * (4 * (3 * (2 * 1)))); # returns start as resolutions/calculations begin x = (5 * (4 * (3 * 2))); x = (5 * (4 * 6)); x = (5 * 24); x = (120); # final resolution/calculation before return x = 120;递归的理解不尽相同， 不过读者大可不必去关心函数如何一层层调用的，因为 Recursion is the process of solving a problem in terms of smaller versions of the same problem. Since the problem gets smaller each time, the process eventually terminates in a problem (the “base case”) that can be solved directly. Be sure of three things: The problem gets smaller each time. You include a solution for the base case. Each case is handled correctly. That’s really all there is to it.参考资料：！递归理解1！递归理解2]]></content>
       <categories>
@@ -337,6 +338,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Python算法分享系列 -- 二叉树]]></title>
+    <url>%2F2018%2F02%2F07%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E7%AE%97%E6%B3%95%2FPython%E7%AE%97%E6%B3%95%E5%88%86%E4%BA%AB%E7%B3%BB%E5%88%97%20--%20%E4%BA%8C%E5%8F%89%E6%A0%91%2F</url>
+    <content type="text"><![CDATA[最近比较懒，一直没有更新，耐不住迷妹们在后台频繁的鼓励，今天我们来蹭个热点，了解下二叉树。 最近最火的一个新闻莫过于某著名程序员面试Google被拒，原因是不会反转二叉树。今天我们就来学习二叉树。 什么是二叉树 二叉树是每个节点最多有两个子树的树结构。通常子树被称作“左子树”（left subtree）和“右子树”（right subtree）。二叉树常被用于实现二叉查找树和二叉堆。 如何定义一个二叉树根据定义，我们知道二叉树最重要的是根节点，左节点和右节点，我们来实现一个类来代表二叉树：12345class BinaryTree(object): def __init__(self, val, left=None, right=None): self.val = val self.left = left self.right = right 实现二叉查找树（Binary Search Tree）首先， 二叉查找树，又称二叉排序树（Binary Sort Tree）， 二叉搜索树，它有如下特点：（0）它是一颗空树，如果不是，它一定符合下列性质： （1）若左子树不空，则左子树上所有结点的值均小于或等于它的根结点的值； （2）若右子树不空，则右子树上所有结点的值均大于或等于它的根结点的值； （3）左、右子树也分别为二叉排序树； 先看一个二叉查找树的例子：下面来实现它：12345678910111213class BST: def insert_tree(self, root, value): if root.val &gt; value: if not root.left: root.left = Node(value) else: self.insert_tree(root.left, value) if root.val &lt; value: if not root.right: root.right = Node(value) else: self.insert_tree(root.right, value) 那么，二叉树如何实现查找呢？根据二叉树的特点，我们知道：1.如果要查找的值等于根节点的值，成功退出。2.如果要查找的值小于根节点的值， 递归查找左分支树， 否则，递归查找右分支树，3.如果发现等同于要查找的值，成功退出。4.如果子树为空，返回空。 在查找之前，我们先看看如何遍历二叉树： 1234567891011121314151617181920212223242526272829 #先访问根节点，再遍历左子树，最后遍历右子树；#并且在遍历左右子树时，仍需先访问根节点，然后遍历左子树，最后遍历右子树。 def preorder(self, root): if not root: return [] result = [root.val] left_result = self.preorder(root.left) right_result = self.preorder(root.right) return result + left_result + right_result #中序遍历：先遍历左子树、然后访问根节点，最后遍历右子树；#并且在遍历左右子树的时候。仍然是先遍历左子树，然后访问根节点，最后遍历右子树。 def midorder(self, root): if not root: return [] left_result = self.midorder(root.left) result = [root.val] right_result = self.midorder(root.right) return left_result + result + right_result #后续遍历：先遍历左子树，然后遍历右子树，最后访问根节点；#同样，在遍历左右子树的时候同样要先遍历左子树，然后遍历右子树，最后访问根节点。 def postorder(self, root): if not root: return [] left_result = self.postorder(root.left) right_result = self.postorder(root.right) result = [root.val] return left_result + right_result + result 查找：123def search_node(self, root, value): if value in self.postorder(root): return True 最后，我们来看下大神回答不出来的那个问题， 交换二叉树的左右节点。1234567def switch_node(self, root): if not root: return None root.left, root.right = root.right, root.left self.switch_node(root.left) self.switch_node(root.right) return self.preorder(root)由此可以看出， 二叉树的操作，最多的用到的是递归,递归的本质是自己调用自己，下面给一个函数来理解：12345678910111213141516171819202122#求阶乘 def factorial(n): if n&lt;=1: return 1 else: return n*factorial(n-1) 如何理解呢？n = 5; x = factorial (n); x = factorial (5); # first call to function x = (5 * factorial (4)); # recursion starts, until logic requirement satisfied x = (5 * (4 * factorial (3))); x = (5 * (4 * (3 * factorial (2)))); x = (5 * (4 * (3 * (2 * factorial (1))))); x = (5 * (4 * (3 * (2 * (1))))); # all calls made, logic ceases the recursion x = (5 * (4 * (3 * (2 * 1)))); # returns start as resolutions/calculations begin x = (5 * (4 * (3 * 2))); x = (5 * (4 * 6)); x = (5 * 24); x = (120); # final resolution/calculation before return x = 120;递归的理解不尽相同， 不过读者大可不必去关心函数如何一层层调用的，因为 Recursion is the process of solving a problem in terms of smaller versions of the same problem. Since the problem gets smaller each time, the process eventually terminates in a problem (the “base case”) that can be solved directly. Be sure of three things: The problem gets smaller each time. You include a solution for the base case. Each case is handled correctly. That’s really all there is to it.参考资料：！递归理解1！递归理解2]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>dev-in-test</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[[web开发] Flask+Python开发个人博客（六）]]></title>
     <url>%2F2017%2F12%2F24%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%2F%5Bweb%E5%BC%80%E5%8F%91%5D%20Flask%2BPython%E5%BC%80%E5%8F%91%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E5%85%AD%EF%BC%89%2F</url>
     <content type="text"><![CDATA[Flask开发中的一些技巧。 旧文五篇：[web开发] Flask+Python开发个人博客（一）[web开发] Flask+Python开发个人博客（二）[web开发] Flask+Python开发个人博客（三）[web开发] Flask+Python开发个人博客（四）[web开发] Flask+Python开发个人博客（五） 在Flask开发中，我们常常会用到很多配置变量，这些变量一开始是我们的本地环境变量，等你开发好后，会替换成线上产品变量，这样就导致你经常需要把一个变量的值改来改去。其实Flask提供了一个很好的方式来解决这个问题， 那就是instance。正常情况下，我们的变量都存在config.py的文件里，当使用的时候，在__init__.py里，加入：1234567from flask import Flaskapp = Flask(__name__)app.config.from_object('config')#后面的代码中，如果需要用到某个变量，只需要：app.config["variable"] 就可以访问了 那么当你需要隔离某些变量时怎么办， 只需要在项目根目录下建立一个instance文件夹，然后里面建config文件，目录大概如下： 使用方式是在__init__.py里，加入：12345from flask import Flaskapp = Flask(__name__, instance_relative_config=True)app.config.from_pyfile('config.py')#这样，如果你instance文件里定义了某个变量，系统就会从instance文件夹下面的config文件里寻找。 同时你可以把instance这个文件加入到git的ignore名单，这样就无需再频繁改动config文件了。]]></content>
@@ -344,8 +356,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>dev-in-test</tag>
+        <tag>python</tag>
         <tag>开发个人博客</tag>
       </tags>
   </entry>
@@ -380,8 +392,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>dev-in-test</tag>
+        <tag>python</tag>
         <tag>开发个人博客</tag>
       </tags>
   </entry>
@@ -393,8 +405,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>dev-in-test</tag>
+        <tag>python</tag>
         <tag>开发个人博客</tag>
       </tags>
   </entry>
@@ -406,8 +418,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>dev-in-test</tag>
+        <tag>python</tag>
         <tag>开发个人博客</tag>
       </tags>
   </entry>
@@ -419,8 +431,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>dev-in-test</tag>
+        <tag>python</tag>
         <tag>开发个人博客</tag>
       </tags>
   </entry>
@@ -432,8 +444,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>dev-in-test</tag>
+        <tag>python</tag>
         <tag>开发个人博客</tag>
       </tags>
   </entry>
