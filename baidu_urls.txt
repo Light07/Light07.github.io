@@ -1,1 +1,1 @@
-http://www.helloqa.com/2020/02/15/测试感悟/软件测试职业提升之道/
+http://www.helloqa.com/2020/04/30/测试框架/前端自动化测试Cypress从入门到精通/
