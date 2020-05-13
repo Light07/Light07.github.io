@@ -1,1 +1,1 @@
-http://www.helloqa.com/2020/04/30/测试框架/前端自动化测试Cypress从入门到精通/
+http://www.helloqa.com/2020/05/14/前端自动化测试/软件测试人员弯道超车指南/
