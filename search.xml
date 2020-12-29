@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[你不知道的Cypress系列（3） -- 是时候重构自己的思维了]]></title>
+    <url>%2F2020%2F12%2F31%2F%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97%2F%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97%EF%BC%883%EF%BC%89%20--%20%E6%98%AF%E6%97%B6%E5%80%99%E9%87%8D%E6%9E%84%E8%87%AA%E5%B7%B1%E7%9A%84%E6%80%9D%E7%BB%B4%E4%BA%86%2F</url>
+    <content type="text"><![CDATA[自从我的新书 前端自动化测试框架 – Cypress从入门到精通上市以来，这本书受到了大量同学热情的追捧和讨论。在跟同学们的交流中，我也了解到， 原来除了国外优秀的公司(例如Adobe, 迪士尼，AutoDesk等等）， 国内也有很多公司在尝试使用Cypress提升测试效率。而在Cypress中国群内、在公众号iTesting里，我每天都能看到大量关于Cypress的使用讨论和私下问询。这让我感到无比荣幸。（买了书的同学们，公众号回复你的微信，拉你到Cypress中国群）。 除了日常推荐大家通过阅读我的书来解决日常Cypress使用问题外，我也一直在更新着我这边的Cypress知识图谱， 不夸张的说，目前我总结和实践下来知识点多达200多篇。本着“雕琢自我，普惠他人”的原则，我决定在公众号iTesting上开设&lt;你不知道的Cypress系列&gt;专栏。此专栏目的是分享一些我自己趟过的坑，走过的弯路、以及在选型时抛弃了的实践。希望让大家在选用Cypress作为前端自动化测试框架方案时， 可以借鉴一下，避免再走我走过的弯路。 今天是&lt;你不知道的Cypress系列&gt;的第三篇 – 是时候重构自己的思维了！ 由于Selenium/WebDriver的“荼毒”， 当前在自动化过程中，很多不合理的操作，反而都变成了标准流程。例如，要进行元素属性值比较，我们首先想到的就是先赋值，再比较。再比如，自动化过程中，常常会陷入”条件测试（Conditional Testing）“的陷阱！ 例如，我见过太多这样的case：”如果我点击了某button，如果弹出框没有出现，我执行A操作，如果出现，我执行B操作“。由于这种“荼毒”，初次使用Cypress时， 大多数同学都会认为自己掉进坑里了！ （一）诡异的赋值01 赋值不起作用赋值操作是最常见的了，赋值最常用的场景是获取元素的某个属性供以后使用。 没接触过JavaScript的同学，在第一次写Cypress脚本时，一定会遇见如下问题：12345678910111213141516describe(&apos;欢迎关注iTesting&apos;, function () &#123; it(&apos;你以为的赋值&apos;, function () &#123; // 定义变量那么，用来获取button的text是什么 let name cy.visit(&apos;/login&apos;) //关注公众号iTesting, 玩转Cypress cy.get(&apos;button[type=&quot;submit&quot;]&apos;).then(obj =&gt; &#123; name = obj.text() // 第一次打印 cy.log(&apos;循环内有值&apos;, name) &#125;) // 第二次打印 cy.log(&apos;循环外没有值&apos;, name) &#125;)&#125;) 如上述代码所示，我定义了一个变量name，并尝试把submit button的text即“Submit” 赋值给name。 上面的代码看起来没有任何毛病，但是运行时，你会发现我第一次打印时有值， 但是二次打印时name的值是null。 02 赋值不起作用的原因写惯了Python或Java的同学往往会卡在这里觉得莫名其妙。其实也就是同步执行和异步执行的差异了。 同步执行：可以简单理解为，当你执行一个操作，在这个操作没有结果之前，其后续的操作不会执行。 异步执行：可以简单理解为，当你执行一个操作后，其后续的操作可以立即执行， 当这个操作有结果后，再通过状态，通知或者回调来通知这个操作的调用方。这个解释相当之不准确，不过也足够我们继续下面的内容了。 你如果感兴趣， 可以搜索同步、异步、阻塞、非阻塞来了解更多进程通信和系统调用的知识。正常情况下，Python代码，Java代码就是同步执行的，JavaScript代码就是异步执行的。了解了这一点，你就明白了，当执行到第13行时，name的值还没有被返回，所以打印不出来。 03 99%的情况都无须赋值使用Selenium/WebDriver比较熟悉的同学，初次转到Cypress后，很容易就自无劝退：”Cypress好难用， 我还是用回Selenium/WebDriver“吧。 拿对元素属性值进行断言为例，大家很容易就沿用Selenium/WebDriver时代的旧思维，认为，必须先拿出元素的属性值赋给一个变量，然后在用这个变量跟给定的期望结果对比。实际上，根本无需如此！ 在Cypress中，99%的操作都无须赋值！ 下面分别举例： Selenium/WebDriver123//获取元素的属性值,并比较value = driver.find_element_by_id(&apos;kw&apos;).get_attribute(&apos;innerHTML&apos;)assert value == &quot;iTesting&quot; Cypress：12//获取元素的属性值，并比较cy.get(&apos;#kw&apos;).should(&apos;have.text&apos;, &apos;iTesting&apos;) 就这么简单！ （二）Cypress命令是如何运行的？01先来看一个大家常常会犯的错误： 假设我们定义了一个自定义方法login，最后返回登录后的凭证：1234567//关注公众号iTesting，跟测试万人团一起成长// cypress/support/index.tsCypress.Commands.add(&apos;login&apos;, (username， password) =&gt; &#123; //各种代码实现登录 // 后返回登录凭证 return auth&#125;) 然后在测试用例里，经常看到这样的使用方式：1const auth = cy.login(&quot;iTesting&quot;, &quot;iTesting&quot;) 最后会发现auth的值是undefined，很多人百撕不得骑姐。 为什么？这是因为Cypress命令在它们被调用时不会执行任何操作。它们会自我排队（“enqueue themselves”），最后在统一运行。 来看下官方的解释：12345678910111213141516//关注公众号iTesting，跟测试万人团一起成长it(&apos;iTesting邀你看Cypres如何运行&apos;, () =&gt; &#123; cy.visit(&apos;/my/resource/path&apos;) // 啥也不干 // 关注iTesting，玩转Cypress cy.get(&apos;.awesome-selector&apos;) // 还是啥也不干 .click() // 必须啥也不干 cy.url() // 别想了，就是不干 .should(&apos;include&apos;, &apos;/hello&apos;) // 就在此刻，干！&#125;)// 好了，运行完了， 哦， 你真是一个快枪手。// 事实上，所有的Cypress命令会被queue起来，直到所有命令被chain完毕。// 然后Cypress开始按它们被queue的顺序开始运行。 这个就是Cypress的魔力。这就是为什么JavaScript是异步执行的，但是Cypress命令却能按照你的代码“顺序“执行的原因！ 01那么，知道了Cypress命令是如何运行的，再来看上面的登录例子，你就知道了，1const auth = cy.login(&quot;iTesting&quot;, &quot;iTesting&quot;) cy.login没有被执行，当然auth里就没有值了。 那么，如何才能确保cy.login被执行呢？ 为了让你能够访问到Cypress命令执行的结果，Cypress提供了1.then() .then是闭包的一个典型应用。（如果想深入理解，可以查下Promise） 所以，这下，我们知道要访问cy.login的返回值，我们应该这样用：1234cy.login(&quot;iTesting&quot;, &quot;iTesting&quot;).then( auth =&gt; &#123;const secret = auth//剩余用到auth的代码。&#125;) 这下，你就能愉快的使用Cypress命令的返回值了，不过也带来一个问题，就是代码层次比较深。。。 （三）拒绝条件测试01前面我提到了条件测试（Conditional Testing），实际上，条件测试常见常景如下： 我想在元素存在或者不存在时，执行不同的操作。 我的应用程序有A/B Testing，我需要测试到不同的分支。为了实现这个功能，在Selenium/WebDriver编程中，我们大量使用if…else，我们以为我们Cover住这种情况了，结果我们就发现我们的测试会薛定谔成功：有时候执行能成功，有时候执行不成功， 在你不执行的时候你永远不知道到底执行能不能成功。 我们来看一个例子：假设你的应用程序代码如下：1234567891011121314151617// 你的应用程序代码//关注公众号iTesting，跟测试万人团一起成长// 定义一个随机时间const random = Math.random() * 100// 创建一个 &lt;button&gt; 元素const btn = document.createElement(&apos;button&apos;)//关注iTesting，玩转Cypress// attach 这个元素到body上document.body.appendChild(btn)setTimeout(() =&gt; &#123; // 在random的时间内，给btn一个类属性。 btn.setAttribute(&apos;class&apos;, &apos;active&apos;)&#125;, random) 你的测试代码就会如下：123456789101112//关注公众号iTesting，跟测试万人团一起成长it(&apos;薛定谔的测试&apos;, () =&gt; &#123; // 多执行几遍，你发现，有时候btn的属性是active，有时候不是active。 cy.get(&apos;button&apos;).then(($btn) =&gt; &#123; if ($btn.hasClass(&apos;active&apos;)) &#123; // active时的代码 &#125; else &#123; // 非active的代码 &#125; &#125;)&#125;) 这也是Selenium/WebDriver被诟病的原因之一，不稳定！ 02为了避免这个情况，Cypress告诉你， 不要去做条件测试（Conditional Testing）！ Cypress说，既然你在测试，那么你就应该知道你的每一步下去，其结果是什么。如果你不能确定你的操作下去结果是什么，那么你就不是在测试！（没毛病吧） 相应的，你就要调整你的测试策略，尽量避免让自己的代码处于条件测试（Conditional Testing）下， 具体来说就一句话： 事先做一些操作，确保你的某个操作一定只有一个结果！如何做到呢？别忘记，Cypress是运行在浏览器之内的，是跟你的应用程序运行在同一个生命周期的，你对你的应用程序有完全的控制权！ 听起来很好，不过很可惜。这句话主要是对开发说的，对我们QA来说，用处不大（因为我们QA还是不知道改哪行代码啊！）。 不过，这里还是有一些原则， 比如： A/B Testing， 可以根据AB的策略，构造出一定会走A逻辑的测试数据。 判断元素在不在，一定可以根据业务知道你的什么操作，它一定会在。 总结当你初次使用Cypress时，特别是当你是从Selenium/WebDrvier转到Cypress来时，你一定会感觉到不习惯。这是必然的。当你遇见问题时，不妨尝试转换下思维，把老的思维模式抛弃掉，转入到Cypress的思维中来，毕竟，我们做测试是为了： 测试你的代码，而不是你的耐心！(买了书的同学们，公众号回复你的微信，拉你到Cypress中国群)]]></content>
+      <categories>
+        <category>dev-in-test</category>
+      </categories>
+      <tags>
+        <tag>Cypress</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[你不知道的Cypress系列（2） -- 该死的PO模型​]]></title>
+    <url>%2F2020%2F12%2F30%2F%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97%2F%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97%EF%BC%882%EF%BC%89%20--%20%E8%AF%A5%E6%AD%BB%E7%9A%84PO%E6%A8%A1%E5%9E%8B%E2%80%8B%2F</url>
+    <content type="text"><![CDATA[自从我的新书 前端自动化测试框架 – Cypress从入门到精通上市以来，这本书受到了大量同学热情的追捧和讨论。在跟同学们的交流中，我也了解到， 原来除了国外优秀的公司(例如Adobe, 迪士尼，AutoDesk等等）， 国内也有很多公司在尝试使用Cypress提升测试效率。而在Cypress中国群内、在公众号iTesting里，我每天都能看到大量关于Cypress的使用讨论和私下问询。这让我感到无比荣幸。（买了书的同学们，公众号回复你的微信，拉你到Cypress中国群）。 除了日常推荐大家通过阅读我的书来解决日常Cypress使用问题外，我也一直在更新着我这边的Cypress知识图谱， 不夸张的说，目前我总结和实践下来知识点多达200多篇。本着“雕琢自我，普惠他人”的原则，我决定在公众号iTesting上开设&lt;你不知道的Cypress系列&gt;专栏。此专栏目的是分享一些我自己趟过的坑，走过的弯路、以及在选型时抛弃了的实践。希望让大家在选用Cypress作为前端自动化测试框架方案时， 可以借鉴一下，避免再走我走过的弯路。 今天是&lt;你不知道的Cypress系列&gt;的第二篇 – 绝知此事要躬行，别被Cypress官方忽悠瘸了！ 为了让大家看到标题就知道我再说什么，我把标题更改为： 你不知道的Cypress系列（2） – ”该死”的PO模型 01 PO模型是什么无论你基于何种自动化测试框架开发你的测试脚本，PO模型绝对是你绕不过的坎儿。 PO模型（Page Object Module）算得上自动化测试的最佳实践之一，其中心思想如下：12345把物理上的页面或者逻辑上的功能组合当成一个Page 类处理。针对每一个Page类，将此Page上所属的元素、此Page类上元素动作的组合分别封装成Object， 以及Class Methods。所有针对此页面的操作以Page 类的实例引用。 从代码实现上来看，元素、元素操作、 Page类、Page类对应的测试类就是PO。 实现PO模型后，测试用例的操作细节会被隐藏，转而以面向对象，或者说，以业务角度展示操作步骤，我们直接看一个PO封装后的测试用例：1234567891011121314151617181920import LoginPage from &quot;../pages/login&quot;import mainPage from &quot;../pages/main&quot;describe(&apos;PageObject模式之登录测试&apos;, function () &#123;// 关注公众号iTesting，玩转Cypressconst username = &apos;iTesting&apos;const password = &apos;password123&apos; it(&apos;登录成功&apos;, function () &#123;const loginInstance = new LoginPage() loginInstance.visitPage() .isTargetPage() .login(username, password)const mainInstance = new mainPage() mainInstance.isTargetPage() .welComeText.should(&apos;contain&apos;, &apos;iTesting&apos;) &#125;)&#125;) 从业务角度看，PO模型非常直观：12345678初始化LoginPage实例访问LoginPage判断LoginPage可访问登录接着访问mainPage（登录后会跳转的页面）判断mainPage可访问在mainPage上断言 02 PO模型的好处由上文可以看到， PO模型的目的，主要是为了重用元素，做到每个元素定位、每个元素、甚至每个类方法，在整个项目中，有且仅有一处定义，其它都是调用。通过这样的方式，PO模型做到了即使在复杂项目中，也不会增加维护成本。 除此之外，在当前微服务开发模式下，动辄十几个、几十个微服务会同步进行开发。那么，过去那种一个测试工程师搞定所有自动化测试的机会不再有了。当前大多数公司的实践是将测试框架收归专门团队负责，而将自动化脚本的编写下放到各微服务团队。对应的， 各个团队下的业务测试工程师要具体负责其微服务的自动化测试。 PO模型天然带来一个好处，即，Page类天然隔离了模块和团队。例如我是团队A的测试工程师，除去公用Page外，我只需要关注我这个微服务下的所有Page类及类方法即可。而不必关心其它团队所own的页面。 如果我对其它组的服务有依赖，这些通常会构建专门的函数并成为Common Page的一部分。 如果有新人进来，他的学习成本只是我们团队负责的页面 + 公用Page，相对来说比较友好。 03 Cypress怎么看PO模型正如Cypress官方所宣扬的一样：1// The page object pattern isn’t actually anything “special”. 换句话说， Page Object只是方便重用而已，没什么大不了。 Cypress官方觉得Page Object模型里的大量Page类及其对应的测试类的使用，会加重调用链条，隐藏各个操作之间的动作细节，加重使用者的负担， 具体来说：12345678910111213141516 1. 使用PO模型人为的在测试中引入了其他状态，这些状态是你（测试脚本创建者）自己定义的，而不是应用程序内部拥有的， 它增加了debug成本。// 这个假设是成立的，因为程序内部并没有Page，更遑论Page里的方法。// 那么当你运行失败时发现，Page.addWallet失败了，你无法直接知道哪里出错// 你必须找到addWallet的定义，再去查看其实现，才能知道哪里错。 2. 使用PO模型使得测试速度变慢。// 这也是事实。// 毕竟你每次操作都要先initial Page实例，然后再寻找类方法，最后才是执行。 3. 使用PO模型使代码陷入“Conditional Testing”的怪圈。// 比如你的方法里存在如下判断：// 如果页面发生AAA， 你会进行BBB操作， 如果发生CCC，你会进行DDD操作。// 这在Cypress看来是反模式。因为Cypress跟你的应用程序运行在同一个生命周期。// Cypress可以捕获应用程序里发生的一切。// 所以，你理应知道你的操作引发的结果到底是AAA还是CCC。 这3条， 条条剑指PO模型的七寸。 Cypress官方又说，好既然PO不好用， 而且它存在只是为了方便重用，那么我给你更好的办法： 于是Custom Commands出炉了。Custom Commands你可以看成是PO模型里的Common Page。所有在Custom Commands里定义的方法，天生可以被任何测试之间调用。相当于你生成了自己的全局命令. 来看一个Custom Commands的具体例子：12345678910111213141516Cypress.Commands.add(&apos;login&apos;, (username, password) =&gt; &#123; Cypress.log(&#123; name: &apos;login&apos;, message: `$&#123;username&#125; | $&#123;password&#125;`, &#125;) // 关注公众号iTesting，精通Cypress使用return cy.request(&#123; method: &apos;POST&apos;, url: &apos;/login&apos;, form: true, body: &#123; username, password, &#125;, &#125;)&#125;) 这样，在使用上，你也不需要管什么Login Page类，Login测试类了。你在任何代码里直接写：1cy.login（&quot;关注iTesting，玩转Cypress&quot;） 它自然帮你登录成功， Page是什么？顿时不香了好吗！ Custom Commands的具体用法我的新书&lt;前端自动化测试框架 – Cypress从入门到精通&gt;里讲的还算通透，这里就不多说。 另外，在JavaScript世界里， 很讲究一个链式调用（Chainable）， Custom COmmands + 链式调用，Cypress认为它完全可以取代PO模型。 通过chainable把你的所有操作“可视化”。于是，一个Cypress推崇的测试用例就变成这样：1234567891011/// &lt;reference types=&quot;cypress&quot; /&gt;describe(&apos;Custom Commands模式之登录测试&apos;, function () &#123;// 关注公众号iTesting，玩转Cypress it(&apos;登录成功&apos;, function () &#123; cy.login(username, password) .verifyLoginSuccess() .verifyWelcomeTxt() &#125;)&#125;) 从cypress角度，你看到的是login成功后直接去验证welcome的文本在不在。 这样感觉代码量是不是更少，代码更直观了？ 04 我怎么看PO和Custom Commands? 这里我也谈下我对PO和Custom Commands的看法。 首先要谨记：Cypress的出现是为Developer服务的，它对Developer的友好程度要高于Tester。 基于此，我们再来看登录成功这个用例， 你看到的是123cy.xxx() .yyy() .zzz() 这样的模式调用链清晰，从层次上来是，也比PO模型少了一层。出错后的调试，也更方便。 但是！你的测试用例都是cy这样，cy那样，当然对于Cypress官方来说，很成功，Visibility非常高，简直是Cypress的活广告，美滋滋啊！ 可是，你的“业务”呢？不错！你的业务以及业务细节被隐藏了！ 虽然从Cypress的Custom Commands方式让测试写起代码来更爽，但是别忘记，在国内，我们还存在大量的测试人员，测试开发水平不足！（此时应该有广告，我的拉勾专栏&lt;测试开发入门与实战&gt;开栏24小时内售卖超10000+, 破了测试专栏的记录，值得你去拉勾上搜一下 ：）） 而且，从习惯上来说，国内的同学们更习惯从业务角度去理解测试。并且Custom Commands把所有的公用功能都写在一个文件里，对测试人员来说不友好，当我的测试用例超过10000条时，Custom Commands里的公用方法，恐怕也有几百个了。总不能我来一个新人，让他花上几周时间去熟悉所有的方法吧！况且，都微服务了，他以后基本也只负责其中一些测试，那么我让他学那么多跟他没关系的方法干嘛呢？ 虽然Custom Commands也可以做到按照微服务组织，然后在每个微服务Folder下实现一个Custom Commands的子域。但是，这样做，你使用时候由要跟PO模型一样先引入再使用， 那么它跟PO模型又有什么区别呢？！！ 05 PO和Custom Commands我都要纸上得来终觉浅！纸上得来终觉浅！纸上得来终觉浅！不能迷信权威！我刚开始搭建公司的前端框架时， 我就完全按照Cypress官方建议做，结果，当我的测试用例到达几千条时，我傻了，Custom Commands里的方法几百个，即使是我自己写的，但我自己也闹不清楚哪个做哪个用处，因为没有了Page做参考，时间一长，我很难从函数命名上看出这个方法应该在那个页面下使用， 更别说对框架不熟悉的新人了。 结果没办法，我重新返工了一遍，把特别核心的公用功能放到Custom Commands里，把跟业务有关的，还是以Page Object方式组织。放到微服务下，放到Page下，这样， 再来新人，我告诉他，你只要看这个commands这个文件还有你的微服务folder就好了。 所以， PO + Custom Commands + chainable是我的最佳实践， 以后我的测试用例就变成这样了。123456789101112131415/// &lt;reference types=&quot;cypress&quot; /&gt;import mainPage from &quot;../pages/main&quot;describe(&apos;PageObject模式之登录测试&apos;, function () &#123;// 关注公众号iTesting，玩转Cypressconst username = &apos;iTesting&apos;const password = &apos;password123&apos; it(&apos;登录成功&apos;, function () &#123; cy.login(username, password)const mainInstance = new mainPage() mainInstance.isTargetPage() .welComeText.should(&apos;contain&apos;, &apos;iTesting&apos;) &#125;)&#125;) 这下终于清静了！是么？ Cypress又提出了一个模型，App Actions， 同学，你想去尝尝鲜吗？（买了书的同学们，公众号回复你的微信，拉你到Cypress中国群）。 往期回看： 你不知道的Cypress系列（1） –鸡肋的BDD下期预告： 你不知道的Cypress系列（3） – 是时候重构自己的思维了！]]></content>
+      <categories>
+        <category>dev-in-test</category>
+      </categories>
+      <tags>
+        <tag>Cypress</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[你不知道的Cypress系列（1） --鸡肋的BDD]]></title>
+    <url>%2F2020%2F12%2F29%2F%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97%2F%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89%20--%E9%B8%A1%E8%82%8B%E7%9A%84BDD%2F</url>
+    <content type="text"><![CDATA[自从我的新书 前端自动化测试框架 – Cypress从入门到精通上市以来，这本书受到了大量同学热情的追捧和讨论。在跟同学们的交流中，我也了解到， 原来除了国外优秀的公司(例如Adobe, 迪士尼，AutoDesk等等）， 国内也有很多公司在尝试使用Cypress提升测试效率。而在Cypress中国群内、在公众号iTesting里，我每天都能看到大量关于Cypress的使用讨论和私下问询。这让我感到无比荣幸。（买了书的同学们，公众号回复你的微信，拉你到Cypress中国群）。 除了日常推荐大家通过阅读我的书来解决日常Cypress使用问题外，我也一直在更新着我这边的Cypress知识图谱， 不夸张的说，目前我总结和实践下来知识点多达200多篇。本着“雕琢自我，普惠他人”的原则，我决定在公众号iTesting上开设&lt;你不知道的Cypress系列&gt;专栏。此专栏目的是分享一些我自己趟过的坑，走过的弯路、以及在选型时抛弃了的实践。希望让大家在选用Cypress作为前端自动化测试框架方案时， 可以借鉴一下，避免再走我走过的弯路。 经常有同学问我，为什么不在自动化测试中使用BDD？ 进退两难之际，夏侯惇入帐，禀请夜间口号。曹操随口曰：“鸡肋!鸡肋!” 01 什么是BDD？Behavioural Driven Development (BDD)是从TDD发展来的（什么，TDD你都不知道？！），它通过自然语言定义系统行为，以功能使用者的角度，编写需求场景，且这些行为描述可以直接形成需求文档，同时也是测试标准。 这个概念太绕了，我不准备详细展开。你只要记住，BDD的背后是Gherkin， 而Gherkin的最佳体现是Cucumber框架，所以当你看到有人的测试用例/脚本是下面这个样子时，它就是BDD了。123Given XXXWhen XXXThen XXX 02 BDD为什么是鸡肋？本着测试工程师的优良传统 “You Can You Up， No Can No BB”， 我们直接用代码说话：假设我有一个网站，它如下面这个样子：它非常简单，当你输入正确的用户名和密码，我就允许你登录。假设我们要测试这个登录功能，那么我们先来看下，该如何测试。 不使用BDD12345678910111213141516171819202122//login.jsdescribe(&apos;HTML form submission&apos;, function () &#123; beforeEach(function () &#123; cy.visit(&apos;/login&apos;) &#125;) const username = &quot;kevin.cai&quot; const password = &quot;password123&quot; //关注公众号iTesting，跟测试万人团一起成长 it(&apos;验证登录成功&apos;, function () &#123; //登录 cy.get(&apos;input[name=username]&apos;).type(username) cy.get(&apos;input[name=password]&apos;).type(password) cy.get(&apos;form&apos;).submit() // 登录后验证 cy.url().should(&apos;include&apos;, &apos;/dashboard&apos;) cy.get(&apos;h1&apos;).should(&apos;contain&apos;, &apos;kevin.cai&apos;) cy.getCookie(&apos;cypress-session-cookie&apos;).should(&apos;exist&apos;) &#125;)&#125;) 可以看到，这个代码非常的Stright Forword。 为了简单起见，在这里我没有用任何的设计模式，实际工作中代码要比这个复杂的多，但是这一点不影响我们的比较，因为即使你用了PO， 用了Custom Commands， 也无非是代码结构更清晰一点，全部放在这里的代码无非分开放到公用Page里，放到Commands.js里。 再来看下，BDD的用法要使用BDD， 它的文件结构会如下所示：123456789101112//关注公众号iTesting，跟测试万人团一起成长|--iTesting（你的项目） |--integration |--login.feature(你的feature文件) |--login |--login.js(你的Step Definitons) |--plugins |--index.js |--support |--commands.js |--index.js 其中，login.feature文件的代码如下所示：123456789101112131415//关注公众号iTesting，跟测试万人团一起成长Feature: LoginiTesting want to loginScenario: iTeting Demo Given I am on the home page When I login with | username | password | | kevin.cai | password123 | Then the url is | url | | /dashboard | And iTesting logged BDD宣称的最大好处就在这里了：用自然语言描述一个测试，并把它当成测试用例使用。 真的是这样的吗？经验告诉我们，华丽的外袍下面，一定是千疮百孔。来跟我一起解密，这些所谓的”自然语言“是如何起作用的吧。 再来看下Step Definiton， login.js的代码如下：1234567891011121314151617181920212223242526//关注公众号iTesting，跟测试万人团一起成长import &#123; Given, When, Then &#125; from &apos;cypress-cucumber-preprocessor/steps&apos;Given(/^I am on the home page$/, () =&gt; &#123; cy.visit(&quot;http://localhost:7077/login&quot;)&#125;)When(/^I login with$/, (dataTable) =&gt; &#123; dataTable.hashes().forEach(auth =&gt; &#123; cy.get(&apos;input[name=username]&apos;).type(auth.username) cy.get(&apos;input[name=password]&apos;).type(auth.password) cy.get(&apos;form&apos;).submit() &#125;)&#125;)Then(/^the url is$/, (dataTable) =&gt; &#123; dataTable.hashes().forEach(dashbord =&gt; &#123; cy.log(dashbord.url) cy.url() .should(&apos;eq&apos;, `$&#123;Cypress.config().baseUrl&#125;$&#123;dashbord.url&#125;`) &#125;)&#125;)And(/^iTesting logged$/, () =&gt; &#123; cy.getCookie(&apos;cypress-session-cookie&apos;).should(&apos;exist&apos;)&#125;) 看到这里，你心里是不是跟我一样，就这？？（黑人问号脸）， 这难道不是另一种形式的函数吗？或者再高大上一点， 关键字？怎么你就敢这么秀？竟然开宗立派叫自己BDD， 要我说，BDD， 你应该叫“别BB，你就是DD！” 我们再来看运行时表现： 用了BDD后，你的测试用例里只能看到定义的feature文件（华丽的外袍给你看，内里就不好意思拿出来喽~）。 运行一下： 我再次笑了， 除了把我写的描述高亮出来，有什么区别吗？？ BDD唯一让我觉得不是一无是处的地方在于，可以给feature文件加标签，支持按标签运行：12345678910111213141516//关注公众号iTesting，跟测试万人团一起成长Feature: LoginiTesting want to login@smokeScenario: iTeting Demo Given I am on the home page When I login with | username | password | | kevin.cai | password123 | Then the url is | url | | /dashboard | And iTesting logged 然后命令行中运行：1yarn cypress-tags run -e Tags=&apos;@smoke&apos; 这样能起到一个挑选测试用例运行的目的。 03 总结我一贯是讨厌BDD的，在初次定义Cypress框架规范时，也有同学建议我用BDD，我都是一票否决的。原因无它，BDD使用下来的唯一感受就是（相信我，我开发基于Python的测试框架时也鄙视过BDD），会写代码的同学不想用BDD，觉得BDD是脱裤子放屁，隔靴搔痒多此一举。不会写代码的同学用不好BDD， 不是说自然语言描述吗？为什么我描述的框架都不认 ：）。 BDD除了给我们增加点工作量和Debug负担后，没有带来任何测试效率提升。 正所谓：“进退维谷，曹阿瞒不想吃鸡， 幸灾乐祸，老蔡笑骂BDD”。 （买了书的同学们，公众号回复你的微信，拉你到Cypress中国群）。 下次预告：你不知道的Cypress系列（2） – 绝知此事要躬行，别被Cypress官方忽悠瘸了！]]></content>
+      <categories>
+        <category>dev-in-test</category>
+      </categories>
+      <tags>
+        <tag>Cypress</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[测试开发入门与实践，你值得拥有！]]></title>
     <url>%2F2020%2F09%2F10%2F%E6%B5%8B%E8%AF%95%E6%84%9F%E6%82%9F%2F%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5%EF%BC%8C%E4%BD%A0%E5%80%BC%E5%BE%97%E6%8B%A5%E6%9C%89%2F</url>
     <content type="text"><![CDATA[热烈庆祝我在拉勾教育上的大课《测试开发入门与实践》24小时内订阅数超10000+！ 撒花！！ 同为测试人，据说90%的人都会经历以下场景： 每次发版时间相当紧张，上线前几天总是要肝个通宵 开发改动核心代码，留给测试完成全量回归测试时间非常短，出问题就要背锅。 手工执行用例、多浏览器重复验证同个功能、单个功能多个测试环境一遍遍点过去，像个机器人 每天重复“点点点”的机械工作，也不知道之后的几年还能干点啥。 怎么样？细节是不是拿捏的死死的？但这些都不算啥，无非是工作比较难罢了，更难的是跳槽、涨薪非常困难。 几天前，我有个做了 3 年测试的朋友去面试，因为不懂测试开发，被定级为“初级测试”。他觉得自己受到了侮辱，但他没意识到：很多公司都已经停止招聘只会功能测试的人员了。 因为最近这几年，高度自动化的测试成为业界追求的目标，要实现自动化，离不开测试开发来开发各种框架，支撑测试工作高效率运行。1 个测试开发的效率远大于 3 个普通测试。 毫不夸张地说，功能测试人员如果不转型测试开发，基本上得告别软件测试生涯了。 想成为测试开发有那么难么？其实跟着测试大牛，从入门到上手实战都不会占用你太长时间。拉勾教育「测试开发入门与实战」的专栏，只用27 讲就把测试开发的必学知识和实战技巧都讲得相当明白，非常适合想要入门测试开发的朋友学习。 专栏讲什么？ 本专栏分为五大模块，共27讲。从测试框架的概念、开发方法以及设计思想入手，通过实战案例和测试框架的代码实现，带你全面掌握测试框架的开发，完成从功能测试向测试开发的华丽转身。 第一模块 打牢基础 , 从框架概念到代码实践。专栏将从概念、组成、设计原则带你全方位认识自动化测试框架，并从工作场景出发，为你讲解开发测试框架所需要的Python知识，Git技巧，打牢测试开发基础。 第二模块 项目实战 ，搭建自动化测试框架。专栏将带你从零开始，搭建你的第一个Web测试框架和API测试框架。在搭建测试框架的过程中，专栏将讲解 Python 的两个经典 Library：unittest 和 pytest，带你了解这两个框架的经典实现原理以及如何通过调整部分代码来优化你的测试框架。 第三模块 能力修炼 ，全面掌握多项技能。 专栏将带你探索自动化测试框架开发中的经典实践，带你拓展测试开发进阶所需技能，比如 API 和 UI 自动化测试融合的技巧，PO 模型，DB 链接，数据驱动，以及数据操作的新方式 — Pandas。通过本模块的学习，你将能够比较自如地应用市面上的测试框架，并将之改造以适应你的项目，真正做到知其然知其所以然。 第四模块 深入自动化测试框架开发原理 .通过前面的学习，你已经对自动化框架的各个模块了然于胸，比如测试框架命令行参数，测试环境动态切换，测试用例动态挑选等。本模块将为你剖析这些经典模块的实现原理，了解这些原理之后，你将学会如何编码将这些功能实现。此外，本模块还会与你分享实战中的常见问题时和解决思路。 加餐 本职之内，技术之外 。专栏将结合高薪测试的成长路线，为你讲解技术之外，测试人同样需要关注的几个方面：如何在团队中保持技术影响力？如何成为技术骨干/技术管理？这些也是你成长过程中必须要面对的问题。 这是目录，也是测试开发必须的知识图谱，劝你对照着学，绝对会有收获： 测试开发转型之路，你不容错过！立刻扫码开启你的测试开发转型之路！]]></content>
@@ -43,8 +76,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>automation</tag>
         <tag>测试框架</tag>
+        <tag>automation</tag>
       </tags>
   </entry>
   <entry>
@@ -135,8 +168,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>automation</tag>
         <tag>测试框架</tag>
+        <tag>automation</tag>
       </tags>
   </entry>
   <entry>
@@ -147,8 +180,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>automation</tag>
         <tag>测试框架</tag>
+        <tag>automation</tag>
       </tags>
   </entry>
   <entry>
@@ -159,8 +192,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>automation</tag>
         <tag>测试框架</tag>
+        <tag>automation</tag>
       </tags>
   </entry>
   <entry>
@@ -171,8 +204,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>automation</tag>
         <tag>测试框架</tag>
+        <tag>automation</tag>
       </tags>
   </entry>
   <entry>
@@ -195,8 +228,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>automation</tag>
         <tag>测试框架</tag>
+        <tag>automation</tag>
       </tags>
   </entry>
   <entry>
@@ -207,8 +240,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>automation</tag>
         <tag>测试框架</tag>
+        <tag>automation</tag>
       </tags>
   </entry>
   <entry>
@@ -219,8 +252,8 @@
         <category>dev-in-test</category>
       </categories>
       <tags>
-        <tag>automation</tag>
         <tag>测试框架</tag>
+        <tag>automation</tag>
       </tags>
   </entry>
   <entry>
@@ -648,8 +681,8 @@
         <category>微信开发</category>
       </categories>
       <tags>
-        <tag>dev-in-test</tag>
         <tag>微信开发</tag>
+        <tag>dev-in-test</tag>
       </tags>
   </entry>
   <entry>
@@ -1222,8 +1255,8 @@
         <category>微信开发</category>
       </categories>
       <tags>
-        <tag>dev-in-test</tag>
         <tag>微信开发</tag>
+        <tag>dev-in-test</tag>
       </tags>
   </entry>
   <entry>

@@ -1,1 +1,1 @@
-http://www.helloqa.com/2020/09/10/测试感悟/测试开发入门与实践，你值得拥有/
+http://www.helloqa.com/2020/12/31/你不知道的Cypress系列/你不知道的Cypress系列（3） -- 是时候重构自己的思维了/
