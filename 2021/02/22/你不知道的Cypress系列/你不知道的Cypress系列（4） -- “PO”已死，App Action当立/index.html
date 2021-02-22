@@ -1,0 +1,1063 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误，请关注公众号iTesting获取密码');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Cypress," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="自从我的新书 前端自动化测试框架 – Cypress从入门到精通上市以来，这本书受到了大量同学热情的追捧和讨论。在跟同学们的交流中，我也了解到， 原来除了国外优秀的公司(例如Adobe, 迪士尼，AutoDesk等等）， 国内也有很多公司在尝试使用Cypress提升测试效率。而在Cypress中国群内、在公众号iTesting里，我每天都能看到大量关于Cypress的使用讨论和私下问询。这让我感到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你不知道的Cypress系列（4） -- “PO”已死，App Action当立">
+<meta property="og:url" content="http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列（4） -- “PO”已死，App Action当立/index.html">
+<meta property="og:site_name" content="iTesting软件测试知识分享">
+<meta property="og:description" content="自从我的新书 前端自动化测试框架 – Cypress从入门到精通上市以来，这本书受到了大量同学热情的追捧和讨论。在跟同学们的交流中，我也了解到， 原来除了国外优秀的公司(例如Adobe, 迪士尼，AutoDesk等等）， 国内也有很多公司在尝试使用Cypress提升测试效率。而在Cypress中国群内、在公众号iTesting里，我每天都能看到大量关于Cypress的使用讨论和私下问询。这让我感到">
+<meta property="og:updated_time" content="2021-02-22T02:29:36.179Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="你不知道的Cypress系列（4） -- “PO”已死，App Action当立">
+<meta name="twitter:description" content="自从我的新书 前端自动化测试框架 – Cypress从入门到精通上市以来，这本书受到了大量同学热情的追捧和讨论。在跟同学们的交流中，我也了解到， 原来除了国外优秀的公司(例如Adobe, 迪士尼，AutoDesk等等）， 国内也有很多公司在尝试使用Cypress提升测试效率。而在Cypress中国群内、在公众号iTesting里，我每天都能看到大量关于Cypress的使用讨论和私下问询。这让我感到">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列（4） -- “PO”已死，App Action当立/"/>
+
+
+
+
+
+  <title> 你不知道的Cypress系列（4） -- “PO”已死，App Action当立 | iTesting软件测试知识分享 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/Light07/flask_blog" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+<!--
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">iTesting软件测试知识分享</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">iTesting</h1>
+    
+</div>
+-->
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+		
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-basic-knowledge">
+          <a href="/categories/basic-knowledge" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            测试理论
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-dev-in-test">
+          <a href="/categories/dev-in-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-flask"></i> <br />
+            
+            测试开发
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-automation">
+          <a href="/categories/automation" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-desktop"></i> <br />
+            
+            自动化测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-api-test">
+          <a href="/categories/api-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane-o"></i> <br />
+            
+            接口测试
+          </a>
+        </li>
+		
+      
+        
+		
+        <li class="menu-item menu-item-mobile-test">
+          <a href="/categories/mobile-test" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mobile"></i> <br />
+            
+            移动端测试
+          </a>
+        </li>
+		
+      
+        
+		
+      
+        
+		
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列（4） -- “PO”已死，App Action当立/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="请关注微信公众号 iTesting">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="iTesting软件测试知识分享">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="iTesting软件测试知识分享" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                你不知道的Cypress系列（4） -- “PO”已死，App Action当立
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+        
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-02-22T23:48:17+08:00">
+                2021-02-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev-in-test/" itemprop="url" rel="index">
+                    <span itemprop="name">dev-in-test</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">全文共计2.5k字</span>
+			  <span class="post-meta-divider">|</span>
+			  <span class="post-meta-item-icon">
+               <i class="fa fa-folder-o"></i>
+              </span>
+			  <span class="post-count">预计阅读时间9分钟</span>
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>自从我的新书 <a href="https://item.jd.com/12647091.html" target="_blank" rel="external"><font color="#0099ff" size="3" face="“黑体”">前端自动化测试框架 – Cypress从入门到精通</font></a>上市以来，这本书受到了大量同学热情的追捧和讨论。在跟同学们的交流中，我也了解到， 原来除了国外优秀的公司(例如Adobe, 迪士尼，AutoDesk等等）， 国内也有很多公司在尝试使用Cypress提升测试效率。而在Cypress中国群内、在公众号iTesting里，我每天都能看到大量关于Cypress的使用讨论和私下问询。这让我感到无比荣幸。（<font color="red" size="2" face="“黑体”">买了书的同学们，公众号回复你的微信，拉你到Cypress中国群</font>）。</p>
+<p>除了日常推荐大家通过阅读我的书来解决日常Cypress使用问题外，我也一直在更新着我这边的Cypress知识图谱， 不夸张的说，目前我总结和实践下来知识点多达200多篇。本着“雕琢自我，普惠他人”的原则，我决定在公众号iTesting上开设&lt;你不知道的Cypress系列&gt;专栏。此专栏目的是分享一些我自己趟过的坑，走过的弯路、以及在选型时抛弃了的实践。希望让大家在选用Cypress作为前端自动化测试框架方案时， 可以借鉴一下，避免再走我走过的弯路。</p>
+<p>今天是&lt;你不知道的Cypress系列&gt;的第四篇 –  “PO”已死，App Action当立’！</p>
+<a id="more"></a>
+<h4 id="（一）PageObject是什么"><a href="#（一）PageObject是什么" class="headerlink" title=" （一）PageObject是什么"></a><center> （一）PageObject是什么</center></h4><h5 id="01-赋值不起作用"><a href="#01-赋值不起作用" class="headerlink" title="01 赋值不起作用"></a><center>01 赋值不起作用</center></h5><p>关于PageObject，我在<a href="https://helloqa.com/2020/12/31/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97%EF%BC%883%EF%BC%89%20--%20%E6%98%AF%E6%97%B6%E5%80%99%E9%87%8D%E6%9E%84%E8%87%AA%E5%B7%B1%E7%9A%84%E6%80%9D%E7%BB%B4%E4%BA%86/" target="_blank" rel="external">你不知道的Cypress系列（2） –该死的PO模型​</a>中有过比较清晰的描述。这里就不再赘述。</p>
+<p>可以明确的是，<font color="red" size="4" face="“黑体”">Cypress不提倡PageObject，并不是因为PageObject模型不好</font>，而是因为由于Cypress运行原理的独特性，使用PageObject模型，一定程度上阻止了Cypress做的更好，这句话怎么理解？这就不得不说到App Action这个模型了。</p>
+<h5 id="02-什么是App-Action"><a href="#02-什么是App-Action" class="headerlink" title="02 什么是App Action"></a><center>02 什么是App Action</center></h5><p>相信大家听了我那么多次鼓吹Cypress，早已知道，Cypress是市面上为数不多的没有使用JSON Wire Protocol（WebDriver及99%其它自动化框架的核心协议）的框架。Cypress运行在浏览器之内，并且和你的应用程序运行在同一生命周期，这意味着Cypress可以直接访问和控制应用程序本身的行为。</p>
+<font color="red" size="4" face="“黑体”">而这种直接控制应用程序到达要测试所需状态的能力，就是“App Action”。</font>
+
+<p></p>
+<p>这句话同样不好理解，我举个例子，假设我要测试一个页面功能，这个功能是付款成功后，会随机出现一个优惠券供我下次使用。我要测试这个优惠券在付款成功后会出现，并且可以领取。自动化测试为了保证测试用例的原子性，我：</p>
+<h6 id="提前准备好账户："><a href="#提前准备好账户：" class="headerlink" title="提前准备好账户："></a>提前准备好账户：</h6><p>要么准备一个账户，这个账户有余额， 并且这个账户永远有我要的商品在购物车，等着我付款（大家知道这不可能）。</p>
+<h6 id="每次新建账户："><a href="#每次新建账户：" class="headerlink" title="每次新建账户："></a>每次新建账户：</h6><p>要么注册一个账户，用这个账户登录，充钱，添加商品，然后加购物车，然后付款，最后检查优惠券页面。<br>注意：我的测试要求是测试付款成功后的优惠券页面。那么这个动作抽象一下就是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//&quot;iTesting&quot;</div><div class="line">1. 付款及其前置动作</div><div class="line">2. 优惠券页面（真正的测试项）</div></pre></td></tr></table></figure></p>
+<p>在我们实际测试中，我们经常会发现，可能整个测试写了100行代码。测试付款后，检查优惠券的动作只有10行代码，其它90行都是动作1，即我们花大量时间在做付款及其前置动作。<br> <strong><center>有没有觉得有点本末倒置？</center></strong></p>
+<p> 如果有一种办法，可以让我们的应用程序直接到达优惠券页面，我的代码是不是只需要10行？是不是就避免了很多无效的操作？是不是运行速度上可以更快，而且我可以只关注我要测试的部分？</p>
+<font color="red" size="4" face="“黑体”">这种直接控制应用程序到达要测试所需状态的能力，就是“App Action”。</font>
+
+
+<h5 id="03-App-Action举例"><a href="#03-App-Action举例" class="headerlink" title="03 App Action举例"></a><center>03 App Action举例</center></h5><p>Cypress提供给我们一个应用程序供练习，如下图所示：</p>
+<iframe height="600" width="800" src="https://mmbiz.qpic.cn/sz_mmbiz_gif/KrjxpeiaZUP47oibkRg7F07gzficjOXlzuHUnphUiaicn561fImQsasfv1ibUxQrzUf8pWzSoZ04ibwO6L3exI39f1mCQ/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1"><br></iframe>
+
+<p>假设我要测试登录，那么正常情况下，我的操作是下面这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//&quot;iTesting&quot;</div><div class="line">1. 打开首页。</div><div class="line">2. 点击右上角的Login。</div><div class="line">3. 在弹出的Login对话框中输入用户名，密码登录。</div></pre></td></tr></table></figure>
+<p>我的代码是这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">it(&apos;iTesting Demo&apos;, () =&gt; &#123;</div><div class="line"></div><div class="line">  cy</div><div class="line">    .visit(&apos;/&apos;);</div><div class="line"></div><div class="line">// 7到 13 行是Login的前置条件。</div><div class="line">  cy</div><div class="line">    .get(&apos;[data-cy=&quot;login-menu&quot;]&apos;)</div><div class="line">    .click();</div><div class="line"></div><div class="line">  cy</div><div class="line">    .get(&apos;[data-cy=&quot;login-module&quot;]&apos;)</div><div class="line">    .should(&apos;be.visible&apos;);</div><div class="line"></div><div class="line">//真正的Login 从这里开始</div><div class="line">  cy</div><div class="line">    .get(&apos;[data-cy=&quot;login-email&quot;]&apos;)</div><div class="line">    .type(&apos;iTesting@YouMustFollow.com&apos;);</div><div class="line"></div><div class="line">  cy</div><div class="line">    .get(&apos;[data-cy=&quot;login-password&quot;]&apos;)</div><div class="line">    .type(&apos;Password&apos;);</div><div class="line"></div><div class="line">  cy</div><div class="line">    .get(&apos;[data-cy=&quot;login&quot;]&apos;)</div><div class="line">    .click();</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>由于Cypress可以直接访问应用程序资源，并且可以控制应用程序状态，那么使用“App Action”的操作就是这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. 打开首页。</div><div class="line">2. Cypress直接操作应用程序打开Login界面。</div><div class="line">3. 输入用户名，密码继续测试。</div></pre></td></tr></table></figure></p>
+<p>使用Applicaiton Action的代码就是这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">it(&apos;iTesting Demo&apos;, () =&gt; &#123;</div><div class="line">  cy</div><div class="line">    .visit(&apos;/&apos;);</div><div class="line"> </div><div class="line"> // Magic! Cypress通过将应用程序窗口暴露出来，从而直接访问应用</div><div class="line"> // 程序本身的各种方法。 实现我们一会讲。  </div><div class="line">  cy</div><div class="line">    .window()</div><div class="line">    .then((&#123; app &#125;) =&gt; &#123;</div><div class="line">      app.showLoginModule = true;</div><div class="line">    &#125;);</div><div class="line">    </div><div class="line">    </div><div class="line"> //真正的Login，从这里开始</div><div class="line">  cy</div><div class="line">    .get(&apos;[data-cy=&quot;login-email&quot;]&apos;)</div><div class="line">    .type(&apos;iTesting@YouMustFollow.com&apos;);</div><div class="line"></div><div class="line">  cy</div><div class="line">    .get(&apos;[data-cy=&quot;login-password&quot;]&apos;)</div><div class="line">    .type(&apos;Password&apos;);</div><div class="line"></div><div class="line">  cy</div><div class="line">    .get(&apos;[data-cy=&quot;login&quot;]&apos;)</div><div class="line">    .click();</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>由此可见，使用了App Action， 我们可以直接指定应用程序到达测试需要的状态，而不必再做无关的操作。</p>
+<p>那么，这个是怎么实现的呢？</p>
+<h4 id="04-App-Action如何实现"><a href="#04-App-Action如何实现" class="headerlink" title="04 App Action如何实现"></a><center>04 App Action如何实现</center></h4><p>我们来看下关键代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//关注公众号iTesting，跟测试万人团一起成长</div><div class="line">// Magic! Cypress通过将应用程序窗口暴露出来，从而直接访问应用</div><div class="line">// 程序本身的各种方法。实现我们一会讲。</div><div class="line">cy</div><div class="line">  .window()</div><div class="line">  .then((&#123; app &#125;) =&gt; &#123;</div><div class="line">    app.showLoginModule = true;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>这段代码直接把Login窗口打开了，而不是通过页面操作打开。为什么这样可以呢？</p>
+<p>这就不得不说到应用程序源码了：</p>
+<iframe height="600" width="800" src="https://mmbiz.qpic.cn/sz_mmbiz_gif/KrjxpeiaZUP47oibkRg7F07gzficjOXlzuHiawcWDF69eaHicMPW4IhTgm9xBnKK1YkuoJzhsMo2tp6HHrE9p8JAVTA/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1"><br></iframe>
+
+<p>从上图可以看到，这个应用程序是Vue的（React和Angular原理类似），通过Vue DevTools我们可以看出来，是属性showLoginModule控制Login窗口的出现。</p>
+<p>而如果我们能把应用打开的窗口（及其支持的方法）暴露给浏览器的Window对象，那么我们就可以通过cy.window来获取。</p>
+<p><strong><center>具体怎么做呢？</center></strong></p>
+<p>在入口文件main.js里, 在初始化vue实例后，把我们的app实例暴露给window context就好。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">const app = new Vue(&#123;</div><div class="line">  // ...</div><div class="line">&#125;).$mount(&apos;#Example-app&apos;);</div><div class="line">// 上面是正常的vue代码。</div><div class="line"></div><div class="line"> // 起作用的是，添加了如下一行。</div><div class="line">window.app = app;</div></pre></td></tr></table></figure></p>
+<p>这样做了后，当应用程序在浏览器中打开时，你可以直接通过window.app来设置所有app支持的方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">window.app.showLoginModule = true</div></pre></td></tr></table></figure></p>
+<p>因为window我们已经完全拿到了，所以我们可以直接用cypress来操作Login窗口的关闭和打开。<br>所以，下面的关键代码在Cypress测试中可以直接使用！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// Magic! Cypress通过将应用程序窗口暴露出来，从而直接访问应用</div><div class="line">// 程序本身的各种方法。实现我们一会讲。</div><div class="line"> cy</div><div class="line">   .window()</div><div class="line">   .then((&#123; app &#125;) =&gt; &#123;</div><div class="line">     app.showLoginModule = true;</div><div class="line">   &#125;);</div></pre></td></tr></table></figure></p>
+<p>Login 窗口可以直接被唤起，一秒直达测试状态，这个感觉只有Cypress能给你有没有？：）</p>
+<h4 id="05-为什么App-Action流行不起来？"><a href="#05-为什么App-Action流行不起来？" class="headerlink" title="05 为什么App  Action流行不起来？"></a><center>05 为什么App  Action流行不起来？</center></h4><p>看到这里，你应该明白使用Cypress的最大好处了吧？你可以直接调用应用程序里的方法来设置你应用程序当前的状态，是不是心潮澎湃啊！这样一来，还需要什么数据准备？还需要什么前置操作，直捣黄龙有没有？</p>
+<p>”桥逗麻袋“， 好像哪里不对？</p>
+<p>这就对了，这就是App  Action流行不起来的原因：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//关注公众号iTesting，跟测试万人团一起成长</div><div class="line"></div><div class="line">1. 测试人员没有那么强的代码能力，去根据开发的代码写Cypress代码。</div><div class="line">2. 开发人员未必愿意配合你做这些。</div></pre></td></tr></table></figure></p>
+<p>所以， 大部分测试人员只能直接从UI去操作，虽杀鸡用牛刀也是不得已。</p>
+<h4 id="06-总结"><a href="#06-总结" class="headerlink" title="06 总结"></a><center>06 总结</center></h4><p>从自动化测试效率上来说，App Action一定是超越Page Object模型的。从测试脚本稳定性，运行时长等因素来看，App  Action也是一骑绝尘。</p>
+<p>但是， 任何技术理论提出的太早，不一定是好事儿，受制于广大人测试人员的认知和技术水平， 虽然App  Action带来的震撼犹如哥白尼的日心说，但是“地球是宇宙的中心”，测试代码在可见的范围内，也仍然是由测试人员来写， 所以， 忘记App  Action，继续拥抱PageObject吧  :(</p>
+<font color="red" size="4" face="“黑体”">Cypress强推的App  Action非常适合那种敏捷型“精英小分队”，即团队的每个人都是多面手，具备一定的开发能力，否则，App  Action只能是水中月，美则美矣，实操性难。<br></font>
+
+<h4 id="Cypress测试你的代码，而不是你的耐心！-买了书的同学们，公众号回复你的微信，拉你到Cypress中国群"><a href="#Cypress测试你的代码，而不是你的耐心！-买了书的同学们，公众号回复你的微信，拉你到Cypress中国群" class="headerlink" title="Cypress测试你的代码，而不是你的耐心！(买了书的同学们，公众号回复你的微信，拉你到Cypress中国群)"></a>Cypress测试你的代码，而不是你的耐心！(<font color="red" size="2" face="“黑体”">买了书的同学们，公众号回复你的微信，拉你到Cypress中国群</font>)</h4><p>往期回看：<br>        <a href="https://helloqa.com/2020/12/29/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89%20--%E9%B8%A1%E8%82%8B%E7%9A%84BDD/" target="_blank" rel="external">你不知道的Cypress系列（1） –鸡肋的BDD</a></p>
+<p><a href="https://helloqa.com/2020/12/30/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97%EF%BC%882%EF%BC%89%20--%20%E8%AF%A5%E6%AD%BB%E7%9A%84PO%E6%A8%A1%E5%9E%8B%E2%80%8B/" target="_blank" rel="external">你不知道的Cypress系列（2） –该死的PO模型​</a></p>
+<p><a href="https://helloqa.com/2020/12/31/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84Cypress%E7%B3%BB%E5%88%97%EF%BC%883%EF%BC%89%20--%20%E6%98%AF%E6%97%B6%E5%80%99%E9%87%8D%E6%9E%84%E8%87%AA%E5%B7%B1%E7%9A%84%E6%80%9D%E7%BB%B4%E4%BA%86/" target="_blank" rel="external">你不知道的Cypress系列（3） – 是时候重构你的思维了</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="请关注微信公众号 iTesting WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="请关注微信公众号 iTesting Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------评论, 吐槽, 学习交流，请关注微信公众号 iTesting-------------</i></div>
+    
+</div>
+	  
+	</div>
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="请关注微信公众号 iTesting wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫码关注，跟作者互动</div>
+</div>
+
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/Cypress/" rel="tag"># Cypress</a>
+          
+        </div>
+      
+	<div>
+		  
+			
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列（4） -- “PO”已死，App Action当立/">你不知道的Cypress系列（4） -- “PO”已死，App Action当立</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 请关注微信公众号 iTesting 的个人博客">请关注微信公众号 iTesting</a></p>
+  <p><span>发布时间:</span>2021年02月22日 - 23:02</p>
+  <p><span>最后更新:</span>2021年02月22日 - 10:02</p>
+  <p><span>原始链接:</span><a href="/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列（4） -- “PO”已死，App Action当立/" title="你不知道的Cypress系列（4） -- “PO”已死，App Action当立">http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列（4） -- “PO”已死，App Action当立/</a>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+		  
+	</div>
+
+    <footer class="post-footer">
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/12/31/你不知道的Cypress系列/你不知道的Cypress系列（3） -- 是时候重构自己的思维了/" rel="next" title="你不知道的Cypress系列（3） -- 是时候重构自己的思维了">
+                <i class="fa fa-chevron-left"></i> 你不知道的Cypress系列（3） -- 是时候重构自己的思维了
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="请关注微信公众号 iTesting" />
+		  
+          <p class="site-author-name" itemprop="name"><a href= "/about">请关注微信公众号 iTesting</a></p>
+		  
+          <p class="site-description motion-element" itemprop="description">测试专家。图书【前端自动化测试框架--Cypress从入门到精通】作者。拉勾教育【测试开发入门与实践】专栏作者，24小时内订阅数超10,000+。 精通Cypress，熟练掌握Python，测试框架开发，测试平台开发，自动化测试，接口测试，长期致力于软件测试的技术传播工作。 联系微信：BetterThinkBig 。</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">109</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/thinkbig" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-user-circle-o"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://qahome.cn" target="_blank" title="wechat">
+                  
+                    <i class="fa fa-fw fa-wechat"></i>
+                  
+                  wechat
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/thinkbig" title="知乎" target="_blank">知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#（一）PageObject是什么"><span class="nav-number">1.</span> <span class="nav-text"> （一）PageObject是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#01-赋值不起作用"><span class="nav-number">1.1.</span> <span class="nav-text">01 赋值不起作用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#02-什么是App-Action"><span class="nav-number">1.2.</span> <span class="nav-text">02 什么是App Action</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#提前准备好账户："><span class="nav-number">1.2.1.</span> <span class="nav-text">提前准备好账户：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#每次新建账户："><span class="nav-number">1.2.2.</span> <span class="nav-text">每次新建账户：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#03-App-Action举例"><span class="nav-number">1.3.</span> <span class="nav-text">03 App Action举例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#04-App-Action如何实现"><span class="nav-number">2.</span> <span class="nav-text">04 App Action如何实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#05-为什么App-Action流行不起来？"><span class="nav-number">3.</span> <span class="nav-text">05 为什么App  Action流行不起来？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#06-总结"><span class="nav-number">4.</span> <span class="nav-text">06 总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cypress测试你的代码，而不是你的耐心！-买了书的同学们，公众号回复你的微信，拉你到Cypress中国群"><span class="nav-number">5.</span> <span class="nav-text">Cypress测试你的代码，而不是你的耐心！(买了书的同学们，公众号回复你的微信，拉你到Cypress中国群)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  Copyright &nbsp 
+  &copy; 2017 - 
+  <span itemprop="copyrightYear">2021 &nbsp&nbsp Designed by helloqa</span>
+  
+  <span class="with-love">
+    <i class="fa fa-wechat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">请关注微信公众号 iTesting</span>
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+
+-->  
+
+
+        <!-- 
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+ -->
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

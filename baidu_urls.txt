@@ -1,1 +1,1 @@
-http://www.helloqa.com/2020/12/31/你不知道的Cypress系列/你不知道的Cypress系列（3） -- 是时候重构自己的思维了/
+http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列（4） -- “PO”已死，App Action当立/
