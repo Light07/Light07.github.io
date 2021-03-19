@@ -94,13 +94,16 @@
 <meta name="description" content="自从我的新书 前端自动化测试框架 – Cypress从入门到精通上市以来，这本书受到了大量同学热情的追捧和讨论。在跟同学们的交流中，我也了解到， 原来除了国外优秀的公司(例如Adobe, 迪士尼，AutoDesk等等）， 国内也有很多公司在尝试使用Cypress提升测试效率。而在Cypress中国群内、在公众号iTesting里，我每天都能看到大量关于Cypress的使用讨论和私下问询。这让我感到">
 <meta property="og:type" content="article">
 <meta property="og:title" content="你不知道的Cypress系列（4） -- “PO”已死，App Action当立">
-<meta property="og:url" content="http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列（4） -- “PO”已死，App Action当立/index.html">
+<meta property="og:url" content="http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列4-PO已死AppAction当立/index.html">
 <meta property="og:site_name" content="iTesting软件测试知识分享">
 <meta property="og:description" content="自从我的新书 前端自动化测试框架 – Cypress从入门到精通上市以来，这本书受到了大量同学热情的追捧和讨论。在跟同学们的交流中，我也了解到， 原来除了国外优秀的公司(例如Adobe, 迪士尼，AutoDesk等等）， 国内也有很多公司在尝试使用Cypress提升测试效率。而在Cypress中国群内、在公众号iTesting里，我每天都能看到大量关于Cypress的使用讨论和私下问询。这让我感到">
-<meta property="og:updated_time" content="2021-02-22T02:29:36.179Z">
+<meta property="og:image" content="http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列4-PO已死AppAction当立/0.gif">
+<meta property="og:image" content="http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列4-PO已死AppAction当立/1.gif">
+<meta property="og:updated_time" content="2021-03-19T14:58:06.404Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="你不知道的Cypress系列（4） -- “PO”已死，App Action当立">
 <meta name="twitter:description" content="自从我的新书 前端自动化测试框架 – Cypress从入门到精通上市以来，这本书受到了大量同学热情的追捧和讨论。在跟同学们的交流中，我也了解到， 原来除了国外优秀的公司(例如Adobe, 迪士尼，AutoDesk等等）， 国内也有很多公司在尝试使用Cypress提升测试效率。而在Cypress中国群内、在公众号iTesting里，我每天都能看到大量关于Cypress的使用讨论和私下问询。这让我感到">
+<meta name="twitter:image" content="http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列4-PO已死AppAction当立/0.gif">
 
 
 
@@ -128,7 +131,7 @@
 
 
 
-  <link rel="canonical" href="http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列（4） -- “PO”已死，App Action当立/"/>
+  <link rel="canonical" href="http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列4-PO已死AppAction当立/"/>
 
 
 
@@ -320,7 +323,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列（4） -- “PO”已死，App Action当立/">
+  <link itemprop="mainEntityOfPage" href="http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列4-PO已死AppAction当立/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="请关注微信公众号 iTesting">
@@ -450,8 +453,7 @@
 
 
 <h5 id="03-App-Action举例"><a href="#03-App-Action举例" class="headerlink" title="03 App Action举例"></a><center>03 App Action举例</center></h5><p>Cypress提供给我们一个应用程序供练习，如下图所示：</p>
-<iframe height="600" width="800" src="https://mmbiz.qpic.cn/sz_mmbiz_gif/KrjxpeiaZUP47oibkRg7F07gzficjOXlzuHUnphUiaicn561fImQsasfv1ibUxQrzUf8pWzSoZ04ibwO6L3exI39f1mCQ/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1"><br></iframe>
-
+<p><img src="/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列4-PO已死AppAction当立/0.gif" alt=""></p>
 <p>假设我要测试登录，那么正常情况下，我的操作是下面这样的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//&quot;iTesting&quot;</div><div class="line">1. 打开首页。</div><div class="line">2. 点击右上角的Login。</div><div class="line">3. 在弹出的Login对话框中输入用户名，密码登录。</div></pre></td></tr></table></figure>
 <p>我的代码是这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">it(&apos;iTesting Demo&apos;, () =&gt; &#123;</div><div class="line"></div><div class="line">  cy</div><div class="line">    .visit(&apos;/&apos;);</div><div class="line"></div><div class="line">// 7到 13 行是Login的前置条件。</div><div class="line">  cy</div><div class="line">    .get(&apos;[data-cy=&quot;login-menu&quot;]&apos;)</div><div class="line">    .click();</div><div class="line"></div><div class="line">  cy</div><div class="line">    .get(&apos;[data-cy=&quot;login-module&quot;]&apos;)</div><div class="line">    .should(&apos;be.visible&apos;);</div><div class="line"></div><div class="line">//真正的Login 从这里开始</div><div class="line">  cy</div><div class="line">    .get(&apos;[data-cy=&quot;login-email&quot;]&apos;)</div><div class="line">    .type(&apos;iTesting@YouMustFollow.com&apos;);</div><div class="line"></div><div class="line">  cy</div><div class="line">    .get(&apos;[data-cy=&quot;login-password&quot;]&apos;)</div><div class="line">    .type(&apos;Password&apos;);</div><div class="line"></div><div class="line">  cy</div><div class="line">    .get(&apos;[data-cy=&quot;login&quot;]&apos;)</div><div class="line">    .click();</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
@@ -462,9 +464,7 @@
 <h4 id="04-App-Action如何实现"><a href="#04-App-Action如何实现" class="headerlink" title="04 App Action如何实现"></a><center>04 App Action如何实现</center></h4><p>我们来看下关键代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//关注公众号iTesting，跟测试万人团一起成长</div><div class="line">// Magic! Cypress通过将应用程序窗口暴露出来，从而直接访问应用</div><div class="line">// 程序本身的各种方法。实现我们一会讲。</div><div class="line">cy</div><div class="line">  .window()</div><div class="line">  .then((&#123; app &#125;) =&gt; &#123;</div><div class="line">    app.showLoginModule = true;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
 <p>这段代码直接把Login窗口打开了，而不是通过页面操作打开。为什么这样可以呢？</p>
-<p>这就不得不说到应用程序源码了：</p>
-<iframe height="600" width="800" src="https://mmbiz.qpic.cn/sz_mmbiz_gif/KrjxpeiaZUP47oibkRg7F07gzficjOXlzuHiawcWDF69eaHicMPW4IhTgm9xBnKK1YkuoJzhsMo2tp6HHrE9p8JAVTA/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1"><br></iframe>
-
+<p>这就不得不说到应用程序源码了：<br><img src="/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列4-PO已死AppAction当立/1.gif" alt=""></p>
 <p>从上图可以看到，这个应用程序是Vue的（React和Angular原理类似），通过Vue DevTools我们可以看出来，是属性showLoginModule控制Login窗口的出现。</p>
 <p>而如果我们能把应用打开的窗口（及其支持的方法）暴露给浏览器的Window对象，那么我们就可以通过cy.window来获取。</p>
 <p><strong><center>具体怎么做呢？</center></strong></p>
@@ -549,11 +549,11 @@
   <!-- JS库 sweetalert 可修改路径 -->
   <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列（4） -- “PO”已死，App Action当立/">你不知道的Cypress系列（4） -- “PO”已死，App Action当立</a></p>
+  <p><span>本文标题:</span><a href="/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列4-PO已死AppAction当立/">你不知道的Cypress系列（4） -- “PO”已死，App Action当立</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 请关注微信公众号 iTesting 的个人博客">请关注微信公众号 iTesting</a></p>
   <p><span>发布时间:</span>2021年02月22日 - 23:02</p>
-  <p><span>最后更新:</span>2021年02月22日 - 10:02</p>
-  <p><span>原始链接:</span><a href="/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列（4） -- “PO”已死，App Action当立/" title="你不知道的Cypress系列（4） -- “PO”已死，App Action当立">http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列（4） -- “PO”已死，App Action当立/</a>
+  <p><span>最后更新:</span>2021年03月19日 - 22:03</p>
+  <p><span>原始链接:</span><a href="/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列4-PO已死AppAction当立/" title="你不知道的Cypress系列（4） -- “PO”已死，App Action当立">http://www.helloqa.com/2021/02/22/你不知道的Cypress系列/你不知道的Cypress系列4-PO已死AppAction当立/</a>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -590,6 +590,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/03/19/你不知道的Cypress系列/你不知道的Cypress系列5-眼瞎的TestRunner​/" rel="prev" title="你不知道的Cypress系列（5） -- 眼瞎的TestRunner​">
+                你不知道的Cypress系列（5） -- 眼瞎的TestRunner​ <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -661,7 +665,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/">
-                <span class="site-state-item-count">109</span>
+                <span class="site-state-item-count">110</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
