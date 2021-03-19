@@ -1,1 +1,1 @@
-http://www.helloqa.com/2021/03/19/你不知道的Cypress系列/你不知道的Cypress系列5-眼瞎的TestRunner​/
+http://www.helloqa.com/2021/03/19/你不知道的Cypress系列/你不知道的Cypress系列5眼瞎的TestRunner​/
