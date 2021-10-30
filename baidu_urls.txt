@@ -1,1 +1,1 @@
-http://www.helloqa.com/2021/09/20/你不知道的Cypress系列/你不知道的Cypress系列9-代码自动生成术​/
+http://www.helloqa.com/2021/10/16/你不知道的Cypress系列/你不知道的Cypress系列12Cypress使用测试报告Allure/
